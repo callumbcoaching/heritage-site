@@ -10,7 +10,7 @@ const dir = "temporary screenshots"; fs.mkdirSync(dir, { recursive: true });
 const n = fs.readdirSync(dir).filter(f => f.startsWith("screenshot-")).map(f => +f.split("-")[1].split(".")[0]).reduce((m, x) => Math.max(m, x || 0), 0) + 1;
 const browser = await chromium.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: true });
 const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: W < 600 ? 2 : 1, reducedMotion: a.includes("--reduced") ? "reduce" : "no-preference" });
-await page.goto(url, { waitUntil: "networkidle" }); await page.waitForTimeout(1200);
+await page.goto(url, { waitUntil: "load" }); await page.waitForTimeout(1200);
 for (const y of at) {
   // walk down in steps so scroll-driven reveals fire like a real visitor
   const cur = await page.evaluate(() => scrollY);

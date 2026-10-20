@@ -6,12 +6,12 @@ src, out = sys.argv[1], sys.argv[2]; art = "--artifact" in sys.argv
 root = pathlib.Path(src).parent
 s = (root / pathlib.Path(src).name).read_text()
 def datauri(p):
-    p = root / p; mt = {"png":"image/png","webp":"image/webp","jpg":"image/jpeg","svg":"image/svg+xml"}[p.suffix[1:]]
+    p = root / p; mt = {"png":"image/png","webp":"image/webp","jpg":"image/jpeg","jpeg":"image/jpeg","svg":"image/svg+xml","mp4":"video/mp4","webm":"video/webm"}[p.suffix[1:]]
     return f"data:{mt};base64," + base64.b64encode(p.read_bytes()).decode()
 cache = {}
 s = re.sub(r'(src|href)="((?:brand_assets|assets)/[^"]+)"', lambda m: f'{m.group(1)}="{cache.setdefault(m.group(2), datauri(m.group(2)))}"', s)
-s = s.replace('<link rel="stylesheet" href="heritage.css">', "<style>\n" + (root/"heritage.css").read_text() + "\n</style>")
-s = s.replace('<script src="heritage.js"></script>', "<script>\n" + (root/"heritage.js").read_text() + "\n</script>")
+s = re.sub(r'<link rel="stylesheet" href="([\w.-]+\.css)">', lambda m: "<style>\n" + (root/m.group(1)).read_text() + "\n</style>", s)
+s = re.sub(r'<script src="([\w.-]+\.js)"></script>', lambda m: "<script>\n" + (root/m.group(1)).read_text() + "\n</script>", s)
 if art:
     head = re.search(r"<head>(.*?)</head>", s, re.S).group(1)
     head = re.sub(r'<meta (charset|name="viewport")[^>]*>\n?', "", head)
