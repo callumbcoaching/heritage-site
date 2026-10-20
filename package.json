@@ -8,7 +8,7 @@
     "test:desktop": "playwright test --project=desktop",
     "test:phone": "playwright test --project=phone",
     "report": "playwright show-report",
-    "build": "python3 tools/build_pages.py",
+    "build": "python3 tools/build_pages.py && python3 tools/version_assets.py",
     "test:live": "BASE_URL=https://callumbcoaching.co.uk playwright test"
   },
   "dependencies": {

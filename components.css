@@ -760,7 +760,7 @@ fieldset.field{border:0;margin:0;padding:0;}
 @keyframes rays{from{opacity:.65}to{opacity:1}}
 .temple__motes{z-index:-1;}
 .temple__motes b{animation-duration:var(--dur2);}
-.colonnade{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3);padding-inline:6%;}
+.colonnade{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3);}
 .colw{position:relative;display:flex;justify-content:center;transform-origin:bottom;transform:scaleY(0);opacity:0;transition:transform 1.6s var(--ease),opacity .8s ease;transition-delay:calc(var(--d) * 220ms + 200ms);}
 .temple.in .colw{transform:none;opacity:1;}
 .col{width:min(100%,150px);height:auto;display:block;overflow:visible;}

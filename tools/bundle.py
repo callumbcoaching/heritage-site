@@ -10,8 +10,8 @@ def datauri(p):
     return f"data:{mt};base64," + base64.b64encode(p.read_bytes()).decode()
 cache = {}
 s = re.sub(r'(src|href)="((?:brand_assets|assets)/[^"]+)"', lambda m: f'{m.group(1)}="{cache.setdefault(m.group(2), datauri(m.group(2)))}"', s)
-s = re.sub(r'<link rel="stylesheet" href="([\w.-]+\.css)">', lambda m: "<style>\n" + (root/m.group(1)).read_text() + "\n</style>", s)
-s = re.sub(r'<script src="([\w.-]+\.js)"></script>', lambda m: "<script>\n" + (root/m.group(1)).read_text() + "\n</script>", s)
+s = re.sub(r'<link rel="stylesheet" href="([\w.-]+\.css)(?:\?v=\w+)?">', lambda m: "<style>\n" + (root/m.group(1)).read_text() + "\n</style>", s)
+s = re.sub(r'<script src="([\w.-]+\.js)(?:\?v=\w+)?"></script>', lambda m: "<script>\n" + (root/m.group(1)).read_text() + "\n</script>", s)
 if art:
     head = re.search(r"<head>(.*?)</head>", s, re.S).group(1)
     head = re.sub(r'<meta (charset|name="viewport")[^>]*>\n?', "", head)
