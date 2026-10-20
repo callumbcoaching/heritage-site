@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=GFS+Didot&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="heritage.css?v=3e1236b2">
+<link rel="stylesheet" href="heritage.css?v=8b94fb6c">
 <link rel="stylesheet" href="components.css?v=c294268a">
 </head>
 <body>
@@ -30,9 +30,15 @@
   <div class="nav__bar">
     <a class="mark" href="/" aria-label="CALLUM.B home"><img src="brand_assets/lion-420.webp" alt="">CALLUM<i>.</i>B</a>
     <nav class="nav__links" aria-label="Main"><a href="/#method">Method</a><a href="/results" aria-current="page">Results</a><a href="/about">About</a><a href="/coaching">Coaching</a></nav>
-    <a class="btn" href="/apply">Apply <span class="arr">→</span></a>
+    <div class="nav__end"><a class="btn" href="/apply">Apply <span class="arr">→</span></a><button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mnav"><span></span><span></span><span></span></button></div>
   </div>
 </header>
+<div class="mnav" id="mnav" hidden>
+  <div class="mnav__bg" aria-hidden="true"><img src="brand_assets/lion-crest.png" alt=""></div>
+  <nav aria-label="Menu"><ol class="mnav__list"><li style="--d:0"><a href="/"><span class="mnav__n">01</span><span class="mnav__t">Home</span><span class="mnav__s">The promise</span></a></li><li style="--d:1"><a href="/coaching"><span class="mnav__n">02</span><span class="mnav__t">Coaching</span><span class="mnav__s">Plans and what's included</span></a></li><li style="--d:2"><a href="/results" aria-current="page"><span class="mnav__n">03</span><span class="mnav__t">Results</span><span class="mnav__s">Client transformations</span></a></li><li style="--d:3"><a href="/about"><span class="mnav__n">04</span><span class="mnav__t">About</span><span class="mnav__s">My story</span></a></li><li style="--d:4"><a href="/terms-coaching"><span class="mnav__n">05</span><span class="mnav__t">Terms</span><span class="mnav__s">In plain English</span></a></li></ol></nav>
+  <div class="mnav__foot"><a class="btn" href="/apply">Apply for 1:1 coaching <span class="arr">→</span></a><p class="label">Structure over motivation</p></div>
+</div>
+
 <div class="thread" aria-label="Page chapters"><div class="thread__track"></div><div class="thread__fill"></div><div class="thread__head"></div><ol></ol></div>
 <main>
 <section class="phero hero" id="top" data-chap="Results">
@@ -212,7 +218,7 @@
     <div class="foot__base"><span class="label">© 2026 CALLUM.B · Online Transformation Coach · United Kingdom</span><span class="label it" style="font-family:var(--didot);text-transform:none;letter-spacing:0;font-size:15px;color:var(--gold)">Structure over motivation.</span></div>
   </div>
 </footer>
-<script src="heritage.js?v=67c15cf3"></script>
+<script src="heritage.js?v=cf7edf40"></script>
 <script src="components.js?v=dc7d4912"></script>
 </body>
 </html>

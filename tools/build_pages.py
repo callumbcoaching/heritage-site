@@ -1,6 +1,8 @@
 """Build about / coaching / results / apply from shared chrome, reusing Home's sections as the single source.
    python3 tools/build_pages.py   (run from the project root)"""
-import pathlib, re
+import pathlib, re, sys
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from chrome import BURGER, mobile_menu
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 home = (ROOT / "index.html").read_text()
@@ -61,9 +63,10 @@ def nav(active):
   <div class="nav__bar">
     <a class="mark" href="/" aria-label="CALLUM.B home"><img src="brand_assets/lion-420.webp" alt="">CALLUM<i>.</i>B</a>
     <nav class="nav__links" aria-label="Main">{a}</nav>
-    <a class="btn" href="/apply">Apply <span class="arr">→</span></a>
+    <div class="nav__end"><a class="btn" href="/apply">Apply <span class="arr">→</span></a>{BURGER}</div>
   </div>
 </header>
+{mobile_menu(active)}
 <div class="thread" aria-label="Page chapters"><div class="thread__track"></div><div class="thread__fill"></div><div class="thread__head"></div><ol></ol></div>
 <main>
 '''

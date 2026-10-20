@@ -132,3 +132,14 @@ test.describe("with Reduce Motion on", () => {
     expect(await page.locator(".evtrack").evaluate(e => getComputedStyle(e).animationName)).toBe("none");
   });
 });
+
+test("phone menu opens and navigates", async ({ page, isMobile }) => {
+  test.skip(!isMobile, "phone only");
+  await page.goto("/coaching");
+  await expect(page.locator(".nav__links")).toBeHidden();
+  await page.locator(".burger").click();
+  await expect(page.locator("#mnav")).toBeVisible();
+  await expect(page.locator(".burger")).toHaveAttribute("aria-expanded", "true");
+  await page.locator('#mnav a[href="/results"]').click();
+  await expect(page).toHaveURL(/\/results/);
+});

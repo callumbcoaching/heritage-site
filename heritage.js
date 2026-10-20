@@ -31,6 +31,22 @@
   $$("[data-from]").forEach(el => el.textContent = el.dataset.from);
   $$("[data-count]").forEach(el => cio.observe(el));
 
+  /* ---- phone menu ---- */
+  const burger = $(".burger"), mnav = $("#mnav");
+  if (burger && mnav) {
+    const setOpen = (open, byKey) => {
+      burger.setAttribute("aria-expanded", open);
+      burger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      document.body.classList.toggle("menu-open", open);
+      if (open) { mnav.hidden = false; requestAnimationFrame(() => requestAnimationFrame(() => mnav.classList.add("open"))); if (byKey) mnav.querySelector("a").focus({ preventScroll: true }); }
+      else { mnav.classList.remove("open"); setTimeout(() => { if (!mnav.classList.contains("open")) mnav.hidden = true; }, 450); }
+    };
+    burger.addEventListener("click", e => setOpen(burger.getAttribute("aria-expanded") !== "true", e.detail === 0));
+    mnav.addEventListener("click", e => { if (e.target.closest("a")) setOpen(false); });
+    addEventListener("keydown", e => { if (e.key === "Escape" && burger.getAttribute("aria-expanded") === "true") { setOpen(false); burger.focus(); } });
+    addEventListener("resize", () => { if (innerWidth >= 880 && burger.getAttribute("aria-expanded") === "true") setOpen(false); });
+  }
+
   /* ---- nav: solid after the hero, hides on scroll down, returns on scroll up ---- */
   const nav = $(".nav");
   let lastY = scrollY;
