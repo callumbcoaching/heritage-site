@@ -22,7 +22,7 @@ CLIENTS = section("<!-- proof continues", "<!-- VI · THE INVESTMENT -->")
 VF = cut('      <div class="vf" id="video-feedback">', '      <div class="app__foot rv">')
 WA = "https://wa.me/447359838866"
 
-def head(title, desc):
+def head(title, desc, path=""):
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -30,6 +30,17 @@ def head(title, desc):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{title}</title>
 <meta name="description" content="{desc}">
+<link rel="canonical" href="https://callumbcoaching.co.uk/{path}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CALLUM.B">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{desc}">
+<meta property="og:url" content="https://callumbcoaching.co.uk/{path}">
+<meta property="og:image" content="https://callumbcoaching.co.uk/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://callumbcoaching.co.uk/og-image.jpg">
 <meta name="theme-color" content="#09150F">
 <link rel="icon" href="brand_assets/lion-420.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,14 +54,14 @@ def head(title, desc):
 '''
 
 def nav(active):
-    links = [("index.html#method", "Method"), ("results.html", "Results"), ("about.html", "About"), ("coaching.html", "Coaching")]
+    links = [("/#method", "Method"), ("/results", "Results"), ("/about", "About"), ("/coaching", "Coaching")]
     cur = ' aria-current="page"'
     a = "".join(f'<a href="{h}"{cur if n == active else ""}>{n}</a>' for h, n in links)
     return f'''<header class="nav">
   <div class="nav__bar">
-    <a class="mark" href="index.html" aria-label="CALLUM.B home"><img src="brand_assets/lion-420.webp" alt="">CALLUM<i>.</i>B</a>
+    <a class="mark" href="/" aria-label="CALLUM.B home"><img src="brand_assets/lion-420.webp" alt="">CALLUM<i>.</i>B</a>
     <nav class="nav__links" aria-label="Main">{a}</nav>
-    <a class="btn" href="apply.html">Apply <span class="arr">→</span></a>
+    <a class="btn" href="/apply">Apply <span class="arr">→</span></a>
   </div>
 </header>
 <div class="thread" aria-label="Page chapters"><div class="thread__track"></div><div class="thread__fill"></div><div class="thread__head"></div><ol></ol></div>
@@ -62,13 +73,13 @@ FOOT = '''</main>
   <div class="wrap">
     <div class="foot__grid">
       <div class="stack">
-        <a class="mark" href="index.html"><img src="brand_assets/lion-420.webp" alt="">CALLUM<i>.</i>B</a>
+        <a class="mark" href="/"><img src="brand_assets/lion-420.webp" alt="">CALLUM<i>.</i>B</a>
         <p class="body" style="max-width:34ch">Structured physique development for men who are done guessing.</p>
         <p class="label">J3 University Level 1 Certified Coach</p>
       </div>
-      <div><h4>Coaching</h4><ul><li><a href="coaching.html">Premium 1:1</a></li><li><a href="apply.html">Apply</a></li><li><a href="/the-ninety/">The Ninety</a></li><li><a href="/start/">Physique OS</a></li></ul></div>
-      <div><h4>Explore</h4><ul><li><a href="results.html">Results</a></li><li><a href="about.html">About</a></li><li><a href="/tdee-calculator">TDEE calculator</a></li><li><a href="/trt-starter/">TRT framework</a></li></ul></div>
-      <div><h4>Connect</h4><ul><li><a href="https://instagram.com/callum.transformation.coach" target="_blank" rel="noopener">Instagram</a></li><li><a href="/links/">All links</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/terms">Terms</a></li></ul></div>
+      <div><h4>Coaching</h4><ul><li><a href="/coaching">Premium 1:1</a></li><li><a href="/apply">Apply</a></li><li><a href="/the-ninety/">The Ninety</a></li><li><a href="/start/">Physique OS</a></li></ul></div>
+      <div><h4>Explore</h4><ul><li><a href="/results">Results</a></li><li><a href="/about">About</a></li><li><a href="/tdee-calculator">TDEE calculator</a></li><li><a href="/trt-starter/">TRT framework</a></li></ul></div>
+      <div><h4>Connect</h4><ul><li><a href="https://instagram.com/callum.transformation.coach" target="_blank" rel="noopener">Instagram</a></li><li><a href="/links/">All links</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/terms-coaching">Coaching terms</a></li><li><a href="/terms">Site terms</a></li></ul></div>
     </div>
     <div class="foot__base"><span class="label">© 2026 CALLUM.B · Online Transformation Coach · United Kingdom</span><span class="label it" style="font-family:var(--didot);text-transform:none;letter-spacing:0;font-size:15px;color:var(--gold)">Structure over motivation.</span></div>
   </div>
@@ -80,7 +91,7 @@ FOOT = '''</main>
 '''
 
 def hero(chap, eyebrow, l1, l2, lede, img, alt, ctas=True, sid="top"):
-    cta = f'''<div class="actions"><a class="btn" href="apply.html">Apply for 1:1 coaching <span class="arr">→</span></a><a class="tlink" href="index.html#method">How the method works</a></div>''' if ctas else ""
+    cta = f'''<div class="actions"><a class="btn" href="/apply">Apply for 1:1 coaching <span class="arr">→</span></a><a class="tlink" href="/#method">How the method works</a></div>''' if ctas else ""
     media = f'''<div class="phero__media hero__media" data-depth="-12"><div class="frame"><div class="media photo"><img src="{img}" alt="{alt}" width="800" height="1000"></div></div></div>''' if img else ""
     return f'''<section class="phero hero" id="{sid}" data-chap="{chap}">
   <div class="hero__bg"><div class="glow green g-a" data-depth="-24"></div><div class="glow gold g-b" data-depth="30"></div></div>
@@ -108,7 +119,7 @@ def close(title_a, title_b, run, sid="begin"):
     <p class="eyebrow rv" style="justify-content:center">Structure over motivation</p>
     <h2 style="margin-top:var(--s3)"><span class="ln"><span>{title_a}</span></span><span class="ln" style="--d:1"><span class="it" style="color:var(--gold-deep)">{title_b}</span></span></h2>
     <p class="run rv" style="--d:2">{run}</p>
-    <div class="actions rv" style="--d:3"><a class="btn" href="apply.html">Apply for 1:1 coaching <span class="arr">→</span></a></div>
+    <div class="actions rv" style="--d:3"><a class="btn" href="/apply">Apply for 1:1 coaching <span class="arr">→</span></a></div>
     <p class="label rv" style="--d:4;margin-top:var(--s4)">Application only · NDA as standard · the door doesn't close</p>
   </div>
 </section>
@@ -118,7 +129,7 @@ def chap_attr(s, label):  # give a reused section a thread label
     return re.sub(r'(<section class="[^"]*")', rf'\1 data-chap="{label}"', s, count=1)
 
 # ------------------------------------------------------------------ ABOUT
-about = head("About · CALLUM.B", "Callum's story: addiction, stage 2 hypertension, and the structure that rebuilt him. The same structure he now coaches.") + nav("About")
+about = head("About Callum, Online Fitness Coach | CALLUM.B", "Callum's story: addiction, stage 2 hypertension, and the structure that rebuilt him. The same structure he now coaches.", "about") + nav("About")
 about += hero("The man", "About Callum", "I've got an addictive personality.", "These days it works for me.",
   "For most of my life it worked against me. What changed wasn't willpower. I had plenty of that and it never once saved me. It was structure. That's the whole of what I coach, and I built it because I needed it.",
   "assets/photos/callum-about.webp", "Callum Broadfoot", ctas=False)
@@ -236,11 +247,11 @@ about += '''
   </div>
 </section>
 '''
-about += close("If that sounds like", "your problem.", "I'm not going to tell you to want it more, or hand you a plan that only works on the days you feel like it. <a href=\"apply.html\">I'll build you a structure that holds when you don't.</a>")
+about += close("If that sounds like", "your problem.", "I'm not going to tell you to want it more, or hand you a plan that only works on the days you feel like it. <a href=\"/apply\">I'll build you a structure that holds when you don't.</a>")
 about += FOOT
 
 # ------------------------------------------------------------------ COACHING
-co = head("Coaching · CALLUM.B", "Premium 1:1 coaching. Calibrated nutrition, structured training, weekly reviews, video feedback and WhatsApp access, built around your real life.") + nav("Coaching")
+co = head("Online Fitness Coaching Plans UK | CALLUM.B", "Premium 1:1 coaching. Calibrated nutrition, structured training, weekly reviews, video feedback and WhatsApp access, built around your real life.", "coaching") + nav("Coaching")
 co += hero("The offer", "Premium 1:1 coaching · application only", "Structured transformation,", "with real oversight.",
   "For the man who's ready to stop guessing. We install the system, programme every phase, and I hold you to the structure, week after week, against your actual data.",
   "assets/photos/callum-gym.webp", "Callum training in the gym")
@@ -285,11 +296,16 @@ co += '''
       <p class="eyebrow rv">What every plan is built on</p>
       <h2 class="h-lg"><span class="ln"><span>Four pillars.</span></span><span class="ln" style="--d:1"><span class="it gold-t">Every week.</span></span></h2>
     </div>
+    <div class="temple" data-in>
+      <div class="temple__rays" aria-hidden="true"></div>
+      <div class="motes temple__motes" aria-hidden="true"><b style="left:8%;--dl:-2s;--dur2:14s"></b><b style="left:17%;--dl:-9s;--dur2:18s"></b><b style="left:29%;--dl:-5s;--dur2:16s"></b><b style="left:38%;--dl:-12s;--dur2:20s"></b><b style="left:46%;--dl:-3s;--dur2:15s"></b><b style="left:58%;--dl:-8s;--dur2:19s"></b><b style="left:66%;--dl:-1s;--dur2:17s"></b><b style="left:74%;--dl:-11s;--dur2:21s"></b><b style="left:85%;--dl:-6s;--dur2:16s"></b><b style="left:93%;--dl:-14s;--dur2:22s"></b></div>
+      <div class="colonnade" aria-hidden="true"><div class="colw" style="--d:0"><svg class="col" viewBox="0 0 120 420" aria-hidden="true"><defs><linearGradient id="colg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7C6020" stop-opacity=".35"/><stop offset=".45" stop-color="#E8C987" stop-opacity=".22"/><stop offset="1" stop-color="#7C6020" stop-opacity=".3"/></linearGradient></defs><g class="col__body"><rect x="6" y="8" width="108" height="14"/><path d="M14 22 Q60 44 106 22 L100 40 Q60 56 20 40 Z"/><rect x="22" y="40" width="76" height="12"/><path class="col__shaft" d="M25 52 L95 52 L91 378 L29 378 Z" fill="url(#colg)"/><g class="col__flutes"><line x1="30" y1="64" x2="30" y2="372"/><line x1="39" y1="64" x2="39" y2="372"/><line x1="48" y1="64" x2="48" y2="372"/><line x1="57" y1="64" x2="57" y2="372"/><line x1="66" y1="64" x2="66" y2="372"/><line x1="75" y1="64" x2="75" y2="372"/><line x1="84" y1="64" x2="84" y2="372"/></g><rect x="20" y="378" width="80" height="12"/><rect x="12" y="390" width="96" height="12"/><rect x="4" y="402" width="112" height="14"/></g></svg><span class="col__light"></span></div><div class="colw" style="--d:1"><svg class="col" viewBox="0 0 120 420" aria-hidden="true"><defs><linearGradient id="colg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7C6020" stop-opacity=".35"/><stop offset=".45" stop-color="#E8C987" stop-opacity=".22"/><stop offset="1" stop-color="#7C6020" stop-opacity=".3"/></linearGradient></defs><g class="col__body"><rect x="6" y="8" width="108" height="14"/><path d="M14 22 Q60 44 106 22 L100 40 Q60 56 20 40 Z"/><rect x="22" y="40" width="76" height="12"/><path class="col__shaft" d="M25 52 L95 52 L91 378 L29 378 Z" fill="url(#colg)"/><g class="col__flutes"><line x1="30" y1="64" x2="30" y2="372"/><line x1="39" y1="64" x2="39" y2="372"/><line x1="48" y1="64" x2="48" y2="372"/><line x1="57" y1="64" x2="57" y2="372"/><line x1="66" y1="64" x2="66" y2="372"/><line x1="75" y1="64" x2="75" y2="372"/><line x1="84" y1="64" x2="84" y2="372"/></g><rect x="20" y="378" width="80" height="12"/><rect x="12" y="390" width="96" height="12"/><rect x="4" y="402" width="112" height="14"/></g></svg><span class="col__light"></span></div><div class="colw" style="--d:2"><svg class="col" viewBox="0 0 120 420" aria-hidden="true"><defs><linearGradient id="colg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7C6020" stop-opacity=".35"/><stop offset=".45" stop-color="#E8C987" stop-opacity=".22"/><stop offset="1" stop-color="#7C6020" stop-opacity=".3"/></linearGradient></defs><g class="col__body"><rect x="6" y="8" width="108" height="14"/><path d="M14 22 Q60 44 106 22 L100 40 Q60 56 20 40 Z"/><rect x="22" y="40" width="76" height="12"/><path class="col__shaft" d="M25 52 L95 52 L91 378 L29 378 Z" fill="url(#colg)"/><g class="col__flutes"><line x1="30" y1="64" x2="30" y2="372"/><line x1="39" y1="64" x2="39" y2="372"/><line x1="48" y1="64" x2="48" y2="372"/><line x1="57" y1="64" x2="57" y2="372"/><line x1="66" y1="64" x2="66" y2="372"/><line x1="75" y1="64" x2="75" y2="372"/><line x1="84" y1="64" x2="84" y2="372"/></g><rect x="20" y="378" width="80" height="12"/><rect x="12" y="390" width="96" height="12"/><rect x="4" y="402" width="112" height="14"/></g></svg><span class="col__light"></span></div><div class="colw" style="--d:3"><svg class="col" viewBox="0 0 120 420" aria-hidden="true"><defs><linearGradient id="colg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7C6020" stop-opacity=".35"/><stop offset=".45" stop-color="#E8C987" stop-opacity=".22"/><stop offset="1" stop-color="#7C6020" stop-opacity=".3"/></linearGradient></defs><g class="col__body"><rect x="6" y="8" width="108" height="14"/><path d="M14 22 Q60 44 106 22 L100 40 Q60 56 20 40 Z"/><rect x="22" y="40" width="76" height="12"/><path class="col__shaft" d="M25 52 L95 52 L91 378 L29 378 Z" fill="url(#colg)"/><g class="col__flutes"><line x1="30" y1="64" x2="30" y2="372"/><line x1="39" y1="64" x2="39" y2="372"/><line x1="48" y1="64" x2="48" y2="372"/><line x1="57" y1="64" x2="57" y2="372"/><line x1="66" y1="64" x2="66" y2="372"/><line x1="75" y1="64" x2="75" y2="372"/><line x1="84" y1="64" x2="84" y2="372"/></g><rect x="20" y="378" width="80" height="12"/><rect x="12" y="390" width="96" height="12"/><rect x="4" y="402" width="112" height="14"/></g></svg><span class="col__light"></span></div></div>
     <div class="pillars">
       <div class="pillar rv"><span class="n">i</span><h3 class="h-sm">Nutrition</h3><p class="body">Full macros hit, weekdays and weekends. Treats planned in, not fought.</p></div>
       <div class="pillar rv" style="--d:1"><span class="n">ii</span><h3 class="h-sm">Training</h3><p class="body">Every set logged, every week progressed. The numbers go up or we find out why.</p></div>
       <div class="pillar rv" style="--d:2"><span class="n">iii</span><h3 class="h-sm">Steps</h3><p class="body">The quiet lever. Daily movement that keeps fat loss moving without more cardio.</p></div>
       <div class="pillar rv" style="--d:3"><span class="n">iv</span><h3 class="h-sm">Check-ins</h3><p class="body">Your weekly review. Together the four pillars make your structure score, the number the guarantee is measured on.</p></div>
+    </div>
     </div>
   </div>
 </section>
@@ -316,11 +332,11 @@ co += '''
 </section>
 '''
 co += chap_attr(GUARANTEE, "The guarantee") + chap_attr(INVEST, "Investment") + FAQ
-co += close("Tell me", "where you're at.", "The application takes two minutes and gets you a straight answer. <a href=\"apply.html\">Apply for coaching</a>, or <a href=\"/start/\">start free on Physique&nbsp;OS</a>.")
+co += close("Tell me", "where you're at.", "The application takes two minutes and gets you a straight answer. <a href=\"/apply\">Apply for coaching</a>, or <a href=\"/start/\">start free on Physique&nbsp;OS</a>.")
 co += FOOT
 
 # ------------------------------------------------------------------ RESULTS
-re_ = head("Results · CALLUM.B", "Real client transformations: photos, measurements, blood pressure and their own words.") + nav("Results")
+re_ = head("Client Transformations and Results | CALLUM.B", "Real client transformations from 1:1 online coaching: photos, measurements, blood pressure and their own words.", "results") + nav("Results")
 re_ += hero("Results", "Client results", "Real transformations.", "Built on structure.",
   "Their photos, their numbers, their own words. Ordinary men with jobs, families and busy weeks, following the same structure.", None, None)
 re_ += chap_attr(CLIENTS, "Clients")
@@ -330,7 +346,7 @@ re_ += '''
     <div class="stack" style="max-width:760px">
       <p class="eyebrow rv">Proven on me first</p>
       <h2 class="h-md rv">Before I coached anyone, <span class="it gold-t">I did it myself.</span></h2>
-      <p class="body rv">Stage 2 hypertension to normal, with no medication, in fourteen months. <a class="tlink" href="about.html">Read my story</a></p>
+      <p class="body rv">Stage 2 hypertension to normal, with no medication, in fourteen months. <a class="tlink" href="/about">Read my story</a></p>
     </div>
     <div class="numbers">
       <div class="monitors">
@@ -345,11 +361,11 @@ re_ += '''
   </div>
 </section>
 '''
-re_ += close("Your photos", "could be next.", "Every result on this page started with one application. <a href=\"apply.html\">Tell me where you're at.</a>")
+re_ += close("Your photos", "could be next.", "Every result on this page started with one application. <a href=\"/apply\">Tell me where you're at.</a>")
 re_ += FOOT
 
 # ------------------------------------------------------------------ APPLY
-ap = head("Apply · CALLUM.B", "Apply for 1:1 coaching. A short private application, read personally, with a straight answer within 24 hours.") + nav("")
+ap = head("Apply for 1:1 Online Coaching | CALLUM.B", "Apply for 1:1 coaching. A short private application, read personally, with a straight answer within 24 hours.", "apply") + nav("")
 ap += hero("Apply", "1:1 coaching · application", "Tell me", "where you're at.",
   "Two minutes, completely private. I read every application myself and reply within 24 hours. If I'm not the right fit for you, I'll say so.", None, None, ctas=False)
 ap += '''
@@ -428,3 +444,52 @@ ap += FOOT
 for name, html in [("about.html", about), ("coaching.html", co), ("results.html", re_), ("apply.html", ap)]:
     (ROOT / name).write_text(html)
     print(name, len(html) // 1024, "KB")
+
+# ------------------------------------------------------------------ TERMS (published as premium-terms-direct.html)
+def tbl(head, rows, cls=""):
+    h = "".join(f"<th>{c}</th>" for c in head)
+    b = "".join("<tr>" + "".join(f"<td>{c}</td>" for c in r) + "</tr>" for r in rows)
+    return f'<div class="tt {cls}"><table><thead><tr>{h}</tr></thead><tbody>{b}</tbody></table></div>'
+
+def tsec(n, title, body, chap):
+    return f'''<section class="tsec rv" id="t{n}" data-chap="{chap}"><span class="tsec__n">{n:02d}</span><div class="tsec__b"><h2 class="h-md">{title}</h2>{body}</div></section>
+'''
+
+tm = head("Coaching Terms | CALLUM.B", "The terms for CALLUM.B premium 1:1 coaching: what acceptance means, the standard, the guarantee, the money and your data.", "terms-coaching").replace('<meta name="theme-color"', '<meta name="robots" content="noindex,follow">\n<meta name="theme-color"') + nav("")
+tm += hero("The terms", "Premium 1:1 coaching · terms v3 · October 2026", "The terms,", "in plain English.",
+  "This is what you're stepping into. Nothing here is buried, and every number stays visible to you the whole way through.", None, None, ctas=False)
+tm += '<div class="chap g1 terms-wrap"><div class="wrap"><div class="tbar rv"><span class="label">Applies to every 1:1 package</span><button class="tlink" type="button" onclick="window.print()" style="background:none;border:0;cursor:pointer">Print or save as PDF</button></div>'
+tm += tsec(1, "What acceptance means", '''<ul class="tl2">
+<li><b>Payment secures your place.</b> The payment link comes first, and your onboarding form arrives the moment it's paid.</li>
+<li><b>Full premium from day one:</b> coached training and cardio, your nutrition build and the weekly check-in rhythm. The complete programme, not a roadmap.</li>
+<li><b>Programmes start on a Monday.</b> The days between payment and your first Monday are your setup window: the app, baseline photos, measurements and your first weigh-in.</li></ul>''', "Acceptance")
+tm += tsec(2, "The standard: what's tracked", '''<p class="body">Premium runs on data. The same five inputs are tracked and scored at every weekly check-in. It's how the coaching stays honest, and everything that's scored is visible to you at all times.</p>''' +
+  tbl(["Input", "What counts", "Weight"], [["Nutrition logged", "Days your food is logged, out of 7", "35%"], ["Daily weigh-ins", "Days you weigh in, out of 7 (aim for 6+)", "25%"], ["Weekly check-in", "Submitted on time", "15%"], ["Progress photo", "Submitted each Sunday", "12.5%"], ["Body measurements", "Taken and submitted each week", "12.5%"]]) +
+  '''<p class="tnote"><b>If adherence drops:</b> three weeks in a row below 80% triggers a review call. If nothing changes after it, the programme moves to the £99 a month fallback (nutrition and tracking only) until the standard returns.</p>''', "The standard")
+tm += tsec(3, "The 8-Week Progress Guarantee", '''<p class="lede" style="font-size:clamp(17px,1.6vw,19px)">Hold 80%+ on your weekly score for the first eight weeks. <b>Do your part and see no results, and month three is free.</b></p>
+<ul class="tl2">
+<li><b>Applies to</b> every 1:1 package.</li>
+<li><b>The window</b> is your first eight weeks of coaching.</li>
+<li><b>The condition</b> is a score of 80% or more at every weekly check-in in that window, using the inputs in section 2.</li>
+<li><b>The remedy</b> is your third month of coaching free of charge. It's a free month, not a refund.</li></ul>''', "Guarantee")
+tm += tsec(4, "The money", tbl(["Package", "Paid in full", "Payment plan", "Saving in full"], [["12 Week Foundation", "£1,200", "3 × £450 (£1,350)", "£150"], ["6 Month Transformation", "£2,200", "6 × £405 (£2,430)", "£230"], ["12 Month Structured Development", "£3,500", "12 × £324 (£3,888)", "£388"]], "money") +
+  '''<ul class="tl2">
+<li><b>Payment plans are spread monthly</b> across the whole programme, not front-loaded: 3 payments across 12 weeks, 6 across 6 months, 12 across 12 months. The first payment secures your place, and the rest fall on the same date each month.</li>
+<li><b>14-day cooling-off</b> from the day of purchase, less the value of coaching already delivered.</li>
+<li><b>Missed instalment:</b> you get a 7-day grace window to settle. After that, your place moves to the fallback rules until the balance is up to date.</li>
+<li><b>Leaving early:</b> you can stop at any time. Nothing further is owed beyond instalments already due, and coaching already delivered isn't refunded.</li></ul>''', "The money")
+tm += tsec(5, "Application and fit", '''<p class="body">Coaching is application only because the fit has to be right for both of us. I read every application myself. If I don't think I'm the right coach for you, I'll tell you straight rather than take your money.</p>''', "Fit")
+tm += tsec(6, "Your data", '''<ul class="tl2">
+<li>Everything that scores you is visible to you: every weigh-in, every log, every percentage, at all times.</li>
+<li>Your data is used to coach you and nothing else. It isn't sold or shared.</li>
+<li>You can ask for a copy, or for it to be deleted, at any time after we finish working together.</li></ul>''', "Your data")
+tm += tsec(7, "The medical line", '''<p class="body">I'm your coach, not your doctor. Nothing in this process is medical advice. GLP-1 dosing, medication changes and anything health-related stay with your prescriber or GP, always. Tell me what they decide, and I'll build the coaching around it.</p>''', "Medical")
+tm += '''<section class="tsign rv" id="agree" data-chap="Agreement">
+  <p class="body"><b>Agreement:</b> by making payment you're accepting the terms above: the standard in section 2, the guarantee in section 3, the money in section 4, and the shared understanding that adherence, not the outcome, is what's being measured.</p>
+  <div class="tsign__row"><div><p class="it" style="font-family:var(--didot);font-size:28px;color:var(--gold);margin:0">Callum</p><span class="label">Callum Broadfoot · CALLUM.B</span></div><div class="tsign__line"><span class="label">Client signature and date</span></div></div>
+</section>
+</div></div>
+'''
+tm += FOOT
+(ROOT / "terms-coaching.html").write_text(tm)
+print("terms-coaching", len(tm) // 1024, "KB")

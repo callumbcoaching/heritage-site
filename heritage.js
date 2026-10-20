@@ -17,7 +17,7 @@
     if (!e.isIntersecting) return; cio.unobserve(e.target);
     const el = e.target, to = parseFloat(el.dataset.count), dec = +(el.dataset.dec || 0);
     const sign = to < 0 ? "−" : (el.dataset.plus ? "+" : "");
-    if (RM) { el.textContent = sign + (el.dataset.sep ? Math.abs(to).toLocaleString("en-GB") : Math.abs(to).toFixed(dec)); return; }
+    // numbers change in place, so they still count with Reduce Motion on
     const from = parseFloat(el.dataset.from || 0), t0 = performance.now(), D = el.dataset.from ? 2200 : 1800;
     const tick = t => {
       const k = clamp((t - t0) / D), e2 = 1 - Math.pow(1 - k, 4);
@@ -28,7 +28,7 @@
     requestAnimationFrame(tick);
   }), { threshold: 0.6 });
   // markup holds the real figure; start count-downs at their high number only once JS is running
-  if (!RM) $$("[data-from]").forEach(el => el.textContent = el.dataset.from);
+  $$("[data-from]").forEach(el => el.textContent = el.dataset.from);
   $$("[data-count]").forEach(el => cio.observe(el));
 
   /* ---- nav: solid after the hero, hides on scroll down, returns on scroll up ---- */

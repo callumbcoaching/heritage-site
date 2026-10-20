@@ -1,11 +1,12 @@
 import { test, expect } from "@playwright/test";
 
 const pages = [
-  { path: "/", title: /Structure over motivation/, h1: /started/i },
-  { path: "/about.html", title: /About/, h1: /addictive personality/i },
-  { path: "/coaching.html", title: /Coaching/, h1: /Structured transformation/i },
-  { path: "/results.html", title: /Results/, h1: /Real transformations/i },
-  { path: "/apply.html", title: /Apply/, h1: /where you're at/i },
+  { path: "/", title: /Online Personal Trainer/, h1: /started/i },
+  { path: "/about", title: /About/, h1: /addictive personality/i },
+  { path: "/coaching", title: /Coaching/, h1: /Structured transformation/i },
+  { path: "/results", title: /Results/, h1: /Real transformations/i },
+  { path: "/apply", title: /Apply/, h1: /where you're at/i },
+  { path: "/terms-coaching", title: /Terms/, h1: /The terms/i },
 ];
 
 // scroll to the bottom in steps so scroll-triggered reveals and lazy images run
@@ -54,27 +55,29 @@ for (const p of pages) {
       await page.goto(p.path);
       const applies = page.locator("a.btn", { hasText: /apply/i });
       const n = await applies.count();
-      for (let i = 0; i < n; i++) await expect(applies.nth(i)).toHaveAttribute("href", "apply.html");
+      for (let i = 0; i < n; i++) await expect(applies.nth(i)).toHaveAttribute("href", "/apply");
     });
 
     test("internal links resolve", async ({ page, request }) => {
       await page.goto(p.path);
       const hrefs = await page.$$eval("a[href]", as => [...new Set(as.map(a => a.getAttribute("href")))]);
-      const local = hrefs.filter(h => /^[\w-]+\.html(#.*)?$/.test(h));
-      for (const h of local) expect((await request.get("/" + h.split("#")[0])).status(), h).toBe(200);
+      const ours = ["/", "/about", "/coaching", "/results", "/apply", "/terms-coaching"];
+      const local = hrefs.map(h => h.split("#")[0] || "/").filter(h => ours.includes(h));
+      for (const h of new Set(local)) expect((await request.get(h)).status(), h).toBe(200);
+      expect(hrefs.filter(h => /^[\w-]+\.html/.test(h)), "links should use clean addresses").toEqual([]);
     });
 
     test("screenshot", async ({ page }, info) => {
       await page.goto(p.path);
       await walk(page);
       await page.waitForTimeout(800);
-      await page.screenshot({ path: `test-results/shots/${info.project.name}${p.path === "/" ? "/home" : p.path.replace(".html", "")}.png`, fullPage: true });
+      await page.screenshot({ path: `test-results/shots/${info.project.name}${p.path === "/" ? "/home" : p.path}.png`, fullPage: true });
     });
   });
 }
 
 test("apply form builds the WhatsApp message", async ({ page }) => {
-  await page.goto("/apply.html");
+  await page.goto("/apply");
   await page.fill("#f-name", "Dave");
   await page.fill("#f-age", "42");
   await page.getByText("Lose fat", { exact: true }).click();
@@ -103,4 +106,29 @@ test("home: video feedback plays when in view", async ({ page, isMobile }) => {
   await page.waitForTimeout(2500);
   const playing = await page.locator(".vf video").evaluate(v => !v.paused && v.currentTime > 0);
   expect(playing).toBe(true);
+});
+
+test.describe("with Reduce Motion on", () => {
+  test.use({ contextOptions: { reducedMotion: "reduce" } });
+  test("sections still fade in and numbers still count", async ({ page }) => {
+    await page.goto("/");
+    const card = page.locator(".fails .panel").first();
+    await card.scrollIntoViewIfNeeded();
+    await expect(card).toHaveClass(/\bin\b/);
+    await page.waitForTimeout(1200);
+    expect(await card.evaluate(e => getComputedStyle(e).opacity)).toBe("1");
+    expect(await card.evaluate(e => getComputedStyle(e).transform)).toBe("none");
+    const n = page.locator(".sdr__n [data-count]");
+    await n.scrollIntoViewIfNeeded();
+    const early = await n.textContent(); await page.waitForTimeout(2200);
+    expect(await n.textContent()).toBe("89");
+    expect(early).not.toBe("89");
+  });
+  test("nothing slides: marquee and research row stay still", async ({ page }) => {
+    await page.goto("/");
+    const t = () => page.locator(".marquee__row").evaluate(e => getComputedStyle(e).transform);
+    const a = await t(); await page.waitForTimeout(800);
+    expect(await t()).toBe(a);
+    expect(await page.locator(".evtrack").evaluate(e => getComputedStyle(e).animationName)).toBe("none");
+  });
 });

@@ -4,7 +4,7 @@
   const vf = document.querySelector(".vf");
   if (vf) {
     const notesEl = [...vf.querySelectorAll(".vf__notes li")], clock = vf.querySelector(".vf__clock"), vid = vf.querySelector("video");
-    const D = 40, reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const D = 40, reduce = false; // the feedback clip is the content itself, so it plays with Reduce Motion on too
     let t0 = null, seen = false;
     new IntersectionObserver(es => {
       seen = es[0].isIntersecting;
@@ -49,7 +49,7 @@
     };
     tabs.forEach((t, k) => t.addEventListener("click", () => { auto = false; show(k); }));
     new IntersectionObserver(es => { seen = es[0].isIntersecting; }, { threshold: .4 }).observe(cli);
-    if (!matchMedia("(prefers-reduced-motion: reduce)").matches)
-      setInterval(() => { if (auto && seen) show((i + 1) % tabs.length); }, 4500);
+    // screens cross-fade (no slide with Reduce Motion), so auto-advance stays on for everyone
+    setInterval(() => { if (auto && seen) show((i + 1) % tabs.length); }, 4500);
   }
 })();
