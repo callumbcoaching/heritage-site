@@ -8,7 +8,14 @@
   <meta name="robots" content="index,follow" />
   <link rel="icon" type="image/png" href="assets/img/favicon-lion.png?v=1" />
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png?v=1" />
-  <link rel="stylesheet" href="assets/css/styles.css?v=6" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=GFS+Didot&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/heritage.css?v=e77540c5">
+<link rel="stylesheet" href="/components.css?v=a9aa471a">
+<meta name="theme-color" content="#09150F">
+<link rel="stylesheet" href="/assets/css/tools.css?v=1">
+
   <!-- ANALYTICS — paste your snippet here once you pick a tool.
        Cookieless (no cookie banner needed): Plausible / Fathom, e.g.
        <!-- Privacy-friendly analytics by Plausible -->
@@ -35,18 +42,24 @@
        To split them, create a 2nd Formspree form and change data-formspree.
        ============================================================ -->
 </head>
-<body>
+<body class="legacy">
+<div class="grain" aria-hidden="true"></div>
 
-  <header class="nav lp-nav">
-    <div class="wrap nav__inner">
-      <a class="brand" href="/" aria-label="CALLUM.B home">
-        <img class="brand-logo" src="assets/img/callum-logo.png" alt="CALLUM.B — Online Transformation Coach" />
-      </a>
-      <a class="lp-back" href="/">← Back to main site</a>
-    </div>
-  </header>
 
-  <main>
+  <header class="nav">
+  <div class="nav__bar">
+    <a class="mark" href="/" aria-label="CALLUM.B home"><img src="/brand_assets/lion-420.webp" alt="">CALLUM<i>.</i>B</a>
+    <nav class="nav__links" aria-label="Main"><a href="/#method">Method</a><a href="/results">Results</a><a href="/about">About</a><a href="/coaching">Coaching</a></nav>
+    <div class="nav__end"><a class="tlink" href="/">← Back to main site</a><button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mnav"><span></span><span></span><span></span></button></div>
+  </div>
+</header>
+<div class="mnav" id="mnav" hidden>
+  <div class="mnav__bg" aria-hidden="true"><img src="/brand_assets/lion-crest.png" alt=""></div>
+  <nav aria-label="Menu"><ol class="mnav__list"><li style="--d:0"><a href="/"><span class="mnav__n">01</span><span class="mnav__t">Home</span><span class="mnav__s">The promise</span></a></li><li style="--d:1"><a href="/coaching"><span class="mnav__n">02</span><span class="mnav__t">Coaching</span><span class="mnav__s">Plans and what's included</span></a></li><li style="--d:2"><a href="/results"><span class="mnav__n">03</span><span class="mnav__t">Results</span><span class="mnav__s">Client transformations</span></a></li><li style="--d:3"><a href="/about"><span class="mnav__n">04</span><span class="mnav__t">About</span><span class="mnav__s">My story</span></a></li><li style="--d:4"><a href="/terms-coaching"><span class="mnav__n">05</span><span class="mnav__t">Terms</span><span class="mnav__s">In plain English</span></a></li></ol></nav>
+  <div class="mnav__foot"><a class="btn" href="/apply">Apply for 1:1 coaching <span class="arr">→</span></a><p class="label">Structure over motivation</p></div>
+</div>
+
+<main>
     <section class="hero">
       <div class="wrap">
         <div class="hero__grid">
@@ -118,15 +131,22 @@
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="wrap">
-      <div class="footer__bottom" style="border:0;padding-top:0;">
-        <span>© <span id="year">2026</span> CALLUM.B · Online Transformation Coach</span>
-        <a href="https://instagram.com/callum.transformation.coach" target="_blank" rel="noopener" style="color:var(--body);text-decoration:none;">Instagram</a>
+  <footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div class="stack">
+        <a class="mark" href="/"><img src="/brand_assets/lion-420.webp" alt="">CALLUM<i>.</i>B</a>
+        <p class="body" style="max-width:34ch">Structured physique development for men who are done guessing.</p>
+        <p class="label">J3 University Level 1 Certified Coach</p>
       </div>
+      <div><h4>Coaching</h4><ul><li><a href="/coaching">Premium 1:1</a></li><li><a href="/apply">Apply</a></li><li><a href="/the-ninety/">The Ninety</a></li><li><a href="/start/">Physique OS</a></li></ul></div>
+      <div><h4>Explore</h4><ul><li><a href="/results">Results</a></li><li><a href="/about">About</a></li><li><a href="/tdee-calculator">TDEE calculator</a></li><li><a href="/trt-starter/">TRT framework</a></li></ul></div>
+      <div><h4>Connect</h4><ul><li><a href="https://instagram.com/callum.transformation.coach" target="_blank" rel="noopener">Instagram</a></li><li><a href="/links/">All links</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/terms-coaching">Coaching terms</a></li><li><a href="/terms">Site terms</a></li></ul></div>
     </div>
-  </footer>
-
-  <script src="assets/js/main.js?v=3"></script>
+    <div class="foot__base"><span class="label">© <span id="year">2026</span> CALLUM.B · Online Transformation Coach · United Kingdom</span><span class="label it" style="font-family:var(--didot);text-transform:none;letter-spacing:0;font-size:15px;color:var(--gold)">Structure over motivation.</span></div>
+  </div>
+</footer>
+<script src="assets/js/main.js?v=3"></script>
+<script src="/heritage.js?v=cf7edf40"></script>
 </body>
 </html>

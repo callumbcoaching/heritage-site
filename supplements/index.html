@@ -5,38 +5,43 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Supplement List · CALLUM.B</title>
 <meta name="description" content="What's actually worth your money, what isn't, and the order to buy it in.">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=GFS+Didot&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/heritage.css?v=e77540c5">
+<link rel="stylesheet" href="/components.css?v=a9aa471a">
+<meta name="theme-color" content="#09150F">
 <style>
-  :root{--bg:#0A0B0A;--panel:#141614;--panel2:#1B1F1B;--line:#2A2F2A;--line2:#363D36;
-        --ink:#FFFFFF;--body:#C2C8C2;--muted:#7A827A;--green:#A4E84B;--amber:#E8A53D;--red:#F0613C;
+  :root{--bg:#09150F;--panel:#0C1C14;--panel2:#112418;--line:rgba(201,169,110,.22);--line2:rgba(201,169,110,.42);
+        --ink:#F3EAD6;--body:#CFC8B6;--muted:#7E9184;--green:#C9A96E;--amber:#E8A53D;--red:#F0613C;
         --radius:16px;--radius-sm:11px;}
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--body);font-family:'Inter',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
   .wrap{max-width:820px;margin:0 auto;padding:0 20px}
-  h1,h2,h3{font-family:'Sora',sans-serif;font-weight:800;color:var(--ink);letter-spacing:-.02em}
+  h1,h2,h3{font-family:"Cinzel",Georgia,serif;font-weight:800;color:var(--ink);letter-spacing:-.02em}
   a{color:var(--green)}
-  .eyebrow{font-family:'Sora';font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:12px}
+  .eyebrow{font-family:"Cinzel";font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:12px}
   .eyebrow::before{content:"";width:26px;height:3px;background:var(--green);border-radius:2px}
 
   header{padding:26px 0;border-bottom:1px solid var(--line)}
   header .wrap{display:flex;justify-content:space-between;align-items:center}
-  .wordmark{font-family:'Sora';font-weight:800;color:#fff;font-size:18px;text-decoration:none}
+  .wordmark{font-family:"Cinzel";font-weight:800;color:#F3EAD6;font-size:18px;text-decoration:none}
   .wordmark .dot{color:var(--green)}
-  header .tag{font-size:12px;color:var(--muted);font-family:'Sora';letter-spacing:.14em;text-transform:uppercase}
+  header .tag{font-size:12px;color:var(--muted);font-family:"Cinzel";letter-spacing:.14em;text-transform:uppercase}
 
   .hero{padding:54px 0 34px}
   .hero h1{font-size:clamp(32px,5.5vw,50px);line-height:1.05;margin:16px 0 0}
   .hero .sub{font-size:clamp(16px,2.2vw,19px);margin-top:16px;max-width:660px}
   .hero .sub b{color:var(--ink)}
 
-  .code-card{background:linear-gradient(180deg,rgba(164,232,75,.08),var(--panel));border:1px solid rgba(164,232,75,.4);
+  .code-card{background:linear-gradient(180deg,rgba(201,169,110,.08),var(--panel));border:1px solid rgba(201,169,110,.4);
     border-radius:var(--radius);padding:24px 26px;margin:30px 0 10px;display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
-  .code-card .l .k{font-family:'Sora';font-weight:800;font-size:30px;color:var(--green);letter-spacing:.06em}
+  .code-card .l .k{font-family:"Cinzel";font-weight:800;font-size:30px;color:var(--green);letter-spacing:.06em}
   .code-card .l .w{font-size:13.5px;color:var(--muted);margin-top:2px}
-  .btn{font-family:'Sora';font-weight:700;font-size:15px;border:0;border-radius:var(--radius-sm);padding:14px 26px;
-    display:inline-flex;align-items:center;gap:9px;text-decoration:none;background:var(--green);color:#0A0B0A}
+  .btn{font-family:"Cinzel";font-weight:700;font-size:15px;border:0;border-radius:var(--radius-sm);padding:14px 26px;
+    display:inline-flex;align-items:center;gap:9px;text-decoration:none;background:var(--green);color:#09150F}
 
-  .callout{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--green);border-radius:14px;padding:16px 20px;color:#fff;margin:22px 0;font-size:14.5px}
+  .callout{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--green);border-radius:14px;padding:16px 20px;color:#F3EAD6;margin:22px 0;font-size:14.5px}
   .callout.amber{border-left-color:var(--amber)}
   .callout b{color:var(--green)}
   .callout.amber b{color:var(--amber)}
@@ -49,15 +54,15 @@
   .item{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin-top:14px}
   .item .top{display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap}
   .item h3{font-size:18px}
-  .item .dose{font-family:'Sora';font-weight:700;font-size:13.5px;color:var(--green);white-space:nowrap}
+  .item .dose{font-family:"Cinzel";font-weight:700;font-size:13.5px;color:var(--green);white-space:nowrap}
   .item p{margin-top:8px;font-size:14.5px}
   .item .when{margin-top:10px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
   .item .when b{color:var(--body)}
   .item .stock{margin-top:9px;font-size:12.5px;color:var(--green);font-weight:600}
   .item .stock.off{color:var(--muted);font-weight:500}
 
-  .rank{display:inline-block;font-family:'Sora';font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
-    padding:4px 10px;border-radius:100px;background:rgba(164,232,75,.14);color:var(--green);border:1px solid rgba(164,232,75,.35)}
+  .rank{display:inline-block;font-family:"Cinzel";font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+    padding:4px 10px;border-radius:100px;background:rgba(201,169,110,.14);color:var(--green);border:1px solid rgba(201,169,110,.35)}
   .rank.two{background:rgba(232,165,61,.12);color:var(--amber);border-color:rgba(232,165,61,.35)}
   .rank.three{background:rgba(255,255,255,.06);color:var(--muted);border-color:var(--line2)}
 
@@ -67,14 +72,25 @@
 
   .order{counter-reset:step;margin-top:14px}
   .order .step{display:flex;gap:16px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin-bottom:10px}
-  .order .n{flex:0 0 auto;width:32px;height:32px;border-radius:50%;background:rgba(164,232,75,.14);border:1px solid rgba(164,232,75,.35);
-    color:var(--green);font-family:'Sora';font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px}
-  .order .step b{color:var(--ink);font-family:'Sora'}
+  .order .n{flex:0 0 auto;width:32px;height:32px;border-radius:50%;background:rgba(201,169,110,.14);border:1px solid rgba(201,169,110,.35);
+    color:var(--green);font-family:"Cinzel";font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px}
+  .order .step b{color:var(--ink);font-family:"Cinzel"}
   .order .step p{font-size:14px;margin-top:3px}
 
   footer{border-top:1px solid var(--line);margin-top:30px;padding:30px 0 46px;font-size:12.5px;color:var(--muted)}
   footer .wordmark{font-size:15px}
   footer p{margin-top:10px;max-width:640px}
+
+/* Heritage stylesheets load above. Keep this page's layout and section order. */
+.hero{min-height:0;display:block;}
+.hero .eyebrow,.hero .lede,.hero .lead,.hero .actions,.hero .meta{opacity:1;transform:none;}
+.btn,.btn-solid,.btn-line,.btn-pri{position:static;overflow:visible;isolation:auto;letter-spacing:normal;text-transform:none;box-shadow:none;border-radius:0;}
+.btn::before,.btn::after{content:none !important;display:none !important;animation:none !important;}
+.nav__links a.btn,.nav__links a.btn-solid,.nav__links a.btn-pri{color:#09150F;letter-spacing:normal;text-transform:none;}
+.nav__links a.btn:hover,.nav__links a.btn-solid:hover,.nav__links a.btn-pri:hover{color:#09150F;}
+.nav__links a.btn::after,.nav__links a.btn-solid::after{display:none;}
+.cta,.dl,button.go,.pflag{border-radius:0;}
+.nav{padding-top:0;pointer-events:auto;}
 </style>
 </head>
 <body>

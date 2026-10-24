@@ -8,7 +8,14 @@
   <meta name="robots" content="index,follow" />
   <link rel="icon" type="image/png" href="assets/img/favicon-lion.png?v=1" />
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png?v=1" />
-  <link rel="stylesheet" href="assets/css/styles.css?v=6" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=GFS+Didot&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/heritage.css?v=e77540c5">
+<link rel="stylesheet" href="/components.css?v=a9aa471a">
+<meta name="theme-color" content="#09150F">
+<link rel="stylesheet" href="/assets/css/tools.css?v=1">
+
   <link rel="canonical" href="https://callumbcoaching.co.uk/offset-calculator" />
   <meta property="og:title" content="The Transformation Offset Tool — CALLUM.B" />
   <meta property="og:description" content="Your habits have a price tag. See what they cost per year — and what coaching costs after the offset." />
@@ -21,23 +28,23 @@
     .os-group{ background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; margin-bottom:22px; }
     .os-row{ display:flex; align-items:center; gap:12px; padding:14px 18px; border-bottom:1px solid var(--line); transition:background .15s; }
     .os-row:last-child{ border-bottom:none; }
-    .os-row:focus-within{ background:rgba(164,232,75,.05); }
+    .os-row:focus-within{ background:rgba(201,169,110,.05); }
     .os-ic{ font-size:18px; width:28px; text-align:center; flex:none; }
-    .os-lb{ flex:1; font-family:'Sora'; font-weight:600; font-size:14px; color:var(--ink); min-width:0; }
+    .os-lb{ flex:1; font-family:"Cinzel"; font-weight:600; font-size:14px; color:var(--ink); min-width:0; }
     .os-lb small{ display:block; font-family:'Inter'; font-weight:400; font-size:11.5px; color:var(--muted); margin-top:2px; }
     .os-in{ display:flex; align-items:center; gap:4px; background:var(--bg); border:1px solid var(--line2); border-radius:9px; padding:0 10px; flex:none; }
     .os-in:focus-within{ border-color:var(--green); }
     .os-in b{ font-size:13px; color:var(--muted); }
-    .os-in input{ background:transparent; border:0; outline:0; color:var(--ink); font-family:'Sora'; font-weight:700; font-size:15px; width:62px; text-align:right; padding:9px 0; }
-    .os-chip{ font-family:'Sora'; font-weight:700; font-size:12.5px; color:var(--body); background:var(--bg); border:1px solid var(--line2); border-radius:999px; padding:8px 14px; cursor:pointer; transition:.15s; }
-    .os-chip.on{ background:var(--green); color:#0A0B0A; border-color:var(--green); }
-    .os-big{ font-family:'Sora'; font-weight:800; font-size:clamp(40px,7vw,54px); line-height:1; color:var(--red); }
+    .os-in input{ background:transparent; border:0; outline:0; color:var(--ink); font-family:"Cinzel"; font-weight:700; font-size:15px; width:62px; text-align:right; padding:9px 0; }
+    .os-chip{ font-family:"Cinzel"; font-weight:700; font-size:12.5px; color:var(--body); background:var(--bg); border:1px solid var(--line2); border-radius:999px; padding:8px 14px; cursor:pointer; transition:.15s; }
+    .os-chip.on{ background:var(--green); color:#09150F; border-color:var(--green); }
+    .os-big{ font-family:"Cinzel"; font-weight:800; font-size:clamp(40px,7vw,54px); line-height:1; color:var(--red); }
     .os-big.pos{ color:var(--green); }
     .os-cells{ display:grid; grid-template-columns:1fr 1fr; }
     .os-cell{ padding:15px 20px; border-top:1px solid var(--line); }
     .os-cell:nth-child(odd){ border-right:1px solid var(--line); }
-    .os-cell .l{ font-family:'Sora'; font-weight:700; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:5px; }
-    .os-cell .v{ font-family:'Sora'; font-weight:800; font-size:24px; color:var(--ink); }
+    .os-cell .l{ font-family:"Cinzel"; font-weight:700; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:5px; }
+    .os-cell .v{ font-family:"Cinzel"; font-weight:800; font-size:24px; color:var(--ink); }
     .os-cell.warn .v{ color:var(--amber); }
     .os-cell.good .v{ color:var(--green); }
     @media (max-width:480px){ .os-cells{ grid-template-columns:1fr; } .os-cell:nth-child(odd){ border-right:none; } }
@@ -49,18 +56,24 @@
     plausible.init()
   </script>
 </head>
-<body>
+<body class="legacy">
+<div class="grain" aria-hidden="true"></div>
 
-  <header class="nav lp-nav">
-    <div class="wrap nav__inner">
-      <a class="brand" href="/" aria-label="CALLUM.B home">
-        <img class="brand-logo" src="assets/img/callum-logo.png" alt="CALLUM.B — Online Transformation Coach" />
-      </a>
-      <a class="btn btn-pri" href="/coaching#apply">Apply Now</a>
-    </div>
-  </header>
 
-  <main>
+  <header class="nav">
+  <div class="nav__bar">
+    <a class="mark" href="/" aria-label="CALLUM.B home"><img src="/brand_assets/lion-420.webp" alt="">CALLUM<i>.</i>B</a>
+    <nav class="nav__links" aria-label="Main"><a href="/#method">Method</a><a href="/results">Results</a><a href="/about">About</a><a href="/coaching">Coaching</a></nav>
+    <div class="nav__end"><a class="btn" href="/coaching#apply">Apply Now</a><button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mnav"><span></span><span></span><span></span></button></div>
+  </div>
+</header>
+<div class="mnav" id="mnav" hidden>
+  <div class="mnav__bg" aria-hidden="true"><img src="/brand_assets/lion-crest.png" alt=""></div>
+  <nav aria-label="Menu"><ol class="mnav__list"><li style="--d:0"><a href="/"><span class="mnav__n">01</span><span class="mnav__t">Home</span><span class="mnav__s">The promise</span></a></li><li style="--d:1"><a href="/coaching"><span class="mnav__n">02</span><span class="mnav__t">Coaching</span><span class="mnav__s">Plans and what's included</span></a></li><li style="--d:2"><a href="/results"><span class="mnav__n">03</span><span class="mnav__t">Results</span><span class="mnav__s">Client transformations</span></a></li><li style="--d:3"><a href="/about"><span class="mnav__n">04</span><span class="mnav__t">About</span><span class="mnav__s">My story</span></a></li><li style="--d:4"><a href="/terms-coaching"><span class="mnav__n">05</span><span class="mnav__t">Terms</span><span class="mnav__s">In plain English</span></a></li></ol></nav>
+  <div class="mnav__foot"><a class="btn" href="/apply">Apply for 1:1 coaching <span class="arr">→</span></a><p class="label">Structure over motivation</p></div>
+</div>
+
+<main>
     <section class="hero" style="padding-bottom:36px;">
       <div class="wrap center">
         <p class="eyebrow" style="justify-content:center;">Free tool · The Transformation Offset Tool</p>
@@ -93,7 +106,7 @@
             <span class="os-ic">🦁</span>
             <div class="os-lb">12-Month Structured Development<small>The full year — maximum oversight, matched to a year of your spending</small></div>
             <div style="text-align:right;flex:none;">
-              <div style="font-family:'Sora';font-weight:800;font-size:20px;color:var(--amber);">£3,744<span style="font-size:12px;color:var(--muted);"> / year</span></div>
+              <div style="font-family:'Cinzel',Georgia,serif;font-weight:800;font-size:20px;color:var(--amber);">£3,744<span style="font-size:12px;color:var(--muted);"> / year</span></div>
               <div class="note" style="font-size:11px;">≈ £69 a week</div>
             </div>
           </div>
@@ -101,7 +114,7 @@
 
         <!-- RESULTS -->
         <div class="calc-result" style="position:static;padding:0;overflow:hidden;">
-          <div style="padding:24px 24px 20px;background:linear-gradient(135deg,rgba(164,232,75,.10),transparent);">
+          <div style="padding:24px 24px 20px;background:linear-gradient(135deg,rgba(201,169,110,.10),transparent);">
             <p class="tagline" style="color:var(--green);margin-bottom:8px;">What your current lifestyle costs</p>
             <div class="os-big" id="annualCost">£0</div>
             <p class="calc-sub" style="margin-top:6px;">per year — before you change a single thing</p>
@@ -158,17 +171,24 @@
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="wrap">
-      <div class="footer__bottom" style="border:0;padding-top:0;">
-        <span>© <span id="year">2026</span> CALLUM.B · Online Transformation Coach</span>
-        <a href="https://instagram.com/callum.transformation.coach" target="_blank" rel="noopener" style="color:var(--body);text-decoration:none;">Instagram</a>
+  <footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div class="stack">
+        <a class="mark" href="/"><img src="/brand_assets/lion-420.webp" alt="">CALLUM<i>.</i>B</a>
+        <p class="body" style="max-width:34ch">Structured physique development for men who are done guessing.</p>
+        <p class="label">J3 University Level 1 Certified Coach</p>
       </div>
+      <div><h4>Coaching</h4><ul><li><a href="/coaching">Premium 1:1</a></li><li><a href="/apply">Apply</a></li><li><a href="/the-ninety/">The Ninety</a></li><li><a href="/start/">Physique OS</a></li></ul></div>
+      <div><h4>Explore</h4><ul><li><a href="/results">Results</a></li><li><a href="/about">About</a></li><li><a href="/tdee-calculator">TDEE calculator</a></li><li><a href="/trt-starter/">TRT framework</a></li></ul></div>
+      <div><h4>Connect</h4><ul><li><a href="https://instagram.com/callum.transformation.coach" target="_blank" rel="noopener">Instagram</a></li><li><a href="/links/">All links</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/terms-coaching">Coaching terms</a></li><li><a href="/terms">Site terms</a></li></ul></div>
     </div>
-  <div class="wrap center" style="padding:0 0 20px;"><a class="green" href="/protein-calculator" style="font-size:13px;text-decoration:underline;">New: Protein &amp; Muscle Calculator →</a></div>
-  </footer>
+    <div class="foot__base"><span class="label">© <span id="year">2026</span> CALLUM.B · Online Transformation Coach · United Kingdom</span><span class="label it" style="font-family:var(--didot);text-transform:none;letter-spacing:0;font-size:15px;color:var(--gold)">Structure over motivation.</span></div>
+  </div>
+</footer>
 
-  <script src="assets/js/main.js?v=4"></script>
+<div class="wrap extra-link" style="padding:0 0 20px;"><a class="green" href="/protein-calculator" style="font-size:13px;text-decoration:underline;">New: Protein &amp; Muscle Calculator →</a></div>
+<script src="assets/js/main.js?v=4"></script>
   <script>
     (function(){
       var $=function(id){return document.getElementById(id);};
@@ -226,5 +246,6 @@
       });
     })();
   </script>
+<script src="/heritage.js?v=cf7edf40"></script>
 </body>
 </html>
