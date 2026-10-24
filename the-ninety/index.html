@@ -254,5 +254,8 @@
     var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
     document.querySelectorAll('.rv:not(.in)').forEach(function(el){io.observe(el);});
   </script>
+<script>
+addEventListener("load",function(){var n=0;function l(){if(n)return;n=1;var c=document.createElement("link");c.rel="stylesheet";c.href="/chat/widget.css";document.head.appendChild(c);var s=document.createElement("script");s.src="/chat/widget.js";document.body.appendChild(s);}(window.requestIdleCallback?requestIdleCallback(l,{timeout:2200}):setTimeout(l,1400));});
+</script>
 </body>
 </html>
