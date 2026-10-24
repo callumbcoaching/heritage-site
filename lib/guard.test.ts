@@ -2,11 +2,14 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
   createDashStream,
+  createLinkStream,
   createPriceStream,
+  formatReply,
   isValidEmail,
   normaliseMessages,
   resetRateLimits,
   scrubDashes,
+  scrubOwnUse,
   scrubPrices,
   takeRateLimit,
 } from "./guard.ts";
@@ -109,6 +112,53 @@ test("rate limit is per key", () => {
   const blocked = takeRateLimit("1.2.3.4", 20, 1000, 2);
   assert.equal(blocked.ok, false);
   assert.equal(takeRateLimit("5.6.7.8", 20, 1000, 2).ok, true);
+});
+
+test("turns a raw apply path into a button and leaves the sentence readable", () => {
+  const out = formatReply("You can start at /apply.");
+  assert.equal(out.includes("/apply"), false);
+  assert.equal(out.includes("http"), false);
+  assert.match(out, /You can start\./);
+  assert.match(out, /\[\[cta:apply\]\]/);
+});
+
+test("strips other urls and keeps an email address", () => {
+  const out = formatReply(
+    "The calculator is at https://callumbcoaching.co.uk/tdee-calculator. Email callum@callumbcoaching.co.uk. See /the-ninety and instagram.com/callum.transformation.coach.",
+  );
+  assert.equal(out.includes("http"), false);
+  assert.equal(out.includes("/the-ninety"), false);
+  assert.equal(out.includes("instagram.com"), false);
+  assert.match(out, /callum@callumbcoaching\.co\.uk/);
+  assert.match(out, /\[\[cta:calculator\]\]/);
+});
+
+test("a marker and the word apply do not leave a path", () => {
+  const out = formatReply("If you want coaching, apply.\n[[apply]]");
+  assert.equal(out.includes("/"), false);
+  assert.match(out, /\[\[cta:apply\]\]/);
+  assert.equal(out.split("[[cta:").length, 2);
+});
+
+test("does not claim what Callum himself uses", () => {
+  const denied = scrubOwnUse("Callum does not use steroids himself. He coaches the week around training and food.");
+  assert.equal(/does not use/i.test(denied), false);
+  assert.match(denied, /coaches the week/);
+  const only = scrubOwnUse("He doesn't use steroids.");
+  assert.match(only, /doesn't give doses/);
+  assert.match(only, /apply/);
+  const coaching = scrubOwnUse("He coaches men who use anabolics, around training and food.");
+  assert.match(coaching, /who use anabolics/);
+  const onIt = scrubOwnUse("Callum isn't on steroids. He coaches the training and the food instead.");
+  assert.equal(/isn't on/i.test(onIt), false);
+  assert.match(onIt, /coaches the training/);
+});
+
+test("streams a path that arrives in pieces", () => {
+  const stream = createLinkStream();
+  const all = stream.push("Start at /app") + stream.push("ly today.") + stream.flush();
+  assert.equal(all.includes("/app"), false);
+  assert.match(all, /Start/);
 });
 
 test("email must be an email", () => {

@@ -114,13 +114,129 @@
     return fallback;
   }
 
+  function actionFor(value) {
+    const lower = String(value || "").toLowerCase();
+    if (lower.includes("#guide") || /(^|\/)guide$/.test(lower.split("?")[0])) return "guide";
+    if (lower.includes("tdee") || lower === "calculator") return "calculator";
+    if (/(^|\/)apply$/.test(lower.split(/[?#]/)[0]) || lower === "apply") return "apply";
+    return "";
+  }
+
+  function tidy(text) {
+    return text
+      .replace(/\s+\b(?:at|via|on)\b(?=\s*(?:[.,;:!?]|is\b|$))/gi, "")
+      .replace(/\(\s*\)/g, "")
+      .replace(/[ \t]{2,}/g, " ")
+      .replace(/[ \t]+([.,;:!?])/g, "$1")
+      .replace(/\n{3,}/g, "\n\n")
+      .trim();
+  }
+
+  function present(raw) {
+    const actions = [];
+    const addAction = (id) => {
+      if (id && actions.indexOf(id) === -1) actions.push(id);
+    };
+    let text = String(raw || "");
+    text = text.replace(/\[\[cta:([a-z,]*)\]\]/gi, (_match, list) => {
+      list.split(",").forEach((part) => addAction(actionFor(part.trim())));
+      return " ";
+    });
+    text = text.replace(/\[\[(apply|guide|tdee|calculator)\]\]/gi, (_match, name) => {
+      addAction(actionFor(name));
+      return " ";
+    });
+    const cutTrail = (match) => {
+      const trail = /[.,;:!?]+$/.exec(match);
+      const core = trail ? match.slice(0, -trail[0].length) : match;
+      addAction(actionFor(core));
+      return " " + (trail ? trail[0] : "");
+    };
+    text = text.replace(/\b(?:https?:\/\/|www\.)[^\s<>"')\]]+/gi, cutTrail);
+    text = text.replace(/(?<!@)\b(?:[a-z0-9-]+\.)*(?:callumbcoaching\.co\.uk|wa\.me|instagram\.com)(?:\/[^\s<>"')\]]*)?/gi, cutTrail);
+    text = text.replace(/(^|[\s(])(\/(?:#[A-Za-z][\w-]*|[A-Za-z][\w/#-]*)+)/g, (_match, lead, path) => {
+      addAction(actionFor(path));
+      return lead;
+    });
+    text = tidy(text);
+    if (/\bappl(?:y|ying|ication)\b/i.test(text)) addAction("apply");
+    if (/\bfree guide\b/i.test(text)) addAction("guide");
+    if (/\btdee\b/i.test(text)) addAction("calculator");
+    return { text, actions };
+  }
+
+  function actionLink(id) {
+    const hrefs = {
+      apply: [config && config.applyHref, "/apply", config && config.applyLabel, "Apply"],
+      guide: [config && config.guideHref, "/#guide", config && config.guideLabel, "Free guide"],
+      calculator: [config && config.calculatorHref, "/tdee-calculator", config && config.calculatorLabel, "TDEE calculator"],
+    };
+    const spec = hrefs[id] || hrefs.apply;
+    const link = document.createElement("a");
+    link.className = "cw-action" + (id === "apply" ? " cw-action--apply" : "");
+    link.href = safeHref(spec[0] || spec[1], spec[1]);
+    link.textContent = spec[2] || spec[3];
+    return link;
+  }
+
+  function showActions(bubble, actions) {
+    const next = bubble.nextElementSibling;
+    if (next && next.classList.contains("cw-actions")) next.remove();
+    if (!actions.length) return;
+    const row = document.createElement("div");
+    row.className = "cw-actions";
+    actions.forEach((id) => row.appendChild(actionLink(id)));
+    bubble.after(row);
+  }
+
+  function paint(bubble, raw) {
+    const shown = present(raw);
+    bubble.textContent = shown.text || "Sorry, I missed that.";
+    showActions(bubble, shown.actions);
+    log.scrollTop = log.scrollHeight;
+    return shown.text;
+  }
+
   function add(role, text) {
     const p = document.createElement("p");
     p.className = role === "user" ? "cw-msg cw-msg--user" : role === "note" ? "cw-msg cw-msg--note" : "cw-msg cw-msg--bot";
-    p.textContent = text;
     log.appendChild(p);
+    if (role === "assistant") paint(p, text);
+    else p.textContent = text;
     log.scrollTop = log.scrollHeight;
     return p;
+  }
+
+  function fitPanel() {
+    const narrow = window.matchMedia("(max-width: 860px)").matches;
+    if (!narrow || !root.classList.contains("is-open")) {
+      panel.style.top = "";
+      panel.style.left = "";
+      panel.style.right = "";
+      panel.style.bottom = "";
+      panel.style.width = "";
+      panel.style.height = "";
+      return;
+    }
+    const vv = window.visualViewport;
+    const frame = root._frame
+      ? root._frame()
+      : {
+          top: vv ? vv.offsetTop : 0,
+          left: vv ? vv.offsetLeft : 0,
+          width: vv ? vv.width : window.innerWidth,
+          height: vv ? vv.height : window.innerHeight,
+        };
+    const margin = 8;
+    const keyboard = window.innerHeight - frame.height > 120;
+    const dock = !keyboard && document.querySelector(".sticky") && window.matchMedia("(max-width: 760px)").matches ? 88 : 0;
+    panel.style.top = Math.round(frame.top + margin) + "px";
+    panel.style.left = Math.round(frame.left + margin) + "px";
+    panel.style.right = "auto";
+    panel.style.bottom = "auto";
+    panel.style.width = Math.round(Math.max(240, frame.width - margin * 2)) + "px";
+    panel.style.height = Math.round(Math.max(220, frame.height - margin * 2 - dock)) + "px";
+    log.scrollTop = log.scrollHeight;
   }
 
   function pagePath() {
@@ -259,6 +375,7 @@
     root.classList.toggle("is-open", open);
     panel.hidden = !open;
     launch.setAttribute("aria-expanded", open ? "true" : "false");
+    fitPanel();
     if (open) input.focus();
     else launch.focus();
   }
@@ -308,16 +425,17 @@
           const step = await reader.read();
           if (step.done) break;
           acc += decoder.decode(step.value, { stream: true });
-          bubble.textContent = acc;
-          log.scrollTop = log.scrollHeight;
+          const partial = acc.replace(/\[\[[a-z:,]*$/i, "");
+          paint(bubble, partial);
         }
         acc += decoder.decode();
       } else {
         acc = await response.text();
       }
-      bubble.textContent = acc || "Sorry, I missed that.";
-      messages.push({ role: "assistant", content: bubble.textContent });
-      if (wantsDetails(bubble.textContent)) showDetailsLink();
+      const visible = paint(bubble, acc);
+      messages.push({ role: "assistant", content: visible });
+      if (wantsDetails(visible)) showDetailsLink();
+      fitPanel();
     } catch {
       bubble.className = "cw-msg cw-msg--note";
       bubble.textContent = "Sorry, the chat didn't connect. You can still apply below.";
@@ -374,7 +492,8 @@
         body: JSON.stringify({ lead: data, page: pagePath() }),
       });
       const payload = await response.json().catch(() => ({}));
-      add(response.ok ? "assistant" : "note", payload.message || payload.error || "Sorry, that didn't send.");
+      const line = payload.message || payload.error || "Sorry, that didn't send.";
+      add(response.ok ? "assistant" : "note", response.ok ? line : line);
       if (response.ok) {
         form.reset();
         form.hidden = true;
@@ -385,6 +504,17 @@
     } finally {
       button.disabled = false;
     }
+  });
+
+  if (window.visualViewport) {
+    visualViewport.addEventListener("resize", fitPanel);
+    visualViewport.addEventListener("scroll", fitPanel);
+  }
+  addEventListener("resize", fitPanel);
+  input.addEventListener("focus", () => {
+    setTimeout(fitPanel, 50);
+    setTimeout(fitPanel, 350);
+    setTimeout(fitPanel, 700);
   });
 
   const ready = loadConfig();

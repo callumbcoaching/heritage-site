@@ -17,7 +17,8 @@
   color: var(--cw-ink);
   letter-spacing: 0;
 }
-.cw-launch, .cw-panel, .cw-form, .cw-send, .cw-chip, .cw-close, .cw-form-toggle, .cw-input, .cw-field, .cw-foot a {
+.cw-chat, .cw-chat * { box-sizing: border-box; }
+.cw-launch, .cw-panel, .cw-form, .cw-send, .cw-chip, .cw-close, .cw-form-toggle, .cw-input, .cw-field, .cw-foot a, .cw-action {
   font-family: inherit;
 }
 .cw-launch {
@@ -94,15 +95,21 @@
   cursor: pointer;
 }
 .cw-head {
+  position: relative;
   flex: 0 0 auto;
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 10px 10px 14px;
+  min-height: 48px;
+  padding: 10px 48px 10px 14px;
   border-bottom: 1px solid var(--cw-line);
 }
 .cw-head h2 {
   margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-family: var(--cw-display);
   font-weight: 500;
   font-size: 1.05rem;
@@ -110,7 +117,9 @@
   line-height: 1;
 }
 .cw-close {
-  margin-left: auto;
+  position: absolute;
+  top: 6px;
+  right: 6px;
   width: 36px;
   height: 36px;
   border: 0;
@@ -145,6 +154,30 @@
   color: var(--cw-accent-ink);
 }
 .cw-msg--note { color: var(--cw-soft); font-size: 0.84rem; background: transparent; padding: 0; }
+.cw-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-width: 92%;
+}
+.cw-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--cw-accent);
+  background: transparent;
+  color: var(--cw-accent);
+  text-decoration: none;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.cw-action--apply {
+  background: var(--cw-accent);
+  color: var(--cw-accent-ink);
+}
 .cw-chips {
   flex: 0 0 auto;
   display: flex;
@@ -240,12 +273,15 @@
   .cw-chat { right: 12px; bottom: calc(var(--dock-h, 0px) + 12px); }
   .cw-panel {
     position: fixed;
+    top: 8px;
     left: 8px;
     right: 8px;
-    bottom: calc(var(--dock-h, 0px) + 8px);
+    bottom: 8px;
     width: auto;
-    height: min(78dvh, calc(100dvh - var(--dock-h, 0px) - 16px));
+    height: auto;
+    max-height: none;
   }
+  .cw-input, .cw-field { font-size: 16px; }
 }
 @media (max-width: 760px) {
   body:has(.sticky) .cw-chat { --dock-h: 88px; }

@@ -5,6 +5,7 @@ import {
   clientKey,
   createDashStream,
   createPriceStream,
+  formatReply,
   knownPage,
   normaliseMessages,
   sameOrigin,
@@ -39,7 +40,7 @@ function limited(retryAfter: number): Response {
 }
 
 function cleanReply(text: string): string {
-  return scrubDashes(scrubPrices(text, business.allowedPrices, business.priceStandIn));
+  return formatReply(scrubDashes(scrubPrices(text, business.allowedPrices, business.priceStandIn)));
 }
 
 export function GET(): Response {
@@ -84,7 +85,7 @@ export async function POST(request: Request): Promise<Response> {
     if (!saved.ok) {
       return json(
         {
-          error: "I couldn't save that just now. Apply at /apply and it comes straight to Callum.",
+          error: "I couldn't save that just now. Apply and it comes straight to Callum.",
         },
         503,
       );
@@ -92,7 +93,8 @@ export async function POST(request: Request): Promise<Response> {
     return json({
       ok: true,
       notified: saved.notified,
-      message: `${parsed.lead.name}, that's with Callum. The application is still the way to go ahead: /apply. He reads it himself.`,
+      actions: ["apply"],
+      message: `${parsed.lead.name}, that's with Callum. The next step is still to apply. He reads it himself.`,
     });
   }
 
@@ -105,7 +107,7 @@ export async function POST(request: Request): Promise<Response> {
     model,
     instructions: buildInstructions(business, page),
     messages: messages.messages,
-    maxOutputTokens: 320,
+    maxOutputTokens: 120,
     temperature: 0.2,
     reasoning: "none",
     stopWhen: isStepCount(4),
@@ -122,13 +124,13 @@ export async function POST(request: Request): Promise<Response> {
           if (!saved.ok) {
             return {
               ok: false,
-              error: "The details could not be stored. Ask them to use the application at /apply.",
+              error: "The details could not be stored. Ask them to apply.",
             };
           }
           return {
             ok: true,
             notified: saved.notified,
-            note: "Stored for Callum. Do not say it was emailed. The next step is still /apply.",
+            note: "Stored for Callum. Do not say it was emailed. The next step is still to apply. End with [[apply]].",
           };
         },
       }),
@@ -143,35 +145,21 @@ export async function POST(request: Request): Promise<Response> {
   const encoder = new TextEncoder();
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
-      let wrote = false;
-      const write = (chunk: string) => {
-        const next = dashes.push(prices.push(chunk));
-        if (!next) return;
-        wrote = true;
-        controller.enqueue(encoder.encode(next));
-      };
+      let raw = "";
       try {
-        for await (const delta of result.textStream) write(delta);
-        const tail = dashes.push(prices.flush()) + dashes.flush();
-        if (tail) {
-          wrote = true;
-          controller.enqueue(encoder.encode(tail));
-        }
-        if (!wrote) {
-          const fallback = savedLead
-            ? "Thanks. That's with Callum. The application is still here when you want it: /apply."
-            : "Sorry, I missed that. Ask me about the coaching, or apply and Callum will read it himself.";
-          controller.enqueue(encoder.encode(cleanReply(fallback)));
-        }
+        for await (const delta of result.textStream) raw += delta;
+        const joined = dashes.push(prices.push(raw)) + dashes.push(prices.flush()) + dashes.flush();
+        const fallback = savedLead
+          ? "Thanks. That's with Callum. Applying is still the way to go ahead. He reads it himself."
+          : "Sorry, I missed that. Ask me about the coaching, or apply and Callum will read it himself.";
+        controller.enqueue(encoder.encode(cleanReply(joined.trim() ? joined : fallback)));
       } catch (error) {
         console.error("chat stream error", error instanceof Error ? error.name : "error");
-        if (!wrote) {
-          controller.enqueue(
-            encoder.encode(
-              "Sorry, I can't answer just now. You can still apply at /apply and Callum will read it himself.",
-            ),
-          );
-        }
+        controller.enqueue(
+          encoder.encode(
+            cleanReply("Sorry, I can't answer just now. You can still apply, and Callum will read it himself."),
+          ),
+        );
       } finally {
         controller.close();
       }

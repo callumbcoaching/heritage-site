@@ -6,21 +6,27 @@ import { z } from "zod";
 var business = {
   name: "CALLUM.B",
   model: "openai/gpt-4.1-mini",
-  voice: "Plain British English, the way the site talks to a man who is busy and a bit fed up with starting again. Short. Contractions are fine. No jargon, no American spelling, no emoji, no exclamation marks. Two or three sentences, then stop. You are the site assistant, not Callum. Say Callum when you mean him.",
+  voice: "Plain British English, the way the site talks to a man who is busy and a bit fed up with starting again. Short. Contractions are fine. No jargon, no American spelling, no emoji, no exclamation marks. Two or three short sentences, then stop. You are the site assistant, not Callum. Say Callum when you mean him.",
   rules: [
-    "Answer only from the knowledge below. If it is not there, say you don't have that and point him to Apply or the free guide.",
-    "The job is to get the right visitor to Apply. Ask one question, or two at most, about his week. Reflect the problem back in plain words. Say how Callum's online coaching deals with that. Then point him to Apply. Be steady, not pushy. Do not fake urgency, do not say places are limited, and do not use a countdown.",
+    "Answer only from the knowledge below. If it is not there, say you don't have that and point him to apply or the free guide.",
+    "Never invent facts about Callum's personal life or history. If it is not written in the knowledge, you do not know it, so do not say it.",
+    "Never make any statement about Callum's own use of steroids, anabolics, TRT, peptides or any other substance. Do not confirm it and do not deny it. Do not say that he does, does not, has, or has not. If he asks, skip that part and talk about how Callum coaches.",
+    "Steroids, anabolics, peptides and TRT: no judgement. He coaches men who have chosen that route, around training, nutrition, recovery and tracking. No dosing, no protocols, no sourcing, and he does not prescribe or recommend a substance. Medical decisions and bloodwork stay with the person and their doctor or clinician. Then point him to apply.",
+    "The job is to get the right visitor to apply. Ask one question, or two at most, about his week. Reflect the problem back in plain words. Say how Callum's online coaching deals with that. Then point him to apply. Be steady, not pushy. Do not fake urgency, do not say places are limited, and do not use a countdown.",
     "Prices: say only the prices written in the knowledge, copied exactly. Never invent a discount, a sale, a code, or a price that is not listed. If you are not sure, send him to the coaching page.",
     "Never invent testimonials, client results, numbers, before and after claims or guarantees. Use a result only when it is written below, in those words, and say whose it is. Do not present it as his result. The example week and the example charts on the coaching page are illustrations, not clients. Do not quote them.",
     "No in-person training, sessions, gym meetups or local personal training, in Stockport or anywhere else. Callum is not qualified and insured for that yet. Everything is online. If he asks to train in person, say no, and offer online coaching.",
     "No medical advice. For TRT, GLP-1, medication, injuries, pain or any health condition, keep it general, tell him to speak to a GP or clinician, and still offer coaching where it fits. Do not tell him to start, stop or change a dose. Medication stays with his prescriber.",
     "No em dashes and no en dashes. For a range, write the word to. Use full stops, commas or colons. Do not say unlock, elevate, seamless, journey or game-changer.",
-    "Do not work out a calorie number, a macro split or a protein target yourself. Send him to the calculator on the site.",
-    "Do not claim a note was emailed. You may say Callum has it only when saveLead returns ok. The way to apply is still the form at /apply.",
-    "If he is not ready for 1:1, offer the free five numbers guide or the TDEE calculator. Do not hard sell."
+    "Never write a URL, a domain, or a path. Do not write /apply, /guide, /tdee-calculator, https, or a website address. Paths in the knowledge are for you only. In the reply, say apply, the free guide, or the TDEE calculator.",
+    "When you point him to one of those, end the reply with a marker on its own line: [[apply]], [[guide]], or [[tdee]]. He does not see the marker. A button is added for you. Do not also write the path.",
+    "Two or three short sentences, then stop. One thought each. No bullet list, no fourth sentence.",
+    "Do not work out a calorie number, a macro split, a protein target, or a dose yourself. Send him to the TDEE calculator for calories.",
+    "Do not claim a note was emailed. You may say Callum has it only when saveLead returns ok. The way to go ahead is still to apply.",
+    "If he is not ready for 1:1, offer the free guide or the TDEE calculator. Do not hard sell."
   ],
   knowledge: `
-Who. CALLUM.B is Callum Broadfoot, an online transformation coach in the United Kingdom. The site is for men 30 and over: busy, kids, a stressful job, a body that has drifted, diets that did not stick, energy and confidence, wanting to look and feel like himself again. He is a J3 University Level 1 certified coach, through a NASM-approved course provider. It is him every week: every check-in, every video review, every WhatsApp answer. No assistants. Email callum@callumbcoaching.co.uk. The application can also go by WhatsApp on 07359 838866. Instagram is instagram.com/callum.transformation.coach. There is no published street address. Coaching is online only.
+Who. CALLUM.B is Callum Broadfoot, an online transformation coach in the United Kingdom. The site is for men 30 and over: busy, kids, a stressful job, a body that has drifted, diets that did not stick, energy and confidence, wanting to look and feel like himself again. He is a J3 University Level 1 certified coach, through a NASM-approved course provider. Callum has studied with J3 University (J3U), where coaching is applied to athletes who use anabolics. He coaches men who have chosen that route, around their training, nutrition, recovery and tracking. He gives no dosing, no protocols and no sourcing, and he does not prescribe or recommend substances. Medical decisions and bloodwork stay with the person and their doctor or clinician. Nothing in this knowledge says what Callum himself uses or does not use. Do not guess. It is him every week: every check-in, every video review, every WhatsApp answer. No assistants. Email callum@callumbcoaching.co.uk. The application can also go by WhatsApp on 07359 838866. Instagram is instagram.com/callum.transformation.coach. There is no published street address. Coaching is online only.
 
 His own story, from the About page, kept short. An addictive personality. Drink took over: close to a litre of vodka most nights, twenty to thirty cigarettes a day. A photograph from November 2018. He stopped drinking, and stopped smoking a week later. Later years included a plant-based phase, then keto, then carnivore, then a balanced structured diet. January 2023: stage 2 hypertension, his monitor read 151/105, pulse 114. March 2024: the same monitor, same arm, 113/69, pulse 75, no medication. The About page shows systolic down 38, diastolic down 36, resting pulse down 39. The Results page says stage 2 hypertension to normal in fourteen months. These are his own readings, not medical advice. If a visitor's blood pressure looks high, he should see his GP, not a coach. He coaches the structure that replaced willpower, because willpower ran out and the structure did not.
 
@@ -315,6 +321,76 @@ function createDashStream() {
   };
   return { push, flush };
 }
+var MARKER = /\[\[(apply|guide|tdee|calculator)\]\]/gi;
+var CTA_MARKER = /\[\[cta:([a-z,]*)\]\]/gi;
+var URL_TOKEN = /\b(?:https?:\/\/|www\.)[^\s<>"')\]]+/gi;
+var BARE_HOST = /(?<!@)\b(?:[a-z0-9-]+\.)*(?:callumbcoaching\.co\.uk|wa\.me|instagram\.com)(?:\/[^\s<>"')\]]*)?/gi;
+var SITE_PATH = /(^|[\s(])(\/(?:#[A-Za-z][\w-]*|[A-Za-z][\w/#-]*)+)/g;
+var OWN_USE = /\b(?:Callum|he)\b(?:(?![.?!]).){0,70}?\b(?:does not|doesn't|isn't|is not|never|has never|has not|hasn't)\b(?:(?![.?!]).){0,40}?\b(?:use|using|used|take|taking|taken|run|running|on)\b(?:(?![.?!]).){0,40}?\b(?:steroids?|anabolics?|trt|peptides?|substances?)\b[^.?!]*[.?!]?/gi;
+function actionForTarget(value) {
+  const lower = value.toLowerCase();
+  if (lower.includes("#guide") || /(^|\/)guide$/.test(lower.split("?")[0] ?? lower)) return "guide";
+  if (lower.includes("tdee-calculator") || lower === "tdee" || lower === "calculator") return "calculator";
+  if (/(^|\/)apply$/.test(lower.split(/[?#]/)[0] ?? lower) || lower === "apply") return "apply";
+  return null;
+}
+function tidyReply(text) {
+  return text.replace(/\s+\b(?:at|via|on)\b(?=\s*(?:[.,;:!?]|is\b|$))/gi, "").replace(/\(\s*\)/g, "").replace(/[ \t]{2,}/g, " ").replace(/[ \t]+([.,;:!?])/g, "$1").replace(/\s+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
+}
+function scrubLinks(text) {
+  const actions = [];
+  const add = (action) => {
+    if (action && !actions.includes(action)) actions.push(action);
+  };
+  let out = text.replace(CTA_MARKER, (_match, list) => {
+    for (const part of list.split(",")) add(actionForTarget(part.trim()));
+    return " ";
+  });
+  out = out.replace(MARKER, (_match, name) => {
+    add(actionForTarget(name));
+    return " ";
+  });
+  const cutTrail = (match) => {
+    const trail = /[.,;:!?]+$/.exec(match)?.[0] ?? "";
+    const core = trail ? match.slice(0, -trail.length) : match;
+    add(actionForTarget(core));
+    return ` ${trail}`;
+  };
+  out = out.replace(URL_TOKEN, cutTrail);
+  out = out.replace(BARE_HOST, cutTrail);
+  out = out.replace(SITE_PATH, (_match, lead, path) => {
+    add(actionForTarget(path));
+    return lead;
+  });
+  return { text: tidyReply(out), actions };
+}
+function mentionActions(text) {
+  const actions = [];
+  if (/\bappl(?:y|ying|ication)\b/i.test(text)) actions.push("apply");
+  if (/\bfree guide\b/i.test(text)) actions.push("guide");
+  if (/\btdee\b/i.test(text)) actions.push("calculator");
+  return actions;
+}
+var OWN_USE_FALLBACK = "He coaches men who have chosen that route, around training, nutrition, recovery and tracking. He doesn't give doses, protocols or sourcing, and medical decisions stay with you and your doctor. If you want that, apply.";
+function scrubOwnUse(text) {
+  if (!OWN_USE.test(text)) return text;
+  OWN_USE.lastIndex = 0;
+  const removed = tidyReply(text.replace(OWN_USE, " "));
+  OWN_USE.lastIndex = 0;
+  if (removed.length < 40) return OWN_USE_FALLBACK;
+  return removed;
+}
+function formatReply(text) {
+  const cleaned = scrubLinks(scrubOwnUse(text));
+  const actions = [...cleaned.actions];
+  for (const action of mentionActions(cleaned.text)) {
+    if (!actions.includes(action)) actions.push(action);
+  }
+  const body = cleaned.text;
+  if (!actions.length) return body;
+  return `${body}
+[[cta:${actions.join(",")}]]`;
+}
 function isValidEmail(value) {
   const text = value.trim();
   if (text.length < 6 || text.length > 120) return false;
@@ -424,20 +500,22 @@ ${rules}`,
 ${config.knowledge}`,
     [
       "Lead capture.",
-      "Your main job is to help the right person reach Apply. Ask one question at a time, two at most, so you understand their week. Reflect the problem in their words, say how Callum's online coaching fits, then point them to Apply.",
+      "Your main job is to help the right person apply. Ask one question at a time, two at most, so you understand their week. Reflect the problem in their words, say how Callum's online coaching fits, then point them to apply.",
       "Do not ask for their details before you have answered them. If they are only asking a question, answer it.",
       "If they give a name, an email and a line about their goal, call saveLead before you confirm. Do not call it with blanks or guesses. Do not say Callum has their note unless saveLead returns ok. Never say it was emailed.",
-      "After a successful save, say Callum has the note, and that the application is still the way to go ahead. Give the Apply path.",
-      "If saveLead fails, do not say the details were saved. Give them the Apply path.",
-      `Apply: ${config.links.apply}. Free guide: ${config.links.guide}. TDEE calculator: ${config.links.calculator}. Email: ${config.links.email}.`
+      "After a successful save, say Callum has the note, and that applying is still the way to go ahead. End with [[apply]].",
+      "If saveLead fails, do not say the details were saved. Tell them to apply, and end with [[apply]].",
+      "Never write a path or a URL. Say apply, the free guide, or the TDEE calculator, then the matching marker."
     ].join(" "),
     `If a price slips out that is not published, it will be replaced with: "${config.priceStandIn}". Prefer to quote a published price yourself, exactly as written in the knowledge.`,
     [
       "Next step.",
-      "The main call to action is Apply. Say so in plain words and give the path.",
-      "If they are not ready, offer the free five numbers guide or the TDEE calculator. Do not push, and do not invent urgency.",
-      "Do not calculate calories, macros or a protein number yourself. Send them to the calculator.",
-      "For a range, write the word to. Never use an em dash or an en dash."
+      "The main call to action is apply. Say so in plain words. End that reply with [[apply]] on its own line.",
+      "If they are not ready, offer the free guide and end with [[guide]], or the TDEE calculator and end with [[tdee]]. Do not push, and do not invent urgency.",
+      "Do not calculate calories, macros, a protein number, or a dose. For calories, send them to the TDEE calculator.",
+      "Two or three short sentences, then stop.",
+      "For a range, write the word to. Never use an em dash or an en dash.",
+      "Never write a path, a domain, or a URL in the reply."
     ].join(" ")
   ].join("\n\n");
 }
@@ -486,7 +564,7 @@ function limited(retryAfter) {
   );
 }
 function cleanReply(text) {
-  return scrubDashes(scrubPrices(text, business.allowedPrices, business.priceStandIn));
+  return formatReply(scrubDashes(scrubPrices(text, business.allowedPrices, business.priceStandIn)));
 }
 function GET() {
   return Response.json(publicWidget(business), {
@@ -526,7 +604,7 @@ async function POST(request) {
     if (!saved.ok) {
       return json(
         {
-          error: "I couldn't save that just now. Apply at /apply and it comes straight to Callum."
+          error: "I couldn't save that just now. Apply and it comes straight to Callum."
         },
         503
       );
@@ -534,7 +612,8 @@ async function POST(request) {
     return json({
       ok: true,
       notified: saved.notified,
-      message: `${parsed.lead.name}, that's with Callum. The application is still the way to go ahead: /apply. He reads it himself.`
+      actions: ["apply"],
+      message: `${parsed.lead.name}, that's with Callum. The next step is still to apply. He reads it himself.`
     });
   }
   const messages = normaliseMessages(body.messages, business.limits);
@@ -545,7 +624,7 @@ async function POST(request) {
     model,
     instructions: buildInstructions(business, page),
     messages: messages.messages,
-    maxOutputTokens: 320,
+    maxOutputTokens: 120,
     temperature: 0.2,
     reasoning: "none",
     stopWhen: isStepCount(4),
@@ -561,13 +640,13 @@ async function POST(request) {
           if (!saved.ok) {
             return {
               ok: false,
-              error: "The details could not be stored. Ask them to use the application at /apply."
+              error: "The details could not be stored. Ask them to apply."
             };
           }
           return {
             ok: true,
             notified: saved.notified,
-            note: "Stored for Callum. Do not say it was emailed. The next step is still /apply."
+            note: "Stored for Callum. Do not say it was emailed. The next step is still to apply. End with [[apply]]."
           };
         }
       })
@@ -581,33 +660,19 @@ async function POST(request) {
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
     async start(controller) {
-      let wrote = false;
-      const write = (chunk) => {
-        const next = dashes.push(prices.push(chunk));
-        if (!next) return;
-        wrote = true;
-        controller.enqueue(encoder.encode(next));
-      };
+      let raw = "";
       try {
-        for await (const delta of result.textStream) write(delta);
-        const tail = dashes.push(prices.flush()) + dashes.flush();
-        if (tail) {
-          wrote = true;
-          controller.enqueue(encoder.encode(tail));
-        }
-        if (!wrote) {
-          const fallback = savedLead ? "Thanks. That's with Callum. The application is still here when you want it: /apply." : "Sorry, I missed that. Ask me about the coaching, or apply and Callum will read it himself.";
-          controller.enqueue(encoder.encode(cleanReply(fallback)));
-        }
+        for await (const delta of result.textStream) raw += delta;
+        const joined = dashes.push(prices.push(raw)) + dashes.push(prices.flush()) + dashes.flush();
+        const fallback = savedLead ? "Thanks. That's with Callum. Applying is still the way to go ahead. He reads it himself." : "Sorry, I missed that. Ask me about the coaching, or apply and Callum will read it himself.";
+        controller.enqueue(encoder.encode(cleanReply(joined.trim() ? joined : fallback)));
       } catch (error) {
         console.error("chat stream error", error instanceof Error ? error.name : "error");
-        if (!wrote) {
-          controller.enqueue(
-            encoder.encode(
-              "Sorry, I can't answer just now. You can still apply at /apply and Callum will read it himself."
-            )
-          );
-        }
+        controller.enqueue(
+          encoder.encode(
+            cleanReply("Sorry, I can't answer just now. You can still apply, and Callum will read it himself.")
+          )
+        );
       } finally {
         controller.close();
       }
