@@ -136,7 +136,7 @@
 /* ---------- MailerLite capture ----------
    Dual-submit: after a successful Formspree post, the same lead is added to
    MailerLite so the matching nurture automation fires. One embedded-form
-   endpoint per lead source (created 31 Jul 2026). Fire-and-forget — never
+   endpoint per lead source (created 31 Jul 2026). Fire-and-forget. Never
    blocks or breaks the visitor-facing flow. */
 (function () {
   var ML_ACCOUNT = '2490221';

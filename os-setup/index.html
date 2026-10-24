@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Set up your Physique OS — CALLUM.B</title>
+<title>Set up your Physique OS | CALLUM.B</title>
 <script defer data-domain="callumbcoaching.co.uk" src="https://plausible.io/js/script.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -110,7 +110,7 @@ footer{text-align:center;font-size:11.5px;color:var(--muted);margin-top:26px}
 
     <div class="card">
       <h2>Your numbers</h2>
-      <div class="sub">Rough is fine — we recalibrate from real data in week two.</div>
+      <div class="sub">Rough is fine. We recalibrate from real data in week two.</div>
       <div class="field"><label>Height</label>
         <div class="unit"><input id="height" type="number" step="any" min="100" max="230" inputmode="decimal" placeholder="cm" required>
           <input id="hFt" type="number" step="any" min="3" max="8" inputmode="numeric" placeholder="ft" style="display:none">
@@ -121,13 +121,13 @@ footer{text-align:center;font-size:11.5px;color:var(--muted);margin-top:26px}
         <div class="unit"><input id="weight" type="number" step="any" min="1" inputmode="decimal" placeholder="kg" required>
           <div class="unitseg" id="wUnit" data-u="kg"><button type="button" class="on" data-u="kg">kg</button><button type="button" data-u="lb">lb</button></div></div>
       </div>
-      <div class="field"><label>Activity — outside of training too</label>
+      <div class="field"><label>Activity, outside of training too</label>
         <select id="activity">
-          <option value="1.2">Sedentary — desk job, little exercise</option>
-          <option value="1.375">Light — train 1–3 days / week</option>
-          <option value="1.55" selected>Moderate — train 3–5 days / week</option>
-          <option value="1.725">Very active — train 6–7 days / week</option>
-          <option value="1.9">Athlete — physical job + daily training</option>
+          <option value="1.2">Sedentary: desk job, little exercise</option>
+          <option value="1.375">Light: train 1 to 3 days / week</option>
+          <option value="1.55" selected>Moderate: train 3 to 5 days / week</option>
+          <option value="1.725">Very active: train 6 to 7 days / week</option>
+          <option value="1.9">Athlete: physical job + daily training</option>
         </select>
       </div>
     </div>
@@ -136,39 +136,39 @@ footer{text-align:center;font-size:11.5px;color:var(--muted);margin-top:26px}
       <h2>Your goal</h2>
       <div class="sub">Pick the one that's true for the next 12 weeks.</div>
       <div id="goal">
-        <label class="opt on" data-v="-0.2"><b>Lose fat</b><span>A controlled deficit — weight comes down, muscle stays.</span></label>
+        <label class="opt on" data-v="-0.2"><b>Lose fat</b><span>A controlled deficit: weight comes down, muscle stays.</span></label>
         <label class="opt" data-v="0"><b>Maintain</b><span>Hold your weight, build the habits, get stronger.</span></label>
-        <label class="opt" data-v="0.1"><b>Build muscle</b><span>A modest surplus — grow without the sloppy gain.</span></label>
+        <label class="opt" data-v="0.1"><b>Build muscle</b><span>A modest surplus: grow without the sloppy gain.</span></label>
       </div>
     </div>
 
     <div class="card" id="macros">
       <h2>Your starting numbers</h2>
-      <div class="sub">Calculated live — these go straight into your app.</div>
+      <div class="sub">Calculated live. These go straight into your app.</div>
       <div class="nums">
-        <div class="num"><b id="mCal">—</b><span>kcal</span></div>
-        <div class="num"><b id="mPro">—</b><span>protein</span></div>
-        <div class="num"><b id="mCarb">—</b><span>carbs</span></div>
-        <div class="num"><b id="mFat">—</b><span>fat</span></div>
+        <div class="num"><b id="mCal">…</b><span>kcal</span></div>
+        <div class="num"><b id="mPro">…</b><span>protein</span></div>
+        <div class="num"><b id="mCarb">…</b><span>carbs</span></div>
+        <div class="num"><b id="mFat">…</b><span>fat</span></div>
       </div>
-      <div class="tdee">Maintenance sits around <b id="mTdee">—</b> kcal. <span id="mGoalTxt"></span></div>
+      <div class="tdee">Maintenance sits around <b id="mTdee">…</b> kcal. <span id="mGoalTxt"></span></div>
     </div>
 
     <div class="card">
       <h2>Your training</h2>
-      <div class="sub">Honest answer beats ambitious — you can move up any time by asking.</div>
+      <div class="sub">Honest answer beats ambitious. You can move up any time by asking.</div>
       <div id="rung">
-        <label class="opt on" data-v="Rung 1 — Foundation (3-day full body)"><b>Foundation · 3 days</b><span>Where everyone starts. Full body ×3 — trains everything often, keeps fatigue low.</span></label>
-        <label class="opt" data-v="Rung 2 — Upper/Lower (4-day)"><b>Rung 2 · 4 days</b><span>Upper/lower split. For those already training consistently.</span></label>
-        <label class="opt" data-v="Rung 3 — 5-day split"><b>Rung 3 · 5 days</b><span>Five days, more volume per muscle. Only if five days is realistic every week.</span></label>
+        <label class="opt on" data-v="Rung 1: Foundation (3-day full body)"><b>Foundation · 3 days</b><span>Where everyone starts. Full body ×3. It trains everything often, keeps fatigue low.</span></label>
+        <label class="opt" data-v="Rung 2: Upper/Lower (4-day)"><b>Rung 2 · 4 days</b><span>Upper/lower split. For those already training consistently.</span></label>
+        <label class="opt" data-v="Rung 3: 5-day split"><b>Rung 3 · 5 days</b><span>Five days, more volume per muscle. Only if five days is realistic every week.</span></label>
       </div>
     </div>
 
     <label class="chk"><input type="checkbox" id="premium">
-      <span>Let me know when a 1:1 coaching space opens up. No pitch — I'll only mention it if one comes free.</span></label>
+      <span>Let me know when a 1:1 coaching space opens up. No pitch. I'll only mention it if one comes free.</span></label>
 
     <button class="go" type="submit" id="submit">Build my setup →</button>
-    <div id="err">Something went wrong — give it another go, or email <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="89eae8e5e5fce4c9eae8e5e5fce4ebeae6e8eae1e0e7eea7eae6a7fce2">[email&#160;protected]</a></div>
+    <div id="err">Something went wrong. Give it another go, or email <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="89eae8e5e5fce4c9eae8e5e5fce4ebeae6e8eae1e0e7eea7eae6a7fce2">[email&#160;protected]</a></div>
     <p class="note">Your details are used to build your plan and nothing else. Not medical advice.</p>
   </form>
 </div>
@@ -176,12 +176,12 @@ footer{text-align:center;font-size:11.5px;color:var(--muted);margin-top:26px}
 <div id="done">
   <div class="tick">✓</div>
   <h2>Setup underway 🦁</h2>
-  <p>I've got everything I need. I'm loading your macros and your training into the app now — <b style="color:#F3EAD6">your onboarding link comes by email</b>, so keep an eye on your inbox. Check your junk folder too, just in case.</p>
+  <p>I've got everything I need. I'm loading your macros and your training into the app now. <b style="color:#F3EAD6">Your onboarding link comes by email</b>, so keep an eye on your inbox. Check your junk folder too, just in case.</p>
   <div class="card" style="text-align:left">
     <h2>While you wait</h2>
     <div class="sub" style="margin-bottom:0">Two things worth doing: get a set of starting photos and a morning weigh-in done, and read The Framework guide when it arrives. Everything else can wait until you're in.</div>
   </div>
-  <p style="font-size:13.5px;color:var(--muted)">Questions before then? Just reply to the email — it's actually me.</p>
+  <p style="font-size:13.5px;color:var(--muted)">Questions before then? Just reply to the email. It's actually me.</p>
 </div>
 
 <footer>CALLUM<span style="color:var(--green)">.</span>B · Physique OS</footer>
@@ -239,7 +239,7 @@ function cm(){
 let M={};
 function calc(){
   const k=kg(), c=cm(), age=parseFloat($('age').value)||0;
-  if(k<=0||c<=0||age<=0){['mCal','mPro','mCarb','mFat','mTdee'].forEach(i=>$(i).textContent='—');return;}
+  if(k<=0||c<=0||age<=0){['mCal','mPro','mCarb','mFat','mTdee'].forEach(i=>$(i).textContent='…');return;}
   const bmr = 10*k + 6.25*c - 5*age + (sex==='male'?5:-161);
   const tdee = bmr*parseFloat($('activity').value);
   const goal = parseFloat(pick('goal'));
@@ -284,12 +284,12 @@ FAT:       ${M.fat} g
 
 --- TRAINING TO LOAD ---
 ${pick('rung')}
-1:1 INTEREST: ${$('premium').checked?'YES — wants to hear when a space opens':'no'}
+1:1 INTEREST: ${$('premium').checked?'YES: wants to hear when a space opens':'no'}
 ========================`;
   fetch('https://formspree.io/f/mbdvgwle',{method:'POST',
     headers:{'Content-Type':'application/json','Accept':'application/json'},
     body:JSON.stringify({name:name,email:$('email').value.trim(),
-      _subject:'🟢 NEW PHYSIQUE OS MEMBER — '+name+' — set up now',
+      _subject:'🟢 NEW PHYSIQUE OS MEMBER: '+name+', set up now',
       setup_sheet:sheet})})
   .then(r=>{ if(!r.ok) throw 0;
     try{fetch('https://assets.mailerlite.com/jsonp/2490221/forms/194856127205214074/subscribe',{method:'POST',

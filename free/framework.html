@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
-<title>The CALLUM.B Framework — CALLUM.B</title>
+<title>The CALLUM.B Framework | CALLUM.B</title>
 <script defer data-domain="callumbcoaching.co.uk" src="https://plausible.io/js/script.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,20 +50,20 @@ footer a{color:var(--muted)}
 <div class="wordmark">CALLUM<span>.</span>B</div>
 <div class="eyebrow">Free download</div>
 <h1>The CALLUM.B Framework</h1>
-<p class="promise">The full system on a page: how the training, the nutrition and the weekly review fit together — and what actually moves the needle first.</p>
-<ul><li>The order things matter in — and what to ignore until later</li><li>How training, food and recovery actually interact</li><li>The weekly review loop that keeps progress honest</li></ul>
+<p class="promise">The full system on a page: how the training, the nutrition and the weekly review fit together, and what actually moves the needle first.</p>
+<ul><li>The order things matter in, and what to ignore until later</li><li>How training, food and recovery actually interact</li><li>The weekly review loop that keeps progress honest</li></ul>
 <div class="card" id="form-side">
   <form id="gate-form">
     <label>First name</label><input name="name" required autocomplete="given-name">
     <label>Email</label><input name="email" type="email" required autocomplete="email">
     <button type="submit" id="submit-btn">Send it to me →</button>
-    <div id="err">Something went wrong — try again.</div>
-    <div class="small">No spam. A short email series on training properly comes with it — unsubscribe any time.</div>
+    <div id="err">Something went wrong. Try again.</div>
+    <div class="small">No spam. A short email series on training properly comes with it. Unsubscribe any time.</div>
   </form>
 </div>
 <div class="card" id="success">
   <h2>It&rsquo;s yours 🦁</h2>
-  <p>A copy&rsquo;s on its way to your inbox — or grab it right now:</p>
+  <p>A copy&rsquo;s on its way to your inbox, or grab it right now:</p>
   <a class="dl" href="/assets/downloads/CallumB-Framework-Guide.pdf" target="_blank">Download the PDF →</a>
 </div>
 <footer>CALLUM.B &middot; Online Transformation Coach &middot; <a href="https://callumbcoaching.co.uk">callumbcoaching.co.uk</a></footer>
@@ -74,7 +74,7 @@ document.getElementById('gate-form').addEventListener('submit',function(e){
  var btn=document.getElementById('submit-btn'),err=document.getElementById('err');
  btn.disabled=true;btn.textContent='Sending…';err.style.display='none';
  var f=e.target,name=f.name.value,email=f.email.value;
- fetch('https://formspree.io/f/mbdvgwle',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name:name,email:email,_subject:'FREE DOWNLOAD — The CALLUM.B Framework — '+name})})
+ fetch('https://formspree.io/f/mbdvgwle',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name:name,email:email,_subject:'FREE DOWNLOAD: The CALLUM.B Framework, '+name})})
  .then(function(r){
    try{fetch('https://assets.mailerlite.com/jsonp/2490221/forms/194528842662021026/subscribe',{method:'POST',body:new URLSearchParams([['fields[email]',email],['fields[name]',name],['ml-submit','1'],['anticsrf','true']])});}catch(_){}
    document.getElementById('form-side').style.display='none';
