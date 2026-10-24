@@ -268,7 +268,7 @@ const J3_REPLY =
 export function ensureAnabolicReply(userText: string, reply: string): string {
   if (!SUBSTANCE_ASK.test(userText)) return reply;
   const stripped = reply.replace(DODGE, "").replace(/\s{2,}/g, " ").trim();
-  if (/J3 University/i.test(stripped) && stripped.length > 80) {
+  if (/J3 University/i.test(stripped) && /\bJ3U\b/.test(stripped) && stripped.length > 80) {
     return /\bappl/i.test(stripped) ? stripped : `${stripped} If you want that, apply.`;
   }
   return J3_REPLY;

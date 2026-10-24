@@ -167,8 +167,11 @@ test("substance questions lead with J3 University and do not dodge", () => {
   assert.equal(/don't have that/i.test(asked), false);
   assert.equal(/does not use/i.test(asked), false);
 
-  const cycle = ensureAnabolicReply("I'm on a cycle, can you still coach me?", "Yes, he can help with the week.");
-  assert.match(cycle, /J3 University/);
+  const cycle = ensureAnabolicReply(
+    "I'm on a cycle, can you still coach me?",
+    "Callum has studied with J3 University, where coaching is applied to athletes who use anabolics, and he coaches men who've chosen that route.",
+  );
+  assert.match(cycle, /J3 University \(J3U\)/);
 
   const dose = ensureAnabolicReply("What dose should I run?", "It depends.");
   assert.match(dose, /doesn't give doses/);
