@@ -2,7 +2,6 @@
 # api/ is the lead function and must be deployed.
 !api/
 !api/**
-CLAUDE (1).md
 tools/
 tests/
 serve.mjs
