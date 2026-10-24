@@ -4,6 +4,7 @@
     { "source": "/api/lead.php", "destination": "/api/lead" }
   ],
   "framework": null,
+  "installCommand": "npm install",
   "buildCommand": "node scripts/build.mjs",
   "outputDirectory": "public",
   "functions": {
