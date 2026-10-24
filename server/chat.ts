@@ -1,0 +1,188 @@
+import { isStepCount, streamText, tool } from "ai";
+import { z } from "zod";
+import { business } from "../lib/business.ts";
+import {
+  clientKey,
+  createDashStream,
+  createPriceStream,
+  knownPage,
+  normaliseMessages,
+  sameOrigin,
+  scrubDashes,
+  scrubPrices,
+  takeRateLimit,
+} from "../lib/guard.ts";
+import { saveLead, validateLead } from "../lib/leads.ts";
+import { buildInstructions, publicWidget } from "../lib/prompt.ts";
+
+export const maxDuration = 30;
+
+const leadSchema = z.object({
+  name: z.string().describe("The visitor's name"),
+  email: z.string().describe("The email address they gave"),
+  goal: z.string().describe("What they want, in their words"),
+});
+
+function json(body: unknown, status = 200, extra?: HeadersInit): Response {
+  return Response.json(body, {
+    status,
+    headers: { "cache-control": "no-store", ...extra },
+  });
+}
+
+function limited(retryAfter: number): Response {
+  return json(
+    { error: "You've sent quite a few messages. Give it a minute, or apply and Callum will read it himself." },
+    429,
+    { "retry-after": String(retryAfter) },
+  );
+}
+
+function cleanReply(text: string): string {
+  return scrubDashes(scrubPrices(text, business.allowedPrices, business.priceStandIn));
+}
+
+export function GET(): Response {
+  return Response.json(publicWidget(business), {
+    headers: { "cache-control": "public, max-age=300" },
+  });
+}
+
+export async function POST(request: Request): Promise<Response> {
+  if (!sameOrigin(request)) {
+    return json({ error: "Open the chat on the site and try again." }, 403);
+  }
+  const length = Number(request.headers.get("content-length") || 0);
+  if (length > 24_000) {
+    return json({ error: "That message is a bit long. Try a shorter question." }, 413);
+  }
+
+  const limit = takeRateLimit(
+    clientKey(request),
+    Date.now(),
+    business.limits.windowMs,
+    business.limits.maxRequests,
+  );
+  if (!limit.ok) return limited(limit.retryAfter);
+
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return json({ error: "I couldn't read that. Try again." }, 400);
+  }
+  if (!body || typeof body !== "object") {
+    return json({ error: "I couldn't read that. Try again." }, 400);
+  }
+
+  const page = knownPage((body as { page?: unknown }).page, business.pages);
+  const leadBody = (body as { lead?: unknown }).lead;
+  if (leadBody && typeof leadBody === "object") {
+    const parsed = validateLead(leadBody, "chat-form", page);
+    if (!parsed.ok) return json({ error: parsed.error }, 400);
+    const saved = await saveLead(business, parsed.lead);
+    if (!saved.ok) {
+      return json(
+        {
+          error: "I couldn't save that just now. Apply at /apply and it comes straight to Callum.",
+        },
+        503,
+      );
+    }
+    return json({
+      ok: true,
+      notified: saved.notified,
+      message: `${parsed.lead.name}, that's with Callum. The application is still the way to go ahead: /apply. He reads it himself.`,
+    });
+  }
+
+  const messages = normaliseMessages((body as { messages?: unknown }).messages, business.limits);
+  if (!messages.ok) return json({ error: messages.error }, messages.status);
+
+  const model = process.env.AI_GATEWAY_MODEL || business.model;
+  let savedLead = false;
+  const result = streamText({
+    model,
+    instructions: buildInstructions(business, page),
+    messages: messages.messages,
+    maxOutputTokens: 320,
+    temperature: 0.2,
+    reasoning: "none",
+    stopWhen: isStepCount(4),
+    tools: {
+      saveLead: tool({
+        description:
+          "Save a note for Callum once the visitor has given their name, email, and a line about their goal. Call this before confirming. Do not say it was emailed.",
+        inputSchema: leadSchema,
+        execute: async (input) => {
+          const parsed = validateLead(input, "chat-tool", page);
+          if (!parsed.ok) return { ok: false, error: parsed.error };
+          const saved = await saveLead(business, parsed.lead);
+          savedLead = saved.ok;
+          if (!saved.ok) {
+            return {
+              ok: false,
+              error: "The details could not be stored. Ask them to use the application at /apply.",
+            };
+          }
+          return {
+            ok: true,
+            notified: saved.notified,
+            note: "Stored for Callum. Do not say it was emailed. The next step is still /apply.",
+          };
+        },
+      }),
+    },
+    onError({ error }) {
+      console.error("chat model error", error instanceof Error ? error.name : "error");
+    },
+  });
+
+  const prices = createPriceStream(business.allowedPrices, business.priceStandIn);
+  const dashes = createDashStream();
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream<Uint8Array>({
+    async start(controller) {
+      let wrote = false;
+      const write = (chunk: string) => {
+        const next = dashes.push(prices.push(chunk));
+        if (!next) return;
+        wrote = true;
+        controller.enqueue(encoder.encode(next));
+      };
+      try {
+        for await (const delta of result.textStream) write(delta);
+        const tail = dashes.push(prices.flush()) + dashes.flush();
+        if (tail) {
+          wrote = true;
+          controller.enqueue(encoder.encode(tail));
+        }
+        if (!wrote) {
+          const fallback = savedLead
+            ? "Thanks. That's with Callum. The application is still here when you want it: /apply."
+            : "Sorry, I missed that. Ask me about the coaching, or apply and Callum will read it himself.";
+          controller.enqueue(encoder.encode(cleanReply(fallback)));
+        }
+      } catch (error) {
+        console.error("chat stream error", error instanceof Error ? error.name : "error");
+        if (!wrote) {
+          controller.enqueue(
+            encoder.encode(
+              "Sorry, I can't answer just now. You can still apply at /apply and Callum will read it himself.",
+            ),
+          );
+        }
+      } finally {
+        controller.close();
+      }
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      "content-type": "text/plain; charset=utf-8",
+      "cache-control": "no-cache, no-transform",
+      "x-accel-buffering": "no",
+    },
+  });
+}

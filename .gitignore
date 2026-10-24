@@ -1,4 +1,5 @@
 node_modules/
+public/
 temporary screenshots/
 .DS_Store
 assets/video-src/

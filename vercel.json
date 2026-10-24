@@ -2,5 +2,13 @@
   "cleanUrls": true,
   "rewrites": [
     { "source": "/api/lead.php", "destination": "/api/lead" }
-  ]
+  ],
+  "framework": null,
+  "buildCommand": "node scripts/build.mjs",
+  "outputDirectory": "public",
+  "functions": {
+    "api/chat.js": {
+      "maxDuration": 30
+    }
+  }
 }
