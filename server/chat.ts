@@ -9,12 +9,12 @@ import {
   formatReply,
   knownPage,
   normaliseMessages,
-  sameOrigin,
   scrubDashes,
   scrubOwnUse,
   scrubPrices,
   takeRateLimit,
 } from "../lib/guard.ts";
+import { corsHeaders, preflight, requestAllowed } from "../lib/cors.ts";
 import { saveLead, validateLead } from "../lib/leads.ts";
 import { buildInstructions, publicWidget } from "../lib/prompt.ts";
 
@@ -26,15 +26,16 @@ const leadSchema = z.object({
   goal: z.string().describe("What they want, in their words"),
 });
 
-function json(body: unknown, status = 200, extra?: HeadersInit): Response {
-  return Response.json(body, {
-    status,
-    headers: { "cache-control": "no-store", ...extra },
-  });
+function json(request: Request, body: unknown, status = 200, extra?: HeadersInit): Response {
+  const headers = corsHeaders(request);
+  headers.set("cache-control", "no-store");
+  if (extra) new Headers(extra).forEach((value, key) => headers.set(key, value));
+  return Response.json(body, { status, headers });
 }
 
-function limited(retryAfter: number): Response {
+function limited(request: Request, retryAfter: number): Response {
   return json(
+    request,
     { error: "You've sent quite a few messages. Give it a minute, or apply and Callum will read it himself." },
     429,
     { "retry-after": String(retryAfter) },
@@ -46,19 +47,23 @@ function cleanReply(text: string, userText = ""): string {
   return formatReply(ensureAnabolicReply(userText, priced));
 }
 
-export function GET(): Response {
-  return Response.json(publicWidget(business), {
-    headers: { "cache-control": "public, max-age=300" },
-  });
+export function OPTIONS(request: Request): Response {
+  return preflight(request);
+}
+
+export function GET(request: Request): Response {
+  const headers = corsHeaders(request);
+  headers.set("cache-control", "public, max-age=300");
+  return Response.json(publicWidget(business), { headers });
 }
 
 export async function POST(request: Request): Promise<Response> {
-  if (!sameOrigin(request)) {
-    return json({ error: "Open the chat on the site and try again." }, 403);
+  if (!requestAllowed(request)) {
+    return json(request, { error: "Open the chat on the site and try again." }, 403);
   }
   const length = Number(request.headers.get("content-length") || 0);
   if (length > 24_000) {
-    return json({ error: "That message is a bit long. Try a shorter question." }, 413);
+    return json(request, { error: "That message is a bit long. Try a shorter question." }, 413);
   }
 
   const limit = takeRateLimit(
@@ -67,33 +72,33 @@ export async function POST(request: Request): Promise<Response> {
     business.limits.windowMs,
     business.limits.maxRequests,
   );
-  if (!limit.ok) return limited(limit.retryAfter);
+  if (!limit.ok) return limited(request, limit.retryAfter);
 
   let body: unknown;
   try {
     body = await request.json();
   } catch {
-    return json({ error: "I couldn't read that. Try again." }, 400);
+    return json(request, { error: "I couldn't read that. Try again." }, 400);
   }
   if (!body || typeof body !== "object") {
-    return json({ error: "I couldn't read that. Try again." }, 400);
+    return json(request, { error: "I couldn't read that. Try again." }, 400);
   }
 
   const page = knownPage((body as { page?: unknown }).page, business.pages);
   const leadBody = (body as { lead?: unknown }).lead;
   if (leadBody && typeof leadBody === "object") {
     const parsed = validateLead(leadBody, "chat-form", page);
-    if (!parsed.ok) return json({ error: parsed.error }, 400);
+    if (!parsed.ok) return json(request, { error: parsed.error }, 400);
     const saved = await saveLead(business, parsed.lead);
     if (!saved.ok) {
-      return json(
+      return json(request, 
         {
           error: "I couldn't save that just now. Apply and it comes straight to Callum.",
         },
         503,
       );
     }
-    return json({
+    return json(request, {
       ok: true,
       notified: saved.notified,
       actions: ["apply"],
@@ -102,7 +107,7 @@ export async function POST(request: Request): Promise<Response> {
   }
 
   const messages = normaliseMessages((body as { messages?: unknown }).messages, business.limits);
-  if (!messages.ok) return json({ error: messages.error }, messages.status);
+  if (!messages.ok) return json(request, { error: messages.error }, messages.status);
   const latestUser = [...messages.messages].reverse().find((message) => message.role === "user")?.content ?? "";
 
   const model = process.env.AI_GATEWAY_MODEL || business.model;
@@ -170,11 +175,9 @@ export async function POST(request: Request): Promise<Response> {
     },
   });
 
-  return new Response(stream, {
-    headers: {
-      "content-type": "text/plain; charset=utf-8",
-      "cache-control": "no-cache, no-transform",
-      "x-accel-buffering": "no",
-    },
-  });
+  const headers = corsHeaders(request);
+  headers.set("content-type", "text/plain; charset=utf-8");
+  headers.set("cache-control", "no-cache, no-transform");
+  headers.set("x-accel-buffering", "no");
+  return new Response(stream, { headers });
 }

@@ -133,6 +133,63 @@ test.describe("with Reduce Motion on", () => {
   });
 });
 
+for (const path of ["/", "/coaching", "/results"]) {
+  test(`five foundations guide on ${path}`, async ({ page }) => {
+    await page.goto(path + "#guide");
+    const section = page.locator("#guide");
+    await expect(section).toContainText("five foundations");
+    await expect(section).toContainText("Protein at every meal");
+    await expect(section).toContainText("Daily steps");
+    await expect(section).toContainText("Three short sessions a week");
+    await expect(section).toContainText("Sleep");
+    await expect(section).toContainText("One weekly check-in");
+    await expect(section.locator('a[data-ev="Guide download"]')).toHaveAttribute("href", "/guides/the-five-foundations.pdf");
+    const text = await section.innerText();
+    expect(text.toLowerCase()).not.toContain("five numbers");
+    expect(text).not.toContain("Blood pressure");
+    expect(text).not.toContain("\u2014");
+    expect(text).not.toContain("\u2013");
+  });
+}
+
+test("old guide address redirects to the new pdf", async ({ request }) => {
+  const next = await request.get("/guides/the-five-foundations.pdf");
+  expect(next.status()).toBe(200);
+  expect(next.headers()["content-type"] || "").toMatch(/pdf/);
+  const bytes = await next.body();
+  expect(Buffer.from(bytes.subarray(0, 5)).toString()).toBe("%PDF-");
+  const old = await request.get("/guides/five-numbers.pdf", { maxRedirects: 0 });
+  expect(old.status()).toBe(301);
+  expect(old.headers().location).toBe("/guides/the-five-foundations.pdf");
+});
+
+test("api base stays on this origin locally", async ({ page }) => {
+  await page.goto("/");
+  await page.waitForFunction(() => window.callumbApi, null, { timeout: 8000 });
+  expect(await page.evaluate(() => window.callumbApi.base())).toBe("");
+  expect(await page.evaluate(() => window.callumbApi.url("/api/chat"))).toBe("/api/chat");
+});
+
+test("api base can be pinned to the vercel app", async ({ page }) => {
+  await page.route("**/chat/widget.js*", (route) => route.abort());
+  await page.goto("/about");
+  const url = await page.evaluate(async () => {
+    const meta = document.createElement("meta");
+    meta.name = "callumb-api-base";
+    meta.content = "https://callumb-coaching.vercel.app";
+    document.head.appendChild(meta);
+    await new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = "/assets/js/api-base.js?v=foundations1";
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+    return window.callumbApi.url("/api/lead.php");
+  });
+  expect(url).toBe("https://callumb-coaching.vercel.app/api/lead.php");
+});
+
 test("phone menu opens and navigates", async ({ page, isMobile }) => {
   test.skip(!isMobile, "phone only");
   await page.goto("/coaching");

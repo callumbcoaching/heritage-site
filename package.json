@@ -16,6 +16,7 @@
     "report": "playwright show-report",
     "build": "python3 tools/build_pages.py && python3 tools/version_assets.py",
     "build:chat": "node scripts/build.mjs",
+    "build:cpanel": "node scripts/cpanel.mjs",
     "typecheck": "tsc --noEmit",
     "test:live": "BASE_URL=https://callumbcoaching.co.uk playwright test"
   },
