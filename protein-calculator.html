@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Protein &amp; Muscle Calculator | keep muscle while losing weight | CALLUM.B</title>
+  <meta name="description" content="Losing weight? Find your exact daily protein and per-meal targets to protect your muscle. Free calculator. Enter your weight, get your numbers in seconds." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=GFS+Didot&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/heritage.css?v=e77540c5">
+<link rel="stylesheet" href="/components.css?v=a9aa471a">
+<meta name="theme-color" content="#09150F">
+<link rel="stylesheet" href="/assets/css/tools.css?v=1">
+
+
+  <meta property="og:title" content="Protein &amp; Muscle Calculator | CALLUM.B" />
+  <meta property="og:description" content="Get the exact daily protein targets to protect your muscle while you lose weight. Free tool." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://callumbcoaching.co.uk/protein-calculator" />
+  <meta property="og:image" content="https://callumbcoaching.co.uk/og-share.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Protein &amp; Muscle Calculator | CALLUM.B" />
+  <meta name="twitter:description" content="The daily protein target to protect your muscle while you lose weight. Free tool." />
+  <meta name="twitter:image" content="https://callumbcoaching.co.uk/og-share.jpg" />
+
+  <style>
+    /* calculator-specific bits, built on the site's brand vars */
+    .pc-lede{color:var(--muted);font-size:15px;max-width:600px;margin:8px auto 0;}
+    .pc-seg{display:inline-flex;background:var(--panel2);border:1px solid var(--line2);border-radius:10px;padding:3px;gap:2px;}
+    .pc-seg button{background:transparent;border:0;color:var(--muted);font-family:"Cinzel",Georgia,serif;font-size:14px;font-weight:600;padding:9px 16px;border-radius:8px;cursor:pointer;}
+    .pc-seg button.on{background:var(--green);color:#09150F;}
+    .pc-mealrow{display:flex;align-items:center;gap:14px;margin-top:6px;}
+    .pc-mealrow input[type=range]{flex:1;accent-color:var(--green);}
+    .pc-mealval{font-weight:800;font-family:"Cinzel",Georgia,serif;min-width:26px;text-align:center;font-size:18px;color:#F3EAD6;}
+    .pc-num{width:100%;background:var(--panel2);border:1px solid var(--line2);color:var(--ink);font-size:20px;font-weight:700;padding:12px 14px;border-radius:10px;outline:none;}
+    .pc-num:focus{border-color:var(--green);}
+    #pcResults{display:none;}
+    #pcResults.show{display:block;}
+    .pc-bignums{display:flex;gap:14px;flex-wrap:wrap;}
+    .pc-big{flex:1;min-width:160px;background:var(--panel2);border:1px solid var(--line2);border-radius:12px;padding:18px;}
+    .pc-big .n{font-family:"Cinzel",Georgia,serif;font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1;}
+    .pc-big .n small{font-size:16px;font-weight:600;color:var(--muted);}
+    .pc-big.accent .n{color:var(--green);}
+    .pc-big .k{font-size:12.5px;color:var(--muted);margin-top:6px;}
+    .pc-sub{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;}
+    .pc-stat{flex:1;min-width:120px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;}
+    .pc-stat .n{font-family:"Cinzel",Georgia,serif;font-size:22px;font-weight:700;color:#F3EAD6;}
+    .pc-stat .k{font-size:12px;color:var(--muted);margin-top:3px;}
+    .pc-note{background:rgba(201,169,110,.07);border:1px solid rgba(201,169,110,.28);border-radius:10px;padding:14px 16px;margin-top:16px;font-size:13.5px;color:var(--body);}
+    .pc-note b{color:#F3EAD6;}
+    .pc-edu{margin-top:16px;font-size:13.5px;color:var(--muted);}
+    .pc-edu b{color:var(--ink);}
+    .pc-disclaimer{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);font-size:11.5px;color:var(--faint,#6f7f6d);}
+    .pc-more{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:8px;}
+    .pc-more a{font-size:13px;color:var(--muted);text-decoration:none;border:1px solid var(--line2);border-radius:8px;padding:8px 14px;}
+    .pc-more a:hover{border-color:var(--green);color:var(--ink);}
+  </style>
+  <!-- Privacy-friendly analytics by Plausible -->
+  <script async src="https://plausible.io/js/pa-ARVew5Fljzfvc-hdK57GS.js"></script>
+  <script>
+    window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+    plausible.init()
+  </script>
+</head>
+<body class="legacy">
+<div class="grain" aria-hidden="true"></div>
+
+
+  <header class="nav">
+  <div class="nav__bar">
+    <a class="mark" href="/" aria-label="CALLUM.B home"><img src="/brand_assets/lion-420.webp" alt="">CALLUM<i>.</i>B</a>
+    <nav class="nav__links" aria-label="Main"><a href="/#method">Method</a><a href="/results">Results</a><a href="/about">About</a><a href="/coaching">Coaching</a></nav>
+    <div class="nav__end"><a class="btn" href="muscle/">Start free trial</a><button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mnav"><span></span><span></span><span></span></button></div>
+  </div>
+</header>
+<div class="mnav" id="mnav" hidden>
+  <div class="mnav__bg" aria-hidden="true"><img src="/brand_assets/lion-crest.png" alt=""></div>
+  <nav aria-label="Menu"><ol class="mnav__list"><li style="--d:0"><a href="/"><span class="mnav__n">01</span><span class="mnav__t">Home</span><span class="mnav__s">The promise</span></a></li><li style="--d:1"><a href="/coaching"><span class="mnav__n">02</span><span class="mnav__t">Coaching</span><span class="mnav__s">Plans and what's included</span></a></li><li style="--d:2"><a href="/results"><span class="mnav__n">03</span><span class="mnav__t">Results</span><span class="mnav__s">Client transformations</span></a></li><li style="--d:3"><a href="/about"><span class="mnav__n">04</span><span class="mnav__t">About</span><span class="mnav__s">My story</span></a></li><li style="--d:4"><a href="/terms-coaching"><span class="mnav__n">05</span><span class="mnav__t">Terms</span><span class="mnav__s">In plain English</span></a></li></ol></nav>
+  <div class="mnav__foot"><a class="btn" href="/apply">Apply for 1:1 coaching <span class="arr">→</span></a><p class="label">Structure over motivation</p></div>
+</div>
+
+<main>
+    <section class="section" style="padding-top:44px;">
+      <div class="wrap" style="max-width:760px;">
+        <div class="center">
+          <p class="eyebrow" style="justify-content:center;">Free tool</p>
+          <h1>Protein &amp; Muscle Calculator</h1>
+          <p class="pc-lede">Losing weight, including with medical support? The scale isn&#8217;t the whole story. Get the exact daily protein and per-meal targets you need to <b class="green">protect your muscle</b> while the weight comes off.</p>
+        </div>
+
+        <!-- ===== CALCULATOR ===== -->
+        <div class="card" style="margin-top:26px;">
+          <div class="row" style="display:flex;gap:14px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:150px;">
+              <label for="pcWeight">Your current weight</label>
+              <input class="pc-num" type="number" id="pcWeight" inputmode="decimal" placeholder="e.g. 82" min="30" max="400" />
+            </div>
+            <div style="min-width:150px;">
+              <label>Units</label><br />
+              <div class="pc-seg" id="pcUnit">
+                <button type="button" data-u="kg" class="on">kg</button>
+                <button type="button" data-u="st">st</button>
+                <button type="button" data-u="lb">lb</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:18px;">
+            <label for="pcMeals">Meals you can realistically hit per day <span class="note" style="font-weight:400;">(appetite&#8217;s often low, so be honest)</span></label>
+            <div class="pc-mealrow">
+              <input type="range" id="pcMeals" min="2" max="5" value="4" step="1" />
+              <span class="pc-mealval" id="pcMealval">4</span>
+            </div>
+          </div>
+
+          <button class="btn btn-pri" id="pcCalc" type="button" style="width:100%;margin-top:20px;">Calculate my targets</button>
+        </div>
+
+        <!-- ===== RESULTS ===== -->
+        <div id="pcResults">
+          <div class="pc-bignums" style="margin-top:24px;">
+            <div class="pc-big accent">
+              <div class="n" id="pcProtDay">…<small> g/day</small></div>
+              <div class="k">Daily protein target to protect muscle</div>
+            </div>
+            <div class="pc-big">
+              <div class="n" id="pcProtMeal">…<small> g</small></div>
+              <div class="k">Protein per meal (across <span id="pcMealsEcho">4</span> meals)</div>
+            </div>
+          </div>
+
+          <div class="pc-sub">
+            <div class="pc-stat"><div class="n" id="pcRange">…</div><div class="k">Sensible daily range (g)</div></div>
+            <div class="pc-stat"><div class="n">2.5 to 3 g</div><div class="k">Leucine per meal (the muscle trigger)</div></div>
+            <div class="pc-stat"><div class="n">3×/week</div><div class="k">Resistance sessions to preserve muscle</div></div>
+          </div>
+
+          <div class="pc-note">
+            <b>Hitting this is the hard part.</b> When appetite drops, protein is the first thing to fall, and that&#8217;s exactly when your body starts taking the shortfall from muscle. Front-load protein early in the day, make every meal protein-first, and lean on high-protein, low-volume foods.
+          </div>
+
+          <div class="pc-edu">
+            <b>Why this matters:</b> when you lose weight without a system, research shows roughly <b>a quarter to nearly 40%</b> of what you lose can be muscle, not fat. Combine enough protein with resistance training and that can drop to around <b>15 to 20%</b>, meaning you keep the strength, shape and metabolism you&#8217;re working for, and you&#8217;re far more likely to hold the result long-term.
+          </div>
+
+          <!-- ===== EMAIL CAPTURE (soft gate) ===== -->
+          <div class="card" style="margin-top:18px;">
+            <p style="margin-bottom:4px;"><b style="color:var(--ink);">📩 Want this emailed to you, plus how to actually hit it?</b></p>
+            <p class="note" style="margin-bottom:12px;">Pop your email in and I&#8217;ll send you the <b>Protein Per Meal</b> guide: how to hit any per-meal target, plus what to reach for when your appetite&#8217;s low.</p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <input class="input" id="pcEmail" type="email" placeholder="you@email.com" autocomplete="email" required style="flex:1;min-width:200px;" />
+              <button class="btn btn-pri" id="pcSend" type="button">Email my plan</button>
+            </div>
+            <p class="note" id="pcMsg" hidden style="margin-top:8px;"></p>
+            <a id="pcGuide" href="assets/downloads/CallumB-Protein-Per-Meal-Guide.pdf" download hidden class="btn btn-startfree" style="margin-top:10px;">📥 Grab your Protein Per Meal guide →</a>
+            <p class="note" style="margin-top:10px;font-size:11.5px;">You&#8217;ll get your plan plus occasional training &amp; nutrition tips. No spam, unsubscribe anytime. See our <a class="green" href="/privacy" style="text-decoration:underline;">privacy policy</a>.</p>
+          </div>
+
+          <!-- ===== FINAL CTA ===== -->
+          <div class="center" style="margin-top:22px;">
+            <a class="btn btn-startfree btn-lg" href="muscle/">See the full system that does this for you →</a>
+          </div>
+        </div>
+
+        <div class="pc-disclaimer">
+          This calculator provides general nutrition and training guidance, not medical advice. Protein needs vary with health status and kidney function. If you&#8217;re losing weight with the support of any medication, always follow your prescriber&#8217;s instructions and speak to your healthcare provider before making changes to your diet or training. Targets are based on published guidance of ~1.2 to 1.6 g of protein per kg of body weight per day for muscle preservation during weight loss.
+        </div>
+
+        <div class="pc-more">
+          <a href="/tdee-calculator">Free TDEE calculator →</a>
+          <a href="/offset-calculator">Transformation Offset Tool →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div class="stack">
+        <a class="mark" href="/"><img src="/brand_assets/lion-420.webp" alt="">CALLUM<i>.</i>B</a>
+        <p class="body" style="max-width:34ch">Structured physique development for men who are done guessing.</p>
+        <p class="label">J3 University Level 1 Certified Coach</p>
+      </div>
+      <div><h4>Coaching</h4><ul><li><a href="/coaching">Premium 1:1</a></li><li><a href="/apply">Apply</a></li><li><a href="/the-ninety/">The Ninety</a></li><li><a href="/start/">Physique OS</a></li></ul></div>
+      <div><h4>Explore</h4><ul><li><a href="/results">Results</a></li><li><a href="/about">About</a></li><li><a href="/tdee-calculator">TDEE calculator</a></li><li><a href="/trt-starter/">TRT framework</a></li></ul></div>
+      <div><h4>Connect</h4><ul><li><a href="https://instagram.com/callum.transformation.coach" target="_blank" rel="noopener">Instagram</a></li><li><a href="/links/">All links</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/terms-coaching">Coaching terms</a></li><li><a href="/terms">Site terms</a></li></ul></div>
+    </div>
+    <div class="foot__base"><span class="label">© <span id="pcYear">2026</span> CALLUM.B · Online Transformation Coach · United Kingdom</span><span class="label it" style="font-family:var(--didot);text-transform:none;letter-spacing:0;font-size:15px;color:var(--gold)">Structure over motivation.</span></div>
+  </div>
+</footer>
+
+<p class="extra-link"><a href="/">callumbcoaching.co.uk</a></p>
+<script>
+  (function(){
+    var $=function(id){return document.getElementById(id);};
+    $('pcYear').textContent=new Date().getFullYear();
+
+    var unit='kg', seg=$('pcUnit');
+    seg.addEventListener('click',function(e){
+      var b=e.target.closest('button'); if(!b)return;
+      unit=b.getAttribute('data-u');
+      Array.prototype.forEach.call(seg.children,function(c){c.classList.toggle('on',c===b);});
+    });
+
+    var meals=$('pcMeals');
+    meals.addEventListener('input',function(){$('pcMealval').textContent=meals.value;});
+
+    function toKg(v,u){ if(u==='lb')return v*0.453592; if(u==='st')return v*6.35029; return v; }
+
+    $('pcCalc').addEventListener('click',function(){
+      var raw=parseFloat($('pcWeight').value);
+      if(!raw||raw<=0){ $('pcWeight').focus(); return; }
+      var kg=toKg(raw,unit), n=parseInt(meals.value,10);
+      var target=Math.round(kg*1.6), low=Math.round(kg*1.2), high=Math.round(kg*2.0), perMeal=Math.round(target/n);
+      $('pcProtDay').innerHTML=target+'<small> g/day</small>';
+      $('pcProtMeal').innerHTML=perMeal+'<small> g</small>';
+      $('pcRange').textContent=low+' to '+high;
+      $('pcMealsEcho').textContent=n;
+      var r=$('pcResults'); r.classList.add('show');
+      r.scrollIntoView({behavior:'smooth',block:'start'});
+    });
+
+    // ===== email capture → existing Formspree pipeline =====
+    $('pcSend').addEventListener('click',function(){
+      var em=($('pcEmail').value||'').trim(), m=$('pcMsg');
+      var show=function(t,ok){ m.textContent=t; m.hidden=false; m.style.color=ok?'var(--green)':'var(--amber)'; };
+      if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ show('That email doesn’t look right. Try again.',false); return; }
+      var btn=$('pcSend'); btn.disabled=true; btn.textContent='Sending…';
+      var fd=new FormData();
+      fd.append('email',em);
+      fd.append('source','glp1-protein-calc');
+      fd.append('lead-source','Protein & Muscle Calculator');
+      fd.append('_subject','New lead: protein calculator');
+      fd.append('marketing-consent','yes');
+      var day=$('pcProtDay').textContent, meal=$('pcProtMeal').textContent;
+      if(day && /^\d/.test(day)){ fd.append('daily-protein-target',day); fd.append('per-meal-target',meal); }
+      fetch('https://formspree.io/f/mgojkeny',{method:'POST',headers:{Accept:'application/json'},body:fd})
+        .then(function(r){ if(!r.ok) throw 0; try{fetch('https://assets.mailerlite.com/jsonp/2490221/forms/194528837141268420/subscribe',{method:'POST',body:new URLSearchParams([['fields[email]',em],['ml-submit','1'],['anticsrf','true']])});}catch(_){} btn.textContent='Sent ✓'; show('Done ✓. Your guide is ready below (also in your inbox shortly). 🦁',true); var g=$('pcGuide'); g.hidden=false; var a=document.createElement('a'); a.href=g.href; a.setAttribute('download',''); document.body.appendChild(a); a.click(); a.remove(); })
+        .catch(function(){ btn.disabled=false; btn.textContent='Email my plan'; show('Couldn’t send. Try again.',false); });
+    });
+  })();
+  </script>
+<script src="/heritage.js?v=cf7edf40"></script>
+<script>
+addEventListener("load",function(){var n=0;function l(){if(n)return;n=1;var c=document.createElement("link");c.rel="stylesheet";c.href="/chat/widget.css";document.head.appendChild(c);var s=document.createElement("script");s.src="/chat/widget.js";document.body.appendChild(s);}(window.requestIdleCallback?requestIdleCallback(l,{timeout:2200}):setTimeout(l,1400));});
+</script>
+</body>
+</html>

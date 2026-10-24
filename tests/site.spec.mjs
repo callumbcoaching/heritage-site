@@ -33,7 +33,7 @@ for (const p of pages) {
 
     test("no em dashes in the copy", async ({ page }) => {
       await page.goto(p.path);
-      expect(await page.locator("body").innerText()).not.toContain("—");
+      expect(await page.locator("body").innerText()).not.toContain(String.fromCharCode(8212));
     });
 
     test("every image loads", async ({ page }) => {

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Transformation Offset Tool | CALLUM.B</title>
+  <meta name="description" content="What's your current lifestyle actually costing you? See what your daily habits add up to per year, and how much of your transformation they'd pay for." />
+  <meta name="robots" content="index,follow" />
+  <link rel="icon" type="image/png" href="assets/img/favicon-lion.png?v=1" />
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png?v=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=GFS+Didot&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/heritage.css?v=e77540c5">
+<link rel="stylesheet" href="/components.css?v=a9aa471a">
+<meta name="theme-color" content="#09150F">
+<link rel="stylesheet" href="/assets/css/tools.css?v=1">
+
+  <link rel="canonical" href="https://callumbcoaching.co.uk/offset-calculator" />
+  <meta property="og:title" content="The Transformation Offset Tool | CALLUM.B" />
+  <meta property="og:description" content="Your habits have a price tag. See what they cost per year, and what coaching costs after the offset." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://callumbcoaching.co.uk/offset-calculator" />
+  <meta property="og:image" content="https://callumbcoaching.co.uk/og-share.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://callumbcoaching.co.uk/og-share.jpg" />
+  <style>
+    .os-group{ background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; margin-bottom:22px; }
+    .os-row{ display:flex; align-items:center; gap:12px; padding:14px 18px; border-bottom:1px solid var(--line); transition:background .15s; }
+    .os-row:last-child{ border-bottom:none; }
+    .os-row:focus-within{ background:rgba(201,169,110,.05); }
+    .os-ic{ font-size:18px; width:28px; text-align:center; flex:none; }
+    .os-lb{ flex:1; font-family:"Cinzel"; font-weight:600; font-size:14px; color:var(--ink); min-width:0; }
+    .os-lb small{ display:block; font-family:'Inter'; font-weight:400; font-size:11.5px; color:var(--muted); margin-top:2px; }
+    .os-in{ display:flex; align-items:center; gap:4px; background:var(--bg); border:1px solid var(--line2); border-radius:9px; padding:0 10px; flex:none; }
+    .os-in:focus-within{ border-color:var(--green); }
+    .os-in b{ font-size:13px; color:var(--muted); }
+    .os-in input{ background:transparent; border:0; outline:0; color:var(--ink); font-family:"Cinzel"; font-weight:700; font-size:15px; width:62px; text-align:right; padding:9px 0; }
+    .os-chip{ font-family:"Cinzel"; font-weight:700; font-size:12.5px; color:var(--body); background:var(--bg); border:1px solid var(--line2); border-radius:999px; padding:8px 14px; cursor:pointer; transition:.15s; }
+    .os-chip.on{ background:var(--green); color:#09150F; border-color:var(--green); }
+    .os-big{ font-family:"Cinzel"; font-weight:800; font-size:clamp(40px,7vw,54px); line-height:1; color:var(--red); }
+    .os-big.pos{ color:var(--green); }
+    .os-cells{ display:grid; grid-template-columns:1fr 1fr; }
+    .os-cell{ padding:15px 20px; border-top:1px solid var(--line); }
+    .os-cell:nth-child(odd){ border-right:1px solid var(--line); }
+    .os-cell .l{ font-family:"Cinzel"; font-weight:700; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:5px; }
+    .os-cell .v{ font-family:"Cinzel"; font-weight:800; font-size:24px; color:var(--ink); }
+    .os-cell.warn .v{ color:var(--amber); }
+    .os-cell.good .v{ color:var(--green); }
+    @media (max-width:480px){ .os-cells{ grid-template-columns:1fr; } .os-cell:nth-child(odd){ border-right:none; } }
+  </style>
+  <!-- Privacy-friendly analytics by Plausible -->
+  <script async src="https://plausible.io/js/pa-ARVew5Fljzfvc-hdK57GS.js"></script>
+  <script>
+    window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+    plausible.init()
+  </script>
+</head>
+<body class="legacy">
+<div class="grain" aria-hidden="true"></div>
+
+
+  <header class="nav">
+  <div class="nav__bar">
+    <a class="mark" href="/" aria-label="CALLUM.B home"><img src="/brand_assets/lion-420.webp" alt="">CALLUM<i>.</i>B</a>
+    <nav class="nav__links" aria-label="Main"><a href="/#method">Method</a><a href="/results">Results</a><a href="/about">About</a><a href="/coaching">Coaching</a></nav>
+    <div class="nav__end"><a class="btn" href="/coaching#apply">Apply Now</a><button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mnav"><span></span><span></span><span></span></button></div>
+  </div>
+</header>
+<div class="mnav" id="mnav" hidden>
+  <div class="mnav__bg" aria-hidden="true"><img src="/brand_assets/lion-crest.png" alt=""></div>
+  <nav aria-label="Menu"><ol class="mnav__list"><li style="--d:0"><a href="/"><span class="mnav__n">01</span><span class="mnav__t">Home</span><span class="mnav__s">The promise</span></a></li><li style="--d:1"><a href="/coaching"><span class="mnav__n">02</span><span class="mnav__t">Coaching</span><span class="mnav__s">Plans and what's included</span></a></li><li style="--d:2"><a href="/results"><span class="mnav__n">03</span><span class="mnav__t">Results</span><span class="mnav__s">Client transformations</span></a></li><li style="--d:3"><a href="/about"><span class="mnav__n">04</span><span class="mnav__t">About</span><span class="mnav__s">My story</span></a></li><li style="--d:4"><a href="/terms-coaching"><span class="mnav__n">05</span><span class="mnav__t">Terms</span><span class="mnav__s">In plain English</span></a></li></ol></nav>
+  <div class="mnav__foot"><a class="btn" href="/apply">Apply for 1:1 coaching <span class="arr">→</span></a><p class="label">Structure over motivation</p></div>
+</div>
+
+<main>
+    <section class="hero" style="padding-bottom:36px;">
+      <div class="wrap center">
+        <p class="eyebrow" style="justify-content:center;">Free tool · The Transformation Offset Tool</p>
+        <h1 style="max-width:20ch;margin-inline:auto;">Your transformation might already be <span class="grad">paid for</span>.</h1>
+        <p class="lead" style="margin:0 auto;">The meal deals, the coffees, the takeaways, the pints: they all have a price tag. Add up what your current lifestyle costs, and see how much of your coaching it would cover.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0;">
+      <div class="wrap" style="max-width:680px;">
+
+        <p class="tagline" style="color:var(--green);margin-bottom:10px;">On-the-go food &amp; drink · typical daily spend (work days)</p>
+        <div class="os-group">
+          <div class="os-row"><span class="os-ic">🥐</span><div class="os-lb">Breakfast on the go<small>Bakery, café, drive-through</small></div><div class="os-in"><b>£</b><input type="number" id="breakfast" placeholder="0" min="0" step="0.5" inputmode="decimal"></div></div>
+          <div class="os-row"><span class="os-ic">🥪</span><div class="os-lb">Meal deal / lunch out<small>Supermarket, sandwich shop</small></div><div class="os-in"><b>£</b><input type="number" id="lunch" placeholder="0" min="0" step="0.5" inputmode="decimal"></div></div>
+          <div class="os-row"><span class="os-ic">☕</span><div class="os-lb">Coffees &amp; energy drinks<small>Through the day</small></div><div class="os-in"><b>£</b><input type="number" id="coffees" placeholder="0" min="0" step="0.5" inputmode="decimal"></div></div>
+          <div class="os-row"><span class="os-ic">🍫</span><div class="os-lb">Snacks<small>Crisps, chocolate, random bits</small></div><div class="os-in"><b>£</b><input type="number" id="snacks" placeholder="0" min="0" step="0.5" inputmode="decimal"></div></div>
+        </div>
+
+        <p class="tagline" style="color:var(--green);margin-bottom:10px;">Evenings &amp; weekends · typical weekly spend</p>
+        <div class="os-group">
+          <div class="os-row"><span class="os-ic">🍺</span><div class="os-lb">Alcohol<small>Beers, spirits, nights out</small></div><div class="os-in"><b>£</b><input type="number" id="alcohol" placeholder="0" min="0" step="1" inputmode="decimal"></div></div>
+          <div class="os-row"><span class="os-ic">🚬</span><div class="os-lb">Cigarettes / vapes<small>Weekly cost</small></div><div class="os-in"><b>£</b><input type="number" id="smoking" placeholder="0" min="0" step="1" inputmode="decimal"></div></div>
+          <div class="os-row"><span class="os-ic">🍕</span><div class="os-lb">Takeaways<small>The weekend damage</small></div><div class="os-in"><b>£</b><input type="number" id="takeaways" placeholder="0" min="0" step="1" inputmode="decimal"></div></div>
+        </div>
+
+        <p class="tagline" style="color:var(--amber);margin-bottom:10px;">Your coaching investment · the year</p>
+        <div class="os-group" style="border-color:rgba(232,165,61,.35);margin-bottom:22px;">
+          <div class="os-row">
+            <span class="os-ic">🦁</span>
+            <div class="os-lb">12-Month Structured Development<small>The full year: maximum oversight, matched to a year of your spending</small></div>
+            <div style="text-align:right;flex:none;">
+              <div style="font-family:'Cinzel',Georgia,serif;font-weight:800;font-size:20px;color:var(--amber);">£3,744<span style="font-size:12px;color:var(--muted);"> / year</span></div>
+              <div class="note" style="font-size:11px;">≈ £69 a week</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RESULTS -->
+        <div class="calc-result" style="position:static;padding:0;overflow:hidden;">
+          <div style="padding:24px 24px 20px;background:linear-gradient(135deg,rgba(201,169,110,.10),transparent);">
+            <p class="tagline" style="color:var(--green);margin-bottom:8px;">What your current lifestyle costs</p>
+            <div class="os-big" id="annualCost">£0</div>
+            <p class="calc-sub" style="margin-top:6px;">per year, before you change a single thing</p>
+          </div>
+          <div id="zeroState" class="note center" style="padding:26px 20px;">🧮 Enter your spend above and watch the number climb…</div>
+          <div id="cells" class="os-cells" style="display:none;">
+            <div class="os-cell warn"><div class="l">Per week</div><div class="v" id="weeklyTotal">£0</div></div>
+            <div class="os-cell warn"><div class="l">Per month</div><div class="v" id="monthlyTotal">£0</div></div>
+            <div class="os-cell"><div class="l">Over 5 years</div><div class="v" id="fiveYear">£0</div></div>
+            <div class="os-cell"><div class="l">12-Month coaching</div><div class="v" id="feeDisplay">£3,744</div></div>
+            <div class="os-cell good" style="grid-column:1/-1;border-right:none;"><div class="l">If you redirected it, you'd still be up</div><div class="v" id="netSaving" style="font-size:30px;">£0 <span style="font-size:15px;color:var(--muted);">/ year, with coaching fully paid</span></div></div>
+          </div>
+        </div>
+
+        <div class="callout" id="verdict" hidden style="margin-top:20px;"><span id="verdictText"></span></div>
+
+        <!-- the story -->
+        <div class="card reveal" style="margin-top:20px;">
+          <p class="tagline" style="color:var(--green);margin-bottom:14px;">I've lived this</p>
+          <div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;">
+            <img src="assets/img/callum-beforeafter.jpeg" alt="Callum, before and after his own transformation" loading="lazy" style="width:160px;border-radius:12px;border:1px solid var(--line);flex:none;">
+            <div style="flex:1;min-width:240px;">
+              <p style="margin-bottom:12px;">A few years back, my numbers were ugly. <b style="color:var(--ink);">Roughly £20 a day</b> on breakfast, meal deals, coffees and snacks out on site. <b style="color:var(--ink);">£40 a night</b> on vodka and cigs. Takeaways every weekend. All in? Close to <b style="color:var(--amber);">£22,000 a year</b>, on habits that were destroying my health.</p>
+              <p style="margin-bottom:12px;">Now I prep my food. I train. I structure my week. No drink, no cigs. I spend <i>less</i> money, have more energy, and I'm in the best shape of my life at 40.</p>
+              <p style="margin:0;"><b style="color:var(--ink);">If your numbers look anything like mine did, I know exactly how to turn them around</b>, because structure and accountability is precisely what did it for me. That's where I come in.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- email me my numbers -->
+        <div class="card" id="mailCard" hidden style="margin-top:20px;">
+          <p style="margin-bottom:12px;"><b style="color:var(--ink);">📩 Want this breakdown in your inbox?</b> I'll send your numbers plus what to do about them.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <input class="input" id="osEmail" type="email" placeholder="you@email.com" style="flex:1;min-width:200px;" />
+            <button class="btn btn-pri" id="osSend" type="button">Send my numbers</button>
+          </div>
+          <p class="note" id="osNote" hidden style="margin-top:10px;"></p>
+        </div>
+
+        <div class="cta-band reveal" style="margin-top:26px;">
+          <h2 style="font-size:clamp(24px,4vw,32px);">Same money. Completely different life.</h2>
+          <p class="lead" style="margin:0 auto 8px;">The habits are already costing you. Structure just points the spend at something that pays you back.</p>
+          <div class="btn-row" style="justify-content:center;">
+            <a class="btn btn-pri btn-lg" href="/coaching#apply">Apply for Coaching</a>
+            <a class="btn btn-ghost btn-lg" href="/tdee-calculator">Try the free calculators</a>
+          </div>
+        </div>
+
+        <p class="note center" style="margin-top:26px;max-width:70ch;margin-inline:auto;">
+          Rough estimates for perspective. Daily items are counted across 5 work days. Nobody expects
+          zero spend: even halving these habits changes the maths (and the mirror).
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div class="stack">
+        <a class="mark" href="/"><img src="/brand_assets/lion-420.webp" alt="">CALLUM<i>.</i>B</a>
+        <p class="body" style="max-width:34ch">Structured physique development for men who are done guessing.</p>
+        <p class="label">J3 University Level 1 Certified Coach</p>
+      </div>
+      <div><h4>Coaching</h4><ul><li><a href="/coaching">Premium 1:1</a></li><li><a href="/apply">Apply</a></li><li><a href="/the-ninety/">The Ninety</a></li><li><a href="/start/">Physique OS</a></li></ul></div>
+      <div><h4>Explore</h4><ul><li><a href="/results">Results</a></li><li><a href="/about">About</a></li><li><a href="/tdee-calculator">TDEE calculator</a></li><li><a href="/trt-starter/">TRT framework</a></li></ul></div>
+      <div><h4>Connect</h4><ul><li><a href="https://instagram.com/callum.transformation.coach" target="_blank" rel="noopener">Instagram</a></li><li><a href="/links/">All links</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/terms-coaching">Coaching terms</a></li><li><a href="/terms">Site terms</a></li></ul></div>
+    </div>
+    <div class="foot__base"><span class="label">© <span id="year">2026</span> CALLUM.B · Online Transformation Coach · United Kingdom</span><span class="label it" style="font-family:var(--didot);text-transform:none;letter-spacing:0;font-size:15px;color:var(--gold)">Structure over motivation.</span></div>
+  </div>
+</footer>
+
+<div class="wrap extra-link" style="padding:0 0 20px;"><a class="green" href="/protein-calculator" style="font-size:13px;text-decoration:underline;">New: Protein &amp; Muscle Calculator →</a></div>
+<script src="assets/js/main.js?v=4"></script>
+  <script>
+    (function(){
+      var $=function(id){return document.getElementById(id);};
+      var dailyIds=['breakfast','lunch','coffees','snacks'], weeklyIds=['alcohol','smoking','takeaways'];
+      var v=function(id){return parseFloat($(id).value)||0;};
+      var fmt=function(n){return '£'+Math.round(n).toLocaleString('en-GB');};
+      var last={annual:0,weekly:0,monthly:0,fee:0,net:0};
+
+      function calc(){
+        var weekly=dailyIds.reduce(function(s,id){return s+v(id);},0)*5 + weeklyIds.reduce(function(s,id){return s+v(id);},0);
+        var annual=weekly*52, monthly=annual/12;
+        var feeAnnual=3744, fee=feeAnnual/12, net=annual-feeAnnual;
+        var has=weekly>0;
+        last={annual:annual,weekly:weekly,monthly:monthly,fee:fee,net:net};
+        $('zeroState').style.display=has?'none':'block';
+        $('cells').style.display=has?'grid':'none';
+        $('annualCost').textContent=fmt(annual);
+        $('weeklyTotal').textContent=fmt(weekly);
+        $('monthlyTotal').textContent=fmt(monthly);
+        $('fiveYear').textContent=fmt(annual*5);
+        $('feeDisplay').textContent=fmt(feeAnnual);
+        $('mailCard').hidden=!has;
+        $('verdict').hidden=!has;
+        if(!has) return;
+        var netEl=$('netSaving'), cell=netEl.closest('.os-cell'), vt=$('verdictText');
+        if(net>0){
+          cell.className='os-cell good'; cell.style.gridColumn='1/-1';
+          netEl.firstChild.nodeValue=fmt(net)+' ';
+          vt.innerHTML='Your habits cost <b style=\"color:#fff\">'+fmt(annual)+' a year</b>. Over five years that\u2019s <b style=\"color:#fff\">'+fmt(annual*5)+'</b>. Redirect it and the full 12-month programme (<b style=\"color:#fff\">'+fmt(feeAnnual)+'</b>) is covered with <span style=\"color:var(--green);font-weight:700\">'+fmt(net)+' left in your pocket</span>, while you get in the best shape of your life. That\u2019s the offset: same money, pointed at the inches instead.';
+        } else {
+          cell.className='os-cell warn'; cell.style.gridColumn='1/-1';
+          netEl.firstChild.nodeValue=fmt(Math.abs(net))+' ';
+          vt.innerHTML='Your habits cost <b style=\"color:#fff\">'+fmt(annual)+' a year</b>. That covers <b style=\"color:#fff\">'+Math.round(annual/feeAnnual*100)+'%</b> of the 12-month programme (£3,744) already, and that\u2019s before counting supermarket food you\u2019d buy anyway. The gap is smaller than it looks. <span style=\"color:var(--green);font-weight:700\">Structure changes the body and the bank balance.</span>';
+        }
+      }
+      dailyIds.concat(weeklyIds).forEach(function(id){ $(id).addEventListener('input',calc); });
+      calc();
+
+      $('osSend').addEventListener('click',function(){
+        var em=($('osEmail').value||'').trim(), n=$('osNote');
+        var show=function(t,ok){ n.textContent=t; n.hidden=false; n.style.color=ok?'var(--green)':'var(--red)'; };
+        if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ show('That email doesn\u2019t look right. Try again.',false); return; }
+        var btn=$('osSend'); btn.disabled=true; btn.textContent='Sending\u2026';
+        var fd=new FormData();
+        fd.append('email',em);
+        fd.append('lead-source','Transformation Offset Tool');
+        fd.append('_subject','New lead: offset tool');
+        fd.append('annual-lifestyle-cost',fmt(last.annual));
+        fd.append('monthly-lifestyle-cost',fmt(last.monthly));
+        fd.append('coaching-fee','£3,744 / 12-month programme');
+        fd.append('net-yearly-offset',(last.net>=0?'+':'-')+fmt(Math.abs(last.net)));
+        fetch('https://formspree.io/f/mgojkeny',{method:'POST',headers:{Accept:'application/json'},body:fd})
+          .then(function(r){ if(!r.ok) throw 0; try{fetch('https://assets.mailerlite.com/jsonp/2490221/forms/194528841373321023/subscribe',{method:'POST',body:new URLSearchParams([['fields[email]',em],['ml-submit','1'],['anticsrf','true']])});}catch(_){} show('Sent. Check your inbox soon. \ud83e\udd81',true); btn.textContent='Sent \u2713'; })
+          .catch(function(){ btn.disabled=false; btn.textContent='Send my numbers'; show('Couldn\u2019t send. Try again.',false); });
+      });
+    })();
+  </script>
+<script src="/heritage.js?v=cf7edf40"></script>
+<script>
+addEventListener("load",function(){var n=0;function l(){if(n)return;n=1;var c=document.createElement("link");c.rel="stylesheet";c.href="/chat/widget.css";document.head.appendChild(c);var s=document.createElement("script");s.src="/chat/widget.js";document.body.appendChild(s);}(window.requestIdleCallback?requestIdleCallback(l,{timeout:2200}):setTimeout(l,1400));});
+</script>
+</body>
+</html>

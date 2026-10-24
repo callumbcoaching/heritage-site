@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The TRT Monitoring &amp; Optimisation Framework | CALLUM.B</title>
+  <meta name="description" content="Free framework: what TRT actually involves, the blood panel that matters, what to expect, and the lifestyle levers that decide your results. Educational, not medical advice." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://callumbcoaching.co.uk/trt-starter" />
+  <meta property="og:title" content="The TRT Framework | CALLUM.B" />
+  <meta property="og:description" content="Free framework: what TRT involves, the blood panel that matters, and what to expect." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://callumbcoaching.co.uk/trt-starter" />
+  <meta property="og:image" content="https://callumbcoaching.co.uk/og-share.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://callumbcoaching.co.uk/og-share.jpg" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon-lion.png?v=1" />
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png?v=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=GFS+Didot&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/heritage.css?v=e77540c5">
+<link rel="stylesheet" href="/components.css?v=a9aa471a">
+<meta name="theme-color" content="#09150F">
+<style>
+    :root{
+      --bg:#09150F; --panel:#0C1C14; --panel2:#112418;
+      --line:rgba(201,169,110,.18); --line2:rgba(201,169,110,.40);
+      --body:#CFC8B6; --muted:#7E9184; --white:#F3EAD6; --green:#C9A96E; --red:#E05A45;
+      --font-d:"Cinzel",Georgia,serif; --font-b:'Inter',sans-serif;
+      --w:1180px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--body);font-family:var(--font-b);font-size:15.5px;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+    body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+    a{color:inherit;text-decoration:none;}
+    .wrap{max-width:var(--w);margin:0 auto;padding:0 clamp(20px,4vw,48px);}
+    .eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--green);display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+    .eyebrow::before{content:"";width:34px;height:1px;background:var(--green);}
+    .display{font-family:var(--font-d);font-weight:800;color:var(--white);letter-spacing:-.03em;line-height:1.04;}
+    .grad{background:linear-gradient(100deg,#F3EAD6 20%,#C9A96E 78%);-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .lead{font-size:clamp(16px,1.6vw,18.5px);line-height:1.7;color:var(--body);}
+    .note{font-size:13px;color:var(--muted);}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--font-b);font-weight:600;font-size:15px;border-radius:999px;padding:16px 32px;transition:all .3s cubic-bezier(.22,1,.36,1);cursor:pointer;border:none;}
+    .btn .arr{transition:transform .3s;}
+    .btn:hover .arr{transform:translateX(5px);}
+    .btn-solid{background:var(--green);color:#09150F;}
+    .btn-solid:hover{background:#E8C987;}
+    .btn-line{border:1px solid var(--line2);color:var(--white);background:transparent;}
+    .btn-line:hover{border-color:var(--green);color:var(--green);}
+    .sec{padding:clamp(72px,9vw,120px) 0;}
+    .sec--line{border-top:1px solid var(--line);}
+    .sec-head{max-width:780px;margin-bottom:clamp(36px,5vw,56px);}
+    h2.display{font-size:clamp(30px,4.4vw,52px);margin-bottom:14px;}
+    .rv{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1);}
+    .rv.in{opacity:1;transform:none;}
+    .rv-d1{transition-delay:.12s;} .rv-d2{transition-delay:.24s;}
+    .rv-slide{opacity:0;}
+    .rv-slide.in{animation:slideL 1s cubic-bezier(.22,1,.36,1) .35s both;}
+    @keyframes slideL{from{opacity:0;transform:translateX(-52px);}to{opacity:1;transform:none;}}
+    .nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .35s,border-color .35s;border-bottom:1px solid transparent;}
+    .nav.on{background:rgba(9,21,15,.82);backdrop-filter:blur(14px);border-bottom-color:var(--line);}
+    .nav__in{max-width:var(--w);margin:0 auto;padding:18px clamp(20px,4vw,48px);display:flex;align-items:center;justify-content:space-between;}
+    .nav__logo img{height:40px;display:block;}
+    .nav__links{display:flex;gap:26px;align-items:center;font-size:14px;color:var(--body);}
+    .nav__links a:hover{color:var(--white);}
+    @media(max-width:760px){.nav__links a.hide-m{display:none;}}
+
+    /* hero + gate */
+    .hero{padding:clamp(140px,17vh,190px) 0 clamp(56px,8vw,90px);position:relative;overflow:hidden;}
+    .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(55% 45% at 25% 15%,rgba(201,169,110,.07),transparent 65%);pointer-events:none;}
+    .hero__grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,4vw,64px);align-items:center;position:relative;}
+    @media(max-width:920px){.hero__grid{grid-template-columns:1fr;}}
+    .hero h1{font-size:clamp(38px,5.4vw,66px);}
+    .hero .lead{margin:22px 0 24px;}
+    .callout{border-left:3px solid var(--green);background:var(--panel);border-radius:0 12px 12px 0;padding:14px 18px;font-size:14px;color:var(--body);}
+    .gate{background:var(--panel);border:1px solid var(--green);border-radius:22px;padding:clamp(26px,3vw,38px);box-shadow:0 0 60px rgba(201,169,110,.07);}
+    .gate h3{font-family:var(--font-d);color:var(--white);font-size:21px;font-weight:800;margin-bottom:6px;}
+    .form{display:grid;gap:14px;}
+    .field label{display:block;font-size:13px;font-weight:600;color:var(--white);margin-bottom:7px;}
+    .field .req{color:var(--green);}
+    .input{width:100%;background:var(--panel2);border:1px solid var(--line2);border-radius:12px;padding:14px 16px;color:var(--white);font-family:var(--font-b);font-size:15px;outline:none;transition:border-color .25s;}
+    .input:focus{border-color:var(--green);}
+    .consent{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:var(--muted);cursor:pointer;line-height:1.5;}
+    .consent input{width:auto;margin-top:3px;}
+
+    /* carousel */
+    .bts-wrap{position:relative;}
+    .bts-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:4px 2px 16px;scrollbar-width:thin;scrollbar-color:#3a3f3a transparent;}
+    .bts-track::-webkit-scrollbar{height:8px;}
+    .bts-track::-webkit-scrollbar-thumb{background:#3a3f3a;border-radius:8px;}
+    .bts-track img{flex:0 0 auto;width:min(80vw,440px);height:auto;border-radius:16px;border:1px solid var(--line2);scroll-snap-align:center;background:#09150F;}
+    .bts-nav{position:absolute;top:44%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(9,21,15,.82);color:#F3EAD6;font-size:26px;line-height:1;cursor:pointer;z-index:2;display:none;}
+    .bts-nav:hover{background:rgba(9,21,15,.95);}
+    .bts-prev{left:-8px;} .bts-next{right:-8px;}
+    @media(min-width:900px){.bts-nav{display:block;}}
+
+    /* inside grid */
+    .hgrid{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);}
+    .g3{grid-template-columns:repeat(3,1fr);}
+    .cell{background:var(--bg);padding:clamp(24px,3vw,38px);}
+    .cell .k{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--green);margin-bottom:12px;display:block;}
+    .cell h3{font-family:var(--font-d);color:var(--white);font-size:18px;font-weight:700;margin-bottom:9px;}
+    .cell p{font-size:14px;color:var(--body);}
+    @media(max-width:860px){.g3{grid-template-columns:1fr;}}
+
+    .band{border-top:1px solid var(--line);text-align:center;padding:clamp(80px,10vw,120px) 0;position:relative;overflow:hidden;}
+    .band::before{content:"";position:absolute;inset:0;background:radial-gradient(50% 60% at 50% 100%,rgba(201,169,110,.08),transparent 70%);pointer-events:none;}
+    .band .display{font-size:clamp(32px,4.6vw,52px);margin-bottom:14px;}
+    .band .lion{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(520px,80vw);opacity:.05;pointer-events:none;}
+    .disc{border-left:3px solid var(--muted);background:var(--panel);border-radius:0 12px 12px 0;padding:16px 20px;font-size:13px;color:var(--muted);line-height:1.7;}
+    .disc b{color:var(--body);}
+    .footer{border-top:1px solid var(--line);padding:34px 0;font-size:12.5px;color:var(--muted);}
+    .footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+  
+/* Heritage stylesheets load above. Keep this page's layout and section order. */
+.hero{min-height:0;display:block;}
+.hero .eyebrow,.hero .lede,.hero .lead,.hero .actions,.hero .meta{opacity:1;transform:none;}
+.btn,.btn-solid,.btn-line,.btn-pri{position:static;overflow:visible;isolation:auto;letter-spacing:normal;text-transform:none;box-shadow:none;border-radius:0;}
+.btn::before,.btn::after{content:none !important;display:none !important;animation:none !important;}
+.nav__links a.btn,.nav__links a.btn-solid,.nav__links a.btn-pri{color:#09150F;letter-spacing:normal;text-transform:none;}
+.nav__links a.btn:hover,.nav__links a.btn-solid:hover,.nav__links a.btn-pri:hover{color:#09150F;}
+.nav__links a.btn::after,.nav__links a.btn-solid::after{display:none;}
+.cta,.dl,button.go,.pflag{border-radius:0;}
+.nav{padding-top:0;pointer-events:auto;}
+</style>
+  <!-- Privacy-friendly analytics by Plausible -->
+  <script async src="https://plausible.io/js/pa-ARVew5Fljzfvc-hdK57GS.js"></script>
+  <script>
+    window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+    plausible.init()
+  </script>
+</head>
+<body>
+
+  <header class="nav" id="nav">
+    <div class="nav__in">
+      <a class="nav__logo" href="/"><img src="/assets/img/callum-logo.png" alt="CALLUM.B" /></a>
+      <nav class="nav__links">
+        <a class="hide-m" href="/coaching">Premium Coaching</a>
+        <a class="hide-m" href="/results">Results</a>
+        <a class="btn btn-solid" style="padding:12px 24px;font-size:14px;" href="#get">Get the framework <span class="arr">→</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO + GATE -->
+    <section class="hero" id="get">
+      <div class="wrap">
+        <div class="hero__grid">
+          <div>
+            <p class="eyebrow rv in">Free framework · TRT</p>
+            <h1 class="display rv in">Thinking about TRT? Start with <span class="grad">blood work,</span> not bro-science.</h1>
+            <p class="lead rv in rv-d1">TRT isn't a shortcut or a magic switch. Done properly it's a steady, monitored process that restores your hormones to a healthy range. This free framework shows you what it actually involves, the blood panel that matters, what to expect, and the levers that decide your results.</p>
+            <div class="callout rv-slide" id="heroCallout">It works because it's dialled in and monitored, not maxed out. Bloods turn guesswork into evidence.</div>
+          </div>
+          <div class="gate rv in rv-d2">
+            <h3>Get the free framework</h3>
+            <p class="note" style="margin-bottom:18px;">Enter your details and both guides unlock instantly.</p>
+            <form class="form" data-formspree="mgojkeny" data-success="#trt-success">
+              <input type="hidden" name="_subject" value="New TRT framework lead" />
+              <input type="hidden" name="lead-source" value="TRT · Monitoring Framework" />
+              <div class="field"><label for="t-name">First name <span class="req">*</span></label><input class="input" id="t-name" name="name" type="text" required placeholder="Your first name" /></div>
+              <div class="field"><label for="t-email">Email <span class="req">*</span></label><input class="input" id="t-email" name="email" type="email" required placeholder="you@email.com" /></div>
+              <label class="consent"><input type="checkbox" name="marketing-consent" value="yes" /><span>Email me the framework and occasional coaching tips. I can unsubscribe anytime.</span></label>
+              <button class="btn btn-solid" type="submit" style="width:100%;">Send me the framework <span class="arr">→</span></button>
+              <p class="note form-error" hidden style="color:var(--red);">Something went wrong. Please try again.</p>
+            </form>
+            <div id="trt-success" hidden style="text-align:center;padding:12px 0 4px;">
+              <h3 style="margin-bottom:8px;">You're in.</h3>
+              <p class="note" style="margin-bottom:18px;">Both guides are ready, and copies are on their way to your inbox.</p>
+              <div style="display:grid;gap:10px;">
+                <a class="btn btn-solid" href="/assets/downloads/trt-what-it-involves.pdf" download>What TRT Actually Involves ↓</a>
+                <a class="btn btn-line" href="/assets/downloads/trt-monitoring-framework.pdf" download>Monitoring &amp; Optimisation Framework ↓</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BEHIND THE SCENES CAROUSEL -->
+    <section class="sec sec--line">
+      <div class="wrap">
+        <div class="sec-head rv">
+          <p class="eyebrow">Behind the scenes</p>
+          <h2 class="display">Real client. Real bloods. <span class="grad">Nothing cropped.</span></h2>
+          <p class="lead">Mark's 10-week update: two full blood panels, six weeks apart, and the plain-English read that goes with them. The wins <em>and</em> the markers still being worked on. Shared with his permission.</p>
+        </div>
+        <div class="bts-wrap rv rv-d1">
+          <button class="bts-nav bts-prev" aria-label="Previous slide" onclick="btsScroll(-1)">&#8249;</button>
+          <div class="bts-track" id="btsTrack">
+            <img src="/assets/trt/bts-1.png" width="1080" height="1080" alt="Mark's before and after photos with headline blood markers" />
+            <img src="/assets/trt/bts-2.png" width="1080" height="1080" loading="lazy" alt="Testosterone, free T and SHBG panel before and after" />
+            <img src="/assets/trt/bts-3.png" width="1080" height="1080" loading="lazy" alt="Blood sugar, liver and iron markers driven by training and nutrition" />
+            <img src="/assets/trt/bts-4.png" width="1080" height="1080" loading="lazy" alt="Cholesterol panel, every number trending the right way" />
+            <img src="/assets/trt/bts-5.png" width="1080" height="1080" loading="lazy" alt="The markers being monitored between panels" />
+            <img src="/assets/trt/bts-6-web.png" width="1080" height="1080" loading="lazy" alt="What premium TRT coaching looks like behind the scenes" />
+          </div>
+          <button class="bts-nav bts-next" aria-label="Next slide" onclick="btsScroll(1)">&#8250;</button>
+        </div>
+        <p class="note rv rv-d2" style="margin-top:10px;text-align:center;">Swipe through the full breakdown → &nbsp;·&nbsp; Educational, not medical advice. Dose is always managed by your prescriber.</p>
+      </div>
+    </section>
+
+    <!-- WHAT'S INSIDE -->
+    <section class="sec sec--line">
+      <div class="wrap">
+        <div class="sec-head rv">
+          <p class="eyebrow">What's inside</p>
+          <h2 class="display">Start the <span class="grad">right way.</span></h2>
+        </div>
+        <div class="hgrid g3 rv rv-d1">
+          <div class="cell"><span class="k">01 · The basics</span><h3>What it is, and isn't</h3><p>A plain-English breakdown of what TRT actually involves, and the realistic week-by-week of what to expect.</p></div>
+          <div class="cell"><span class="k">02 · The panel</span><h3>The blood panel</h3><p>Every marker that matters (hormones, blood count, metabolic, lipids, liver, kidney and prostate), with why each one is tracked.</p></div>
+          <div class="cell"><span class="k">03 · The cadence</span><h3>Testing cadence</h3><p>Baseline, 6 to 8 week review, quarterly and annual, so every decision is made against your real numbers, not guesswork.</p></div>
+          <div class="cell"><span class="k">04 · The feel</span><h3>Wellbeing tracking</h3><p>Energy, libido, mood, sleep, performance and recovery, because how you feel is data too.</p></div>
+          <div class="cell"><span class="k">05 · The levers</span><h3>The lifestyle pillars</h3><p>Training, nutrition, recovery and stress: the levers you control that decide how well any protocol works.</p></div>
+          <div class="cell"><span class="k">06 · The line</span><h3>Safety first</h3><p>What to watch, and when to contact your clinician. Your dose is always managed by your prescriber, never guessed.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="band">
+      <img class="lion" src="/assets/img/lion-cutout.png" alt="" aria-hidden="true" />
+      <div class="wrap" style="position:relative;">
+        <p class="eyebrow" style="justify-content:center;">Guidance at every step</p>
+        <h2 class="display">Build your protocol: <span class="grad">with oversight.</span></h2>
+        <p class="lead" style="max-width:560px;margin:0 auto 30px;">I read your bloods with you, programme your training and nutrition, and keep everything moving in the right direction.</p>
+        <a class="btn btn-solid" href="/coaching#apply">Apply for Coaching <span class="arr">→</span></a>
+        <div class="disc" style="max-width:820px;margin:40px auto 0;text-align:left;">
+          <b>Important: this is educational information, not medical advice.</b> TRT (testosterone replacement therapy) is a medical treatment that must be prescribed and supervised by a licensed clinician based on proper diagnosis and blood work. This framework does not diagnose, prescribe, or recommend any treatment, dose, or supplier, and does not replace medical care. Reference ranges are typical adult-male values and vary between laboratories; "optimal" is individual and interpreted by your prescribing clinician. Do not start, stop, or source testosterone without a qualified doctor.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <span>© <span id="yr">2026</span> CALLUM.B · Online Transformation Coach</span>
+      <span><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('yr').textContent=new Date().getFullYear();
+    var nav=document.getElementById('nav');
+    addEventListener('scroll',function(){nav.classList.toggle('on',scrollY>40);},{passive:true});
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.1});
+    document.querySelectorAll('.rv:not(.in), .rv-slide:not(.in)').forEach(function(el){io.observe(el);});
+    function btsScroll(dir){var t=document.getElementById('btsTrack');if(!t)return;var img=t.querySelector('img');var step=img?img.offsetWidth+16:400;t.scrollBy({left:dir*step,behavior:'smooth'});}
+    document.querySelectorAll('form[data-formspree]').forEach(function(form){
+      form.addEventListener('submit',function(e){
+        e.preventDefault();
+        var btn=form.querySelector('[type=submit]');
+        var orig=btn?btn.innerHTML:'';
+        var err=form.querySelector('.form-error');
+        if(err)err.hidden=true;
+        if(btn){btn.disabled=true;btn.textContent='Sending…';}
+        fetch('https://formspree.io/f/'+form.getAttribute('data-formspree'),{method:'POST',headers:{Accept:'application/json'},body:new FormData(form)})
+          .then(function(r){if(!r.ok)throw 0;
+            try{var em=(form.querySelector('input[type=email]')||{}).value||'';if(em){fetch('https://assets.mailerlite.com/jsonp/2490221/forms/194528838488687781/subscribe',{method:'POST',body:new URLSearchParams([['fields[email]',em],['ml-submit','1'],['anticsrf','true']])});}}catch(_){}
+            var ok=document.querySelector(form.getAttribute('data-success'));
+            form.hidden=true; if(ok)ok.hidden=false;
+          })
+          .catch(function(){if(btn){btn.disabled=false;btn.innerHTML=orig;}if(err)err.hidden=false;});
+      });
+    });
+  </script>
+<script>
+addEventListener("load",function(){var n=0;function l(){if(n)return;n=1;var c=document.createElement("link");c.rel="stylesheet";c.href="/chat/widget.css";document.head.appendChild(c);var s=document.createElement("script");s.src="/chat/widget.js";document.body.appendChild(s);}(window.requestIdleCallback?requestIdleCallback(l,{timeout:2200}):setTimeout(l,1400));});
+</script>
+</body>
+</html>

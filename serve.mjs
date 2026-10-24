@@ -4,6 +4,11 @@ const ROOT = path.resolve("."); const PORT = 3000;
 const T = {".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".webp":"image/webp",".png":"image/png",".jpg":"image/jpeg",".svg":"image/svg+xml",".json":"application/json"};
 http.createServer((req,res)=>{
   let u = decodeURIComponent(req.url.split("?")[0]);
+  if (u === "/api/chat" && req.method === "GET") {
+    res.writeHead(200, {"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});
+    res.end("{}");
+    return;
+  }
   let f = path.join(ROOT, u === "/" ? "/index.html" : u);
   if (!f.startsWith(ROOT)) return res.writeHead(403).end();
   if (fs.existsSync(f) && fs.statSync(f).isDirectory()) f = path.join(f, "index.html");

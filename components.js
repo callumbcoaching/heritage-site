@@ -32,6 +32,10 @@
     evg.addEventListener("touchstart", () => evg.classList.add("touched"), { passive: true });
     document.addEventListener("touchstart", e => { if (!evg.contains(e.target)) evg.classList.remove("touched"); }, { passive: true });
   }
+  // the flat turn: strike "motivation" and show the beats once it's on screen
+  document.querySelectorAll(".turn--flat").forEach(turn => new IntersectionObserver((es, o) => {
+    if (es[0].isIntersecting) { turn.dataset.step = 1; setTimeout(() => turn.dataset.step = 3, 500); o.disconnect(); }
+  }, { threshold: .45 }).observe(turn));
   // the turn: three beats across each sticky turn scene
   document.querySelectorAll(".turn").forEach(turn => turn.addEventListener("scene", e => {
     const t = e.detail, s = t < .12 ? 0 : t < .4 ? 1 : t < .7 ? 2 : 3;
@@ -53,3 +57,36 @@
     setInterval(() => { if (auto && seen) show((i + 1) % tabs.length); }, 4500);
   }
 })();
+
+/* ---------- lead tracking (Plausible custom events) ---------- */
+window.track = (name, props) => { try { window.plausible && window.plausible(name, props ? { props } : undefined); } catch (e) {} };
+document.addEventListener("click", e => {
+  const a = e.target.closest("a, button"); if (!a) return;
+  const href = a.getAttribute("href") || "";
+  const sec = a.closest("section[id]");
+  const where = sec ? sec.id : a.closest(".nav") ? "nav" : a.closest(".mnav") ? "menu" : a.closest("footer") ? "footer" : "page";
+  if (a.dataset.ev) track(a.dataset.ev, { page: location.pathname });
+  else if (/^\/apply(\b|$|#|\?)/.test(href) && location.pathname !== "/apply") track("Apply click", { page: location.pathname, from: where });
+  else if (href.startsWith("https://wa.me") && !a.id) track("WhatsApp click", { page: location.pathname, from: where });
+}, { capture: true });
+
+/* ---------- free guide signup -> /api/lead.php -> MailerLite ---------- */
+document.querySelectorAll(".leadf").forEach(f => {
+  const box = f.parentElement, ok = box.querySelector(".leadok"), msg = f.querySelector(".leadf__msg"), btn = f.querySelector("button");
+  const note = msg.innerHTML;
+  f.addEventListener("submit", async e => {
+    e.preventDefault();
+    const d = Object.fromEntries(new FormData(f)); d.src = f.dataset.src || "site";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test((d.email || "").trim())) { msg.textContent = "That email doesn't look right. Check it and try again."; msg.classList.add("bad"); f.querySelector("[name=email]").focus(); return; }
+    btn.disabled = true; msg.classList.remove("bad"); msg.textContent = "Sending...";
+    try {
+      const r = await fetch("/api/lead.php", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(d) });
+      if (!r.ok) throw new Error(r.status);
+      track("Guide signup", { page: location.pathname });
+      f.hidden = true; ok.hidden = false;
+    } catch (err) {
+      btn.disabled = false; msg.classList.add("bad");
+      msg.innerHTML = 'Something went wrong on my side. <a class="tlink" href="/guides/five-numbers.pdf" target="_blank" rel="noopener">Download the guide here</a>, and try again later to join the list.';
+    }
+  });
+});

@@ -1,0 +1,17 @@
+# Dev files are not part of the public site.
+# api/ is the lead function and must be deployed.
+!api/
+!api/**
+tools/
+tests/
+serve.mjs
+screenshot.mjs
+offsets.mjs
+playwright.config.mjs
+node_modules/
+playwright-report/
+test-results/
+temporary screenshots/
+.firecrawl/
+.gitignore
+*.md
