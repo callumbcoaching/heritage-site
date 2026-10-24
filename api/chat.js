@@ -1,3 +1,5 @@
+// Built from server/chat.ts. Edit that, then npm run build:chat.
+
 // server/chat.ts
 import { isStepCount, streamText, tool } from "ai";
 import { z } from "zod";
@@ -58,7 +60,7 @@ Physique OS, at /start. The self-run system. The app his 1:1 clients use, the Fr
 
 Keep the Muscle, at /muscle. The self-run system for keeping muscle while the weight drops, including when weight loss has medical support, and for holding the result when the loss stops. It is also for someone losing weight with no medication. Price matches Physique OS: 7 days free, then from \xA329/month, or \xA3249/year (\xA320.75/month billed yearly, save \xA399). What is inside: a protein system for low appetite, short joint-friendly resistance sessions, tracking protein, sessions, waist and strength rather than only the scale, an off-ramp for when the loss eases off, the Framework, the app, and the guide library. The page says: lose weight without a system and research shows roughly a quarter to nearly 40% of what comes off can be muscle. Enough protein plus the right training cuts that to around 15 to 20%. Most people regain around two-thirds within a year, and it can come back as fat. These are the page's research lines, not a promise for him. Nutrition and training guidance, not medical advice. Dosing, starting, stopping or switching medication stays with his prescriber. If he has a medical condition, speak to a GP or prescriber before changing diet or training. The free protein calculator is at /protein-calculator.
 
-Free five numbers guide. On the home page, the coaching page and the results page, for someone not ready to apply. Before Callum writes a plan he looks at five numbers: waking resting heart rate, blood pressure, waist measured properly, the 7-day weight trend, and bloods. The guide shows what each one is, how to take it at home, and what to watch for. He leaves a first name and email on the page. Free, instant download. He will hear from Callum by email now and then, and he can unsubscribe. Link: /#guide. This is the free guide to offer. There is a separate free read at /guide about five signs a GLP-1 can work against muscle, energy and results. It is not medical advice. Do not use its short unnamed lines as client results. For what to do about muscle while losing weight, use Keep the Muscle and the protein calculator, and tell him to speak to his clinician about the medication.
+The Five Foundations, the free guide for busy men over 30. On the home page, the coaching page and the results page, for someone not ready to apply. Five things that fit round work and kids. Get them done most weeks and everything else gets easier. The five are: protein at every meal (a proper portion, roughly 30 to 40g, not a daily total chased at night), daily steps (build towards 10,000, and on a bad week beat last week's average by 1,000 to 2,000), three short full-body strength sessions a week (about 45 minutes, and two on a bad week), sleep (seven to nine hours, and the minimum is a set wake time plus a bedtime that gives 7 hours), and one weekly check-in (the 7-day average weight, and waist at the belly button). Each one has a target and a minimum. Hit the target when he can. Hit the minimum when the week goes sideways. Change one thing at a time, never five. Aim for most days, not every day. It is general guidance on training, nutrition and lifestyle, not medical advice. If he has a health condition or takes medication, he should speak to his GP before changing diet or training. He leaves a first name and email on the page. Free, instant download. He will hear from Callum by email now and then, and he can unsubscribe. Link: /#guide. The file is /guides/the-five-foundations.pdf. An old link at /guides/five-numbers.pdf opens this same guide. This is the free guide to offer. There is a separate free read at /guide about five signs a GLP-1 can work against muscle, energy and results. It is not medical advice. Do not use its short unnamed lines as client results. For what to do about muscle while losing weight, use Keep the Muscle and the protein calculator, and tell him to speak to his clinician about the medication.
 
 Calculators. Do not invent a number.
 - TDEE calculator, /tdee-calculator. Free. Maintenance calories and a starting macro split for lose fat, maintain, or build muscle. Metric or imperial. The page says it uses the Mifflin-St Jeor equation. Estimates only, not medical or dietary advice. If he has a health condition, is pregnant, or is unsure, he should check with a GP before changing his diet. Offer this when he wants numbers and is not ready to apply.
@@ -199,17 +201,6 @@ function takeRateLimit(key, now, windowMs, maxRequests) {
   }
   current.count += 1;
   return { ok: true };
-}
-function sameOrigin(request) {
-  const origin = request.headers.get("origin");
-  if (!origin) return true;
-  const host = request.headers.get("host");
-  if (!host) return false;
-  try {
-    return new URL(origin).host === host;
-  } catch {
-    return false;
-  }
 }
 function knownPage(page, pages) {
   if (typeof page !== "string") return void 0;
@@ -412,6 +403,61 @@ function cleanLine(value, max) {
   return value.replace(/[\u0000-\u001f]+/g, " ").replace(/\s+/g, " ").trim().slice(0, max);
 }
 
+// lib/cors.ts
+var SITE_ORIGINS = /* @__PURE__ */ new Set([
+  "https://callumbcoaching.co.uk",
+  "https://www.callumbcoaching.co.uk",
+  "https://callumb-coaching.vercel.app"
+]);
+function originOf(request) {
+  const origin = request.headers.get("origin");
+  if (!origin) return null;
+  let url;
+  try {
+    url = new URL(origin);
+  } catch {
+    return null;
+  }
+  if (url.origin !== origin) return null;
+  return url;
+}
+function projectVercelHost(hostname) {
+  if (hostname === "callumb-coaching.vercel.app") return true;
+  return hostname.startsWith("callumb-coaching-") && hostname.endsWith(".vercel.app");
+}
+function corsOrigin(request) {
+  const url = originOf(request);
+  if (!url) return null;
+  if (url.protocol !== "https:") return null;
+  if (SITE_ORIGINS.has(url.origin) || projectVercelHost(url.hostname)) return url.origin;
+  const host = request.headers.get("host");
+  if (host && url.host === host) return url.origin;
+  return null;
+}
+function requestAllowed(request) {
+  const origin = request.headers.get("origin");
+  if (!origin) return true;
+  return corsOrigin(request) !== null;
+}
+function corsHeaders(request) {
+  const headers = new Headers();
+  headers.set("vary", "Origin");
+  const origin = corsOrigin(request);
+  if (!origin) return headers;
+  headers.set("access-control-allow-origin", origin);
+  headers.set("access-control-allow-methods", "GET, POST, OPTIONS");
+  headers.set("access-control-allow-headers", "Content-Type, Accept");
+  headers.set("access-control-max-age", "86400");
+  return headers;
+}
+function preflight(request) {
+  const headers = corsHeaders(request);
+  if (!request.headers.get("origin") || !requestAllowed(request)) {
+    return new Response(null, { status: 403, headers });
+  }
+  return new Response(null, { status: 204, headers });
+}
+
 // lib/leads.ts
 import { createHash } from "node:crypto";
 import { put } from "@vercel/blob";
@@ -561,14 +607,15 @@ var leadSchema = z.object({
   email: z.string().describe("The email address they gave"),
   goal: z.string().describe("What they want, in their words")
 });
-function json(body, status = 200, extra) {
-  return Response.json(body, {
-    status,
-    headers: { "cache-control": "no-store", ...extra }
-  });
+function json(request, body, status = 200, extra) {
+  const headers = corsHeaders(request);
+  headers.set("cache-control", "no-store");
+  if (extra) new Headers(extra).forEach((value, key) => headers.set(key, value));
+  return Response.json(body, { status, headers });
 }
-function limited(retryAfter) {
+function limited(request, retryAfter) {
   return json(
+    request,
     { error: "You've sent quite a few messages. Give it a minute, or apply and Callum will read it himself." },
     429,
     { "retry-after": String(retryAfter) }
@@ -578,18 +625,21 @@ function cleanReply(text, userText = "") {
   const priced = scrubOwnUse(scrubDashes(scrubPrices(text, business.allowedPrices, business.priceStandIn)));
   return formatReply(ensureAnabolicReply(userText, priced));
 }
-function GET() {
-  return Response.json(publicWidget(business), {
-    headers: { "cache-control": "public, max-age=300" }
-  });
+function OPTIONS(request) {
+  return preflight(request);
+}
+function GET(request) {
+  const headers = corsHeaders(request);
+  headers.set("cache-control", "public, max-age=300");
+  return Response.json(publicWidget(business), { headers });
 }
 async function POST(request) {
-  if (!sameOrigin(request)) {
-    return json({ error: "Open the chat on the site and try again." }, 403);
+  if (!requestAllowed(request)) {
+    return json(request, { error: "Open the chat on the site and try again." }, 403);
   }
   const length = Number(request.headers.get("content-length") || 0);
   if (length > 24e3) {
-    return json({ error: "That message is a bit long. Try a shorter question." }, 413);
+    return json(request, { error: "That message is a bit long. Try a shorter question." }, 413);
   }
   const limit = takeRateLimit(
     clientKey(request),
@@ -597,31 +647,32 @@ async function POST(request) {
     business.limits.windowMs,
     business.limits.maxRequests
   );
-  if (!limit.ok) return limited(limit.retryAfter);
+  if (!limit.ok) return limited(request, limit.retryAfter);
   let body;
   try {
     body = await request.json();
   } catch {
-    return json({ error: "I couldn't read that. Try again." }, 400);
+    return json(request, { error: "I couldn't read that. Try again." }, 400);
   }
   if (!body || typeof body !== "object") {
-    return json({ error: "I couldn't read that. Try again." }, 400);
+    return json(request, { error: "I couldn't read that. Try again." }, 400);
   }
   const page = knownPage(body.page, business.pages);
   const leadBody = body.lead;
   if (leadBody && typeof leadBody === "object") {
     const parsed = validateLead(leadBody, "chat-form", page);
-    if (!parsed.ok) return json({ error: parsed.error }, 400);
+    if (!parsed.ok) return json(request, { error: parsed.error }, 400);
     const saved = await saveLead(business, parsed.lead);
     if (!saved.ok) {
       return json(
+        request,
         {
           error: "I couldn't save that just now. Apply and it comes straight to Callum."
         },
         503
       );
     }
-    return json({
+    return json(request, {
       ok: true,
       notified: saved.notified,
       actions: ["apply"],
@@ -629,7 +680,7 @@ async function POST(request) {
     });
   }
   const messages = normaliseMessages(body.messages, business.limits);
-  if (!messages.ok) return json({ error: messages.error }, messages.status);
+  if (!messages.ok) return json(request, { error: messages.error }, messages.status);
   const latestUser = [...messages.messages].reverse().find((message) => message.role === "user")?.content ?? "";
   const model = process.env.AI_GATEWAY_MODEL || business.model;
   let savedLead = false;
@@ -691,16 +742,15 @@ async function POST(request) {
       }
     }
   });
-  return new Response(stream, {
-    headers: {
-      "content-type": "text/plain; charset=utf-8",
-      "cache-control": "no-cache, no-transform",
-      "x-accel-buffering": "no"
-    }
-  });
+  const headers = corsHeaders(request);
+  headers.set("content-type", "text/plain; charset=utf-8");
+  headers.set("cache-control", "no-cache, no-transform");
+  headers.set("x-accel-buffering", "no");
+  return new Response(stream, { headers });
 }
 export {
   GET,
+  OPTIONS,
   POST,
   maxDuration
 };

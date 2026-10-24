@@ -89,6 +89,26 @@
   const calc = root.querySelector(".cw-calc");
   const sr = root.querySelector(".sr");
 
+  function loadCallumbApi() {
+    if (window.callumbApi) return Promise.resolve(window.callumbApi);
+    if (!window.__callumbApiReady) {
+      window.__callumbApiReady = new Promise((resolve) => {
+        const script = document.createElement("script");
+        script.src = "/assets/js/api-base.js?v=foundations1";
+        script.onload = () => resolve(window.callumbApi || fallbackCallumbApi());
+        script.onerror = () => resolve(fallbackCallumbApi());
+        document.head.appendChild(script);
+      });
+    }
+    return window.__callumbApiReady;
+  }
+
+  function fallbackCallumbApi() {
+    const host = location.hostname;
+    const base = host === "localhost" || host === "127.0.0.1" || host.endsWith(".vercel.app") ? "" : "https://callumb-coaching.vercel.app";
+    return { url: (path) => Promise.resolve(base + path) };
+  }
+
   const messages = [];
   let busy = false;
   let config = null;
@@ -382,7 +402,8 @@
 
   async function loadConfig() {
     try {
-      const response = await fetch("/api/chat");
+      const api = await loadCallumbApi();
+      const response = await fetch(await api.url("/api/chat"));
       if (!response.ok) throw new Error(String(response.status));
       applyConfig(await response.json());
     } catch {
@@ -405,7 +426,8 @@
     input.value = "";
     const bubble = add("assistant", "...");
     try {
-      const response = await fetch("/api/chat", {
+      const api = await loadCallumbApi();
+      const response = await fetch(await api.url("/api/chat"), {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ messages, page: pagePath() }),
@@ -486,7 +508,8 @@
     const button = form.querySelector("button");
     button.disabled = true;
     try {
-      const response = await fetch("/api/chat", {
+      const api = await loadCallumbApi();
+      const response = await fetch(await api.url("/api/chat"), {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ lead: data, page: pagePath() }),

@@ -9,15 +9,27 @@ await rm(publicDir, { recursive: true, force: true });
 await mkdir(path.join(root, "api"), { recursive: true });
 await mkdir(publicDir, { recursive: true });
 
-await build({
-  entryPoints: ["server/chat.ts"],
+const bundle = {
   bundle: true,
   platform: "node",
   format: "esm",
-  outfile: "api/chat.js",
   packages: "external",
   target: "node22",
   legalComments: "none",
+};
+
+await build({
+  ...bundle,
+  entryPoints: ["server/chat.ts"],
+  outfile: "api/chat.js",
+  banner: { js: "// Built from server/chat.ts. Edit that, then npm run build:chat." },
+});
+
+await build({
+  ...bundle,
+  entryPoints: ["server/lead.ts"],
+  outfile: "api/lead.js",
+  banner: { js: "// Built from server/lead.ts. Edit that, then npm run build:chat." },
 });
 
 const skip = new Set([
@@ -40,6 +52,8 @@ const skip = new Set([
   "playwright-report",
   "test-results",
   "deploy",
+  "cpanel",
+  "cpanel-upload.zip",
 ]);
 
 for (const entry of await readdir(root, { withFileTypes: true })) {
