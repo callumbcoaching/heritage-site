@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Ninety — 90 Days, Guided | CALLUM.B</title>
+  <meta name="description" content="The Ninety: 90 days on the full CALLUM.B system with a one-to-one call and a personal written review every month. £297, single payment, starts any time." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://callumbcoaching.co.uk/the-ninety" />
+  <meta property="og:title" content="The Ninety — 90 Days, Guided | CALLUM.B" />
+  <meta property="og:description" content="The system, plus enough of me to keep you honest. £297 · 90 days · starts any time." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://callumbcoaching.co.uk/the-ninety" />
+  <meta property="og:image" content="https://callumbcoaching.co.uk/og-share.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon-lion.png?v=1" />
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png?v=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg:#070807; --panel:#101210; --panel2:#141714;
+      --line:rgba(255,255,255,.07); --line2:rgba(255,255,255,.12);
+      --body:#B9C0B7; --muted:#798177; --white:#F4F6F2; --green:#A4E84B;
+      --font-d:'Sora',sans-serif; --font-b:'Inter',sans-serif;
+      --w:1180px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--body);font-family:var(--font-b);font-size:15.5px;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+    body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+    a{color:inherit;text-decoration:none;}
+    .wrap{max-width:var(--w);margin:0 auto;padding:0 clamp(20px,4vw,48px);}
+    .eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--green);display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+    .eyebrow::before{content:"";width:34px;height:1px;background:var(--green);}
+    .display{font-family:var(--font-d);font-weight:800;color:var(--white);letter-spacing:-.03em;line-height:1.04;}
+    .grad{background:linear-gradient(100deg,#F4F6F2 20%,#A4E84B 78%);-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .lead{font-size:clamp(16px,1.6vw,18.5px);line-height:1.7;color:var(--body);}
+    .note{font-size:13px;color:var(--muted);}
+    .btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-b);font-weight:600;font-size:15px;border-radius:999px;padding:16px 32px;transition:all .3s cubic-bezier(.22,1,.36,1);cursor:pointer;border:none;}
+    .btn .arr{transition:transform .3s;}
+    .btn:hover .arr{transform:translateX(5px);}
+    .btn-solid{background:var(--green);color:#0A0B0A;}
+    .btn-solid:hover{background:#b7f562;}
+    .btn-line{border:1px solid var(--line2);color:var(--white);background:transparent;}
+    .btn-line:hover{border-color:var(--green);color:var(--green);}
+    .sec{padding:clamp(72px,9vw,120px) 0;}
+    .sec--line{border-top:1px solid var(--line);}
+    .sec-head{max-width:720px;margin-bottom:clamp(36px,5vw,56px);}
+    .sec-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+    .sec-head.center .eyebrow{justify-content:center;}
+    .sec-head.center .eyebrow::before{display:none;}
+    h2.display{font-size:clamp(30px,4.4vw,52px);margin-bottom:14px;}
+    .rv{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1);}
+    .rv.in{opacity:1;transform:none;}
+    .rv-d1{transition-delay:.12s;} .rv-d2{transition-delay:.24s;} .rv-d3{transition-delay:.36s;}
+
+    /* nav */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .35s,border-color .35s;border-bottom:1px solid transparent;}
+    .nav.on{background:rgba(7,8,7,.82);backdrop-filter:blur(14px);border-bottom-color:var(--line);}
+    .nav__in{max-width:var(--w);margin:0 auto;padding:18px clamp(20px,4vw,48px);display:flex;align-items:center;justify-content:space-between;}
+    .nav__logo img{height:40px;display:block;}
+    .nav__links{display:flex;gap:26px;align-items:center;font-size:14px;color:var(--body);}
+    .nav__links a:hover{color:var(--white);}
+    @media(max-width:760px){.nav__links a.hide-m{display:none;}}
+
+    /* hero */
+    .hero{padding:clamp(150px,20vh,220px) 0 clamp(64px,8vw,100px);position:relative;overflow:hidden;}
+    .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 78% 20%,rgba(164,232,75,.07),transparent 65%);pointer-events:none;}
+    .hero h1{font-size:clamp(44px,7vw,84px);}
+    .hero .pos{font-family:var(--font-d);font-weight:600;color:var(--white);font-size:clamp(17px,2vw,21px);margin:22px 0 10px;}
+    .hero-price{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:26px 0 6px;}
+    .hero-price b{font-family:var(--font-d);font-size:clamp(48px,6vw,64px);font-weight:800;color:var(--white);letter-spacing:-.035em;}
+    .hero-price span{color:var(--muted);font-size:15px;}
+    .hero-meta{font-size:14px;color:var(--muted);margin-bottom:34px;}
+
+    /* month grid */
+    .mgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+    .mcell{background:var(--bg);padding:clamp(26px,3vw,40px);}
+    .mcell .n{font-family:var(--font-d);font-size:15px;font-weight:700;color:var(--green);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;}
+    .mcell h3{font-family:var(--font-d);color:var(--white);font-size:19px;font-weight:700;letter-spacing:-.01em;margin-bottom:10px;}
+    .mcell p{font-size:14px;color:var(--body);}
+    @media(max-width:860px){.mgrid{grid-template-columns:1fr;}}
+
+    /* not-included */
+    .notgrid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px);align-items:start;}
+    @media(max-width:860px){.notgrid{grid-template-columns:1fr;}}
+    .xlist{list-style:none;}
+    .xlist li{padding:13px 0 13px 34px;border-bottom:1px solid var(--line);position:relative;color:var(--body);font-size:15px;}
+    .xlist li::before{content:"×";position:absolute;left:2px;top:11px;color:var(--muted);font-family:var(--font-d);font-size:18px;}
+    .xlist li:last-child{border-bottom:0;}
+    .yeslist{list-style:none;}
+    .yeslist li{padding:13px 0 13px 34px;border-bottom:1px solid var(--line);position:relative;color:var(--white);font-size:15px;}
+    .yeslist li::before{content:"—";position:absolute;left:0;top:13px;color:var(--green);font-weight:700;}
+    .yeslist li:last-child{border-bottom:0;}
+
+    /* who for */
+    .who{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);}
+    .who>div{background:var(--bg);padding:clamp(26px,3vw,40px);}
+    .who h3{font-family:var(--font-d);color:var(--white);font-size:18px;font-weight:700;margin-bottom:10px;}
+    .who p{font-size:14.5px;}
+    @media(max-width:860px){.who{grid-template-columns:1fr;}}
+
+    /* cta band */
+    .band{border-top:1px solid var(--line);text-align:center;padding:clamp(80px,10vw,130px) 0;position:relative;overflow:hidden;}
+    .band::before{content:"";position:absolute;inset:0;background:radial-gradient(50% 60% at 50% 100%,rgba(164,232,75,.08),transparent 70%);pointer-events:none;}
+    .band .display{font-size:clamp(34px,5vw,58px);margin-bottom:14px;}
+    .footer{border-top:1px solid var(--line);padding:34px 0;font-size:12.5px;color:var(--muted);}
+    .footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+  </style>
+  <!-- Privacy-friendly analytics by Plausible -->
+  <script async src="https://plausible.io/js/pa-ARVew5Fljzfvc-hdK57GS.js"></script>
+  <script>
+    window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+    plausible.init()
+  </script>
+</head>
+<body>
+
+  <header class="nav" id="nav">
+    <div class="nav__in">
+      <a class="nav__logo" href="/"><img src="/assets/img/callum-logo.png" alt="CALLUM.B" /></a>
+      <nav class="nav__links">
+        <a class="hide-m" href="/coaching">Premium Coaching</a>
+        <a class="hide-m" href="/start/">Physique OS</a>
+        <a class="btn btn-solid" style="padding:12px 24px;font-size:14px;" href="/coaching?plan=The Ninety (£297)#apply">Start The Ninety <span class="arr">→</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap" style="max-width:860px;">
+        <p class="eyebrow rv in">Guided · 90 days</p>
+        <h1 class="display rv in">The <span class="grad">Ninety.</span></h1>
+        <p class="pos rv in rv-d1">The system, plus enough of me to keep you honest.</p>
+        <p class="lead rv in rv-d1">Ninety days on the full system — macros built personally to your stats, the app, the training. And every month, two sets of eyes on it: mine on your data, and a call — just us — where you can ask anything.</p>
+        <div class="hero-price rv in rv-d2"><b>£297</b><span>· 90 days · single payment</span></div>
+        <p class="hero-meta rv in rv-d2">Starts any time — no cohort dates, no waiting. No subscription, no rebill.</p>
+        <div class="rv in rv-d3" style="display:flex;gap:14px;flex-wrap:wrap;">
+          <a class="btn btn-solid" href="/coaching?plan=The Ninety (£297)#apply">Start The Ninety <span class="arr">→</span></a>
+          <a class="btn btn-line" href="#what">What's inside <span class="arr">↓</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT IT IS -->
+    <section class="sec sec--line" id="what">
+      <div class="wrap">
+        <div class="sec-head rv">
+          <p class="eyebrow">Every month, three things</p>
+          <h2 class="display">Set up once. <span class="grad">Reviewed monthly.</span></h2>
+          <p class="lead">Up front, I build your macros personally — your stats, your goal, not a formula in an app. Then every month for three months:</p>
+        </div>
+        <div class="mgrid rv rv-d1">
+          <div class="mcell"><p class="n">Each month · 01</p><h3>A one-to-one call</h3><p>One call a month, just you and me. Bring your sticking points, your data, your questions — we sort the next month together.</p></div>
+          <div class="mcell"><p class="n">Each month · 02</p><h3>A personal written review</h3><p>I read your actual logged data — weight trend, training, food — and send you a written adjustment. Not a template. Yours.</p></div>
+          <div class="mcell"><p class="n">Throughout</p><h3>The full system</h3><p>Blueprint macros built to your stats, full app access for the 90 days — recipes, training splits, lift and cardio tracking, the lot.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT THIS IS NOT -->
+    <section class="sec sec--line">
+      <div class="wrap">
+        <div class="sec-head rv">
+          <p class="eyebrow">Straight answer</p>
+          <h2 class="display">What this is — <span class="grad">and isn't.</span></h2>
+          <p class="lead">The Ninety is deliberately not 1:1 coaching. Here's the honest line between the two, so you buy the right thing.</p>
+        </div>
+        <div class="notgrid rv rv-d1">
+          <div>
+            <p style="font-family:var(--font-d);color:var(--white);font-weight:700;margin-bottom:6px;">The Ninety — £297</p>
+            <ul class="yeslist">
+              <li>Macros built personally to you</li>
+              <li>Full app access, 90 days</li>
+              <li>Monthly one-to-one call</li>
+              <li>Monthly personal written review</li>
+            </ul>
+          </div>
+          <div>
+            <p style="font-family:var(--font-d);color:var(--white);font-weight:700;margin-bottom:6px;">Only in Premium 1:1</p>
+            <ul class="xlist">
+              <li>No direct line or WhatsApp access</li>
+              <li>No weekly check-ins</li>
+              <li>No blood work</li>
+              <li>No weekly calls — your call is monthly</li>
+            </ul>
+            <p class="note" style="margin-top:14px;">Want those? That's <a href="/coaching" style="color:var(--green);text-decoration:underline;">Premium Coaching</a> — from £108/week, application only. Everything you pay here credits toward it.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHO IT'S FOR -->
+    <section class="sec sec--line">
+      <div class="wrap">
+        <div class="sec-head rv">
+          <p class="eyebrow">Who it's for</p>
+          <h2 class="display">Two kinds of <span class="grad">people.</span></h2>
+        </div>
+        <div class="who rv rv-d1">
+          <div>
+            <h3>You've run the Blueprint</h3>
+            <p>You've got macros and you've been executing — but nobody's looking at your numbers. Three months of eyes on your data turns "I think it's working" into "I know what to change".</p>
+          </div>
+          <div>
+            <h3>You're not ready for 1:1</h3>
+            <p>You want coaching input without the four-figure commitment — or you applied and the timing wasn't right. The Ninety is the same system with a monthly review, and every pound credits up the ladder.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="band">
+      <div class="wrap">
+        <p class="eyebrow" style="justify-content:center;">£297 · 90 days · starts any time</p>
+        <h2 class="display">Ninety days with <span class="grad">eyes on it.</span></h2>
+        <p class="lead" style="max-width:520px;margin:0 auto 30px;">No application needed. Request your place and I'll send your payment link — you can start the same day.</p>
+        <a class="btn btn-solid" href="/coaching?plan=The Ninety (£297)#apply">Start The Ninety <span class="arr">→</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <span>© <span id="yr">2026</span> CALLUM.B · Online Transformation Coach</span>
+      <span><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span>
+    </div>
+  </footer>
+
+  <script src="/assets/js/payment-links-v2.js"></script>
+  <script>
+    document.getElementById('yr').textContent=new Date().getFullYear();
+    var nav=document.getElementById('nav');
+    addEventListener('scroll',function(){nav.classList.toggle('on',scrollY>40);},{passive:true});
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+    document.querySelectorAll('.rv:not(.in)').forEach(function(el){io.observe(el);});
+  </script>
+</body>
+</html>

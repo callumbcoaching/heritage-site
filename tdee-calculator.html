@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free TDEE, Macro &amp; Body-Fat Calculator | CALLUM.B</title>
+  <meta name="description" content="Free TDEE calculator — find your maintenance calories and a personalised macro split (protein, carbs, fat) for your goal in seconds. Then get it built around you." />
+  <meta name="robots" content="index,follow" />
+  <link rel="icon" type="image/png" href="assets/img/favicon-lion.png?v=1" />
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png?v=1" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=6" />
+  <!-- ANALYTICS — paste your snippet here once you pick a tool.
+       Cookieless (no cookie banner needed): Plausible / Fathom, e.g.
+       <!-- Privacy-friendly analytics by Plausible -->
+  <script async src="https://plausible.io/js/pa-ARVew5Fljzfvc-hdK57GS.js"></script>
+  <script>
+    window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+    plausible.init()
+  </script>
+       Google Analytics 4 is free but needs a cookie-consent banner under UK GDPR. -->
+  <link rel="canonical" href="https://callumbcoaching.co.uk/tdee-calculator" />
+  <meta property="og:title" content="Free TDEE and Macro Calculator — CALLUM.B" />
+  <meta property="og:description" content="Find your maintenance calories and a starting macro split in seconds. Free." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://callumbcoaching.co.uk/tdee-calculator" />
+  <meta property="og:image" content="https://callumbcoaching.co.uk/og-share.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://callumbcoaching.co.uk/og-share.jpg" />
+</head>
+<body>
+
+  <header class="nav lp-nav">
+    <div class="wrap nav__inner">
+      <a class="brand" href="/" aria-label="CALLUM.B home">
+        <img class="brand-logo" src="assets/img/callum-logo.png" alt="CALLUM.B — Online Transformation Coach" />
+      </a>
+      <a class="btn btn-pri" href="/nutrition">Get a Plan</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" style="padding-bottom:40px;">
+      <div class="wrap center">
+        <p class="eyebrow" style="justify-content:center;">Free Tool</p>
+        <h1 style="max-width:18ch;margin-inline:auto;">Know your <span class="grad">numbers</span> in 30 seconds.</h1>
+        <p class="lead" style="margin:0 auto;">Get your maintenance calories (TDEE) and a starting macro split for your goal. It's the first step — turning it into real results is where the structure comes in.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0;">
+      <div class="wrap">
+        <div class="calc-grid">
+
+          <!-- INPUTS -->
+          <div class="lp-form-card">
+            <div class="field" style="margin-bottom:18px;">
+              <label>Units</label>
+              <div class="seg" id="seg-units">
+                <button type="button" data-unit="metric" class="active">Metric (kg/cm)</button>
+                <button type="button" data-unit="imperial">Imperial (lb/ft)</button>
+              </div>
+            </div>
+
+            <div class="field" style="margin-bottom:18px;">
+              <label>Sex</label>
+              <div class="seg" id="seg-sex">
+                <button type="button" data-sex="male" class="active">Male</button>
+                <button type="button" data-sex="female">Female</button>
+              </div>
+            </div>
+
+            <div class="field-row" style="margin-bottom:18px;">
+              <div class="field">
+                <label for="age">Age</label>
+                <input class="input" id="age" type="number" inputmode="numeric" value="30" min="14" max="100" />
+              </div>
+              <div class="field" id="weight-wrap">
+                <label for="weight">Weight (<span class="u-weight">kg</span>)</label>
+                <input class="input" id="weight" type="number" inputmode="decimal" value="85" min="30" max="350" />
+              </div>
+            </div>
+
+            <!-- height: metric -->
+            <div class="field" id="height-metric" style="margin-bottom:18px;">
+              <label for="height-cm">Height (cm)</label>
+              <input class="input" id="height-cm" type="number" inputmode="numeric" value="178" min="120" max="230" />
+            </div>
+            <!-- height: imperial -->
+            <div class="field" id="height-imperial" style="margin-bottom:18px;" hidden>
+              <label>Height (ft / in)</label>
+              <div class="field-row">
+                <input class="input" id="height-ft" type="number" inputmode="numeric" value="5" min="4" max="7" placeholder="ft" />
+                <input class="input" id="height-in" type="number" inputmode="numeric" value="10" min="0" max="11" placeholder="in" />
+              </div>
+            </div>
+
+            <div class="field" style="margin-bottom:18px;">
+              <label for="activity">Activity level</label>
+              <select class="select" id="activity">
+                <option value="1.2">Sedentary — desk job, little exercise</option>
+                <option value="1.375">Light — train 1–3 days / week</option>
+                <option value="1.55" selected>Moderate — train 3–5 days / week</option>
+                <option value="1.725">Very active — train 6–7 days / week</option>
+                <option value="1.9">Athlete — physical job + daily training</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="goal">Your goal</label>
+              <select class="select" id="goal">
+                <option value="-0.2" selected>Lose fat</option>
+                <option value="0">Maintain</option>
+                <option value="0.1">Build muscle</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- RESULTS -->
+          <div class="calc-result">
+            <p class="tagline" id="goal-label" style="color:var(--green);">Your fat-loss target</p>
+            <div class="calc-big"><span id="target-cals">—</span> <span style="font-size:20px;color:var(--body);">kcal/day</span></div>
+            <p class="calc-sub">Maintenance (TDEE): <b id="tdee" style="color:var(--ink);">—</b> kcal · BMR: <span id="bmr">—</span></p>
+
+            <div class="macro-grid">
+              <div class="macro"><div class="g"><span id="m-protein">—</span>g</div><div class="l">Protein</div></div>
+              <div class="macro"><div class="g"><span id="m-carbs">—</span>g</div><div class="l">Carbs</div></div>
+              <div class="macro"><div class="g"><span id="m-fat">—</span>g</div><div class="l">Fat</div></div>
+            </div>
+
+            <div class="callout" style="margin-bottom:22px;">
+              These are a solid <i>starting point</i>. Real results come from adjusting them against your weekly progress — that's exactly what the Nutrition Blueprint does.
+            </div>
+
+            <div style="display:grid;gap:10px;">
+              <a class="btn btn-pri btn-lg" href="/nutrition">Get this built around me →</a>
+              <a class="btn btn-ghost" href="/nutrition#coaching">See online coaching options</a>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="note center" style="margin-top:28px;max-width:70ch;margin-inline:auto;">
+          Calculated with the Mifflin-St Jeor equation. Estimates only and not medical or dietary
+          advice — individual needs vary. If you have a health condition, are pregnant, or are unsure,
+          check with your GP before changing your diet.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- ===================== AI BODY-FAT ESTIMATOR (email-gated extra) ===================== -->
+    <section class="section" id="bodyfat" style="padding-top:0;">
+      <div class="wrap">
+        <div class="sec-head center">
+          <p class="eyebrow" style="justify-content:center;">Free extra · AI powered</p>
+          <h2>AI body-fat estimate from one photo.</h2>
+          <p class="lead" style="margin:0 auto;">Upload a single photo and AI gives you an estimated body-fat percentage, range and confidence — in about ten seconds. Prefer a tape measure? That works too.</p>
+        </div>
+
+        <div class="calc-grid">
+          <div class="lp-form-card">
+            <div class="field" style="margin-bottom:18px;">
+              <label>Method</label>
+              <div class="seg" id="bf-mode">
+                <button type="button" data-mode="ai" class="active">📸 AI photo</button>
+                <button type="button" data-mode="tape">📏 Tape measure</button>
+              </div>
+            </div>
+
+            <!-- AI pane -->
+            <div id="bf-pane-ai">
+              <div class="field" style="margin-bottom:12px;">
+                <label>Your photo</label>
+                <label class="btn btn-dark" style="width:100%;justify-content:center;cursor:pointer;" id="bf-file-btn">📷 Choose a photo<input id="bf-file" type="file" accept="image/*" style="display:none;"></label>
+                <p class="note" id="bf-file-name" style="margin-top:8px;" hidden></p>
+              </div>
+              <p class="note" style="margin-bottom:16px;">Best results: front-on, decent light, form-fitting or minimal clothing (like a progress photo). <b style="color:var(--body);">Analysed instantly and never stored</b> — the photo isn't saved and no human sees it. One free AI estimate per week — re-test weekly and watch the trend.</p>
+            </div>
+
+            <!-- Tape pane -->
+            <div id="bf-pane-tape" hidden>
+              <div class="field-row" style="margin-bottom:18px;">
+                <div class="field">
+                  <label for="bf-neck">Neck (<span class="u-tape">cm</span>)</label>
+                  <input class="input" id="bf-neck" type="number" inputmode="decimal" placeholder="e.g. 38" />
+                </div>
+                <div class="field">
+                  <label for="bf-waist">Waist at navel (<span class="u-tape">cm</span>)</label>
+                  <input class="input" id="bf-waist" type="number" inputmode="decimal" placeholder="e.g. 92" />
+                </div>
+              </div>
+              <div class="field" id="bf-hips-wrap" style="margin-bottom:18px;" hidden>
+                <label for="bf-hips">Hips at widest (<span class="u-tape">cm</span>)</label>
+                <input class="input" id="bf-hips" type="number" inputmode="decimal" placeholder="e.g. 100" />
+              </div>
+              <p class="note" style="margin-bottom:16px;">Uses the US Navy method with your sex &amp; height from the calculator above. Tape relaxed, not pulled tight.</p>
+            </div>
+
+            <button class="btn btn-pri btn-lg" id="bf-go" type="button" style="width:100%;justify-content:center;">Reveal my body-fat % →</button>
+
+            <!-- email gate -->
+            <div id="bf-gate" hidden style="margin-top:16px;">
+              <div class="callout" style="margin-bottom:12px;">Nearly there — pop your email in and your result appears instantly.</div>
+              <div class="field" style="margin-bottom:12px;">
+                <label for="bf-email">Email</label>
+                <input class="input" id="bf-email" type="email" placeholder="you@email.com" />
+              </div>
+              <label class="consent" style="margin-bottom:12px;">
+                <input type="checkbox" id="bf-consent" />
+                <span>Email me occasional no-nonsense coaching tips too. I can unsubscribe anytime. (Optional)</span>
+              </label>
+              <button class="btn btn-pri" id="bf-unlock" type="button" style="width:100%;justify-content:center;">Unlock my result</button>
+            </div>
+            <p class="note" id="bf-err" hidden style="color:var(--red);margin-top:10px;"></p>
+            <p class="note" id="bf-busy" hidden style="color:var(--green);margin-top:10px;">🧠 Analysing your photo… usually ~10 seconds.</p>
+          </div>
+
+          <div class="calc-result" id="bf-result-card">
+            <p class="tagline" style="color:var(--green);">Estimated body fat</p>
+            <div class="calc-big"><span id="bf-pct">—</span><span style="font-size:20px;color:var(--body);"> %</span></div>
+            <p class="calc-sub" id="bf-cat">Choose a method, then hit reveal.</p>
+            <div class="macro-grid">
+              <div class="macro"><div class="g"><span id="bf-lean">—</span></div><div class="l">Lean mass</div></div>
+              <div class="macro"><div class="g"><span id="bf-fat">—</span></div><div class="l">Fat mass</div></div>
+              <div class="macro"><div class="g"><span id="bf-range">—</span></div><div class="l">Range</div></div>
+            </div>
+            <p class="note" id="bf-note" hidden style="margin-bottom:16px;"></p>
+            <div class="callout" style="margin-bottom:22px;">
+              An estimate is a <i>starting point</i> — the real magic is watching it trend down week after week. That's exactly what structured coaching tracks.
+            </div>
+            <div style="display:grid;gap:10px;">
+              <a class="btn btn-pri btn-lg" href="/nutrition">Turn this into a plan →</a>
+              <a class="btn btn-ghost" href="/coaching#apply">Apply for 1:1 coaching</a>
+            </div>
+          </div>
+        </div>
+
+        <p class="note center" style="margin-top:28px;max-width:70ch;margin-inline:auto;">
+          Estimates only (AI visual read or US Navy tape method, typically ±3–4%) — not a medical measurement
+          or advice. Photos are processed in memory for the estimate and never stored.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__bottom" style="border:0;padding-top:0;">
+        <span>© <span id="year">2026</span> CALLUM.B · Online Transformation Coach</span>
+        <a href="https://instagram.com/callum.transformation.coach" target="_blank" rel="noopener" style="color:var(--body);text-decoration:none;">Instagram</a>
+      </div>
+    </div>
+  <div class="wrap center" style="padding:0 0 20px;"><a class="green" href="/protein-calculator" style="font-size:13px;text-decoration:underline;">New: Protein &amp; Muscle Calculator →</a></div>
+  </footer>
+
+  <script src="assets/js/main.js?v=3"></script>
+  <script>
+    (function () {
+      var unit = 'metric', sex = 'male';
+      var $ = function (id) { return document.getElementById(id); };
+
+      function bind(segId, setter) {
+        document.querySelectorAll('#' + segId + ' button').forEach(function (b) {
+          b.addEventListener('click', function () {
+            document.querySelectorAll('#' + segId + ' button').forEach(function (x) { x.classList.remove('active'); });
+            b.classList.add('active');
+            setter(b);
+            calc();
+          });
+        });
+      }
+      bind('seg-units', function (b) {
+        unit = b.getAttribute('data-unit');
+        var metric = unit === 'metric';
+        $('height-metric').hidden = !metric;
+        $('height-imperial').hidden = metric;
+        document.querySelector('.u-weight').textContent = metric ? 'kg' : 'lb';
+        // convert the current weight value so it feels continuous
+        var w = parseFloat($('weight').value) || 0;
+        $('weight').value = metric ? Math.round(w / 2.2046) : Math.round(w * 2.2046);
+      });
+      bind('seg-sex', function (b) { sex = b.getAttribute('data-sex'); });
+
+      function getKg() {
+        var w = parseFloat($('weight').value) || 0;
+        return unit === 'metric' ? w : w / 2.2046;
+      }
+      function getCm() {
+        if (unit === 'metric') return parseFloat($('height-cm').value) || 0;
+        var ft = parseFloat($('height-ft').value) || 0;
+        var inch = parseFloat($('height-in').value) || 0;
+        return (ft * 12 + inch) * 2.54;
+      }
+      var r10 = function (n) { return Math.round(n / 10) * 10; };
+
+      function calc() {
+        var kg = getKg(), cm = getCm(), age = parseFloat($('age').value) || 0;
+        if (kg <= 0 || cm <= 0 || age <= 0) return;
+        var bmr = 10 * kg + 6.25 * cm - 5 * age + (sex === 'male' ? 5 : -161);
+        var tdee = bmr * parseFloat($('activity').value);
+        var goal = parseFloat($('goal').value);
+        var target = tdee * (1 + goal);
+
+        var protein = 2.0 * kg;            // g
+        var fat = 0.8 * kg;                // g
+        var carbCals = target - (protein * 4) - (fat * 9);
+        var carbs = Math.max(0, carbCals / 4);
+
+        $('bmr').textContent = r10(bmr);
+        $('tdee').textContent = r10(tdee);
+        $('target-cals').textContent = r10(target);
+        $('m-protein').textContent = Math.round(protein);
+        $('m-carbs').textContent = Math.round(carbs);
+        $('m-fat').textContent = Math.round(fat);
+        $('goal-label').textContent =
+          goal < 0 ? 'Your fat-loss target' : (goal > 0 ? 'Your muscle-gain target' : 'Your maintenance target');
+      }
+
+      ['age', 'weight', 'height-cm', 'height-ft', 'height-in', 'activity', 'goal'].forEach(function (id) {
+        var el = $(id); if (el) el.addEventListener('input', calc);
+      });
+      calc();
+    })();
+  </script>
+
+  
+  <script>
+    (function () {
+      var $ = function (id) { return document.getElementById(id); };
+      var KEY='cb-bf-unlock', mode='ai', photoData=null;
+
+      function isMetric(){ return !$('height-metric').hidden; }
+      function sexNow(){ var b=document.querySelector('#seg-sex button.active'); return b?b.getAttribute('data-sex'):'male'; }
+      function toCm(v){ return isMetric()? v : v*2.54; }
+      function log10(x){ return Math.log(x)/Math.LN10; }
+      function fail(msg){ var e=$('bf-err'); e.textContent=msg; e.hidden=false; $('bf-busy').hidden=true; }
+      function clearMsgs(){ $('bf-err').hidden=true; $('bf-busy').hidden=true; }
+
+      // mode tabs
+      document.querySelectorAll('#bf-mode button').forEach(function(b){
+        b.addEventListener('click', function(){
+          document.querySelectorAll('#bf-mode button').forEach(function(x){x.classList.remove('active');});
+          b.classList.add('active'); mode=b.getAttribute('data-mode');
+          $('bf-pane-ai').hidden = mode!=='ai';
+          $('bf-pane-tape').hidden = mode!=='tape';
+          clearMsgs();
+        });
+      });
+      function syncUI(){
+        $('bf-hips-wrap').hidden = sexNow()!=='female';
+        document.querySelectorAll('.u-tape').forEach(function(el){ el.textContent = isMetric()?'cm':'in'; });
+      }
+      document.querySelectorAll('#seg-sex button, #seg-units button').forEach(function(b){ b.addEventListener('click', function(){ setTimeout(syncUI,0); }); });
+      syncUI();
+
+      // photo pick + downscale to max 1024px jpeg
+      $('bf-file').addEventListener('change', function(){
+        var f=this.files && this.files[0]; if(!f) return;
+        clearMsgs();
+        var img=new Image(), url=URL.createObjectURL(f);
+        img.onload=function(){
+          var mx=1024, w=img.width, h=img.height, k=Math.min(1, mx/Math.max(w,h));
+          var c=document.createElement('canvas'); c.width=Math.round(w*k); c.height=Math.round(h*k);
+          c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+          photoData=c.toDataURL('image/jpeg',0.85);
+          URL.revokeObjectURL(url);
+          var n=$('bf-file-name'); n.textContent='✓ '+(f.name||'photo')+' ready'; n.hidden=false;
+        };
+        img.onerror=function(){ fail('Couldn\u2019t read that image — try a JPEG or PNG.'); };
+        img.src=url;
+      });
+
+      function heightCm(){
+        if (isMetric()) return parseFloat($('height-cm').value)||0;
+        return (((parseFloat($('height-ft').value)||0)*12)+(parseFloat($('height-in').value)||0))*2.54;
+      }
+      function weightKg(){ var w=parseFloat($('weight').value)||0; return isMetric()? w : w/2.2046; }
+
+      function tapeCompute(){
+        var h=heightCm(), neck=toCm(parseFloat($('bf-neck').value)||0), waist=toCm(parseFloat($('bf-waist').value)||0), sex=sexNow();
+        if(h<=0) return {err:'Add your height in the calculator above first.'};
+        if(neck<=0||waist<=0) return {err:'Add your neck and waist measurements.'};
+        var bf;
+        if(sex==='female'){
+          var hips=toCm(parseFloat($('bf-hips').value)||0);
+          if(hips<=0) return {err:'Add your hip measurement.'};
+          if(waist+hips<=neck) return {err:'Check the tape numbers — waist + hips must be larger than neck.'};
+          bf=495/(1.29579-0.35004*log10(waist+hips-neck)+0.22100*log10(h))-450;
+        } else {
+          if(waist<=neck) return {err:'Check the tape numbers — waist must be larger than neck.'};
+          bf=495/(1.0324-0.19077*log10(waist-neck)+0.15456*log10(h))-450;
+        }
+        if(!(bf>1&&bf<70)) return {err:'That result looks off — double-check the measurements.'};
+        return {bf:bf};
+      }
+
+      function category(bf,sex){
+        var bands = sex==='female'
+          ? [[13,'Essential fat'],[20,'Athlete range'],[24,'Fitness range'],[31,'Average'],[100,'Above average']]
+          : [[5,'Essential fat'],[13,'Athlete range'],[17,'Fitness range'],[24,'Average'],[100,'Above average']];
+        for (var i=0;i<bands.length;i++){ if(bf<=bands[i][0]) return bands[i][1]; }
+        return '';
+      }
+
+      function show(bf, rangeTxt, extraNote){
+        clearMsgs();
+        var sex=sexNow(); bf=Math.round(bf*10)/10;
+        $('bf-pct').textContent=bf;
+        $('bf-cat').innerHTML='Category: <b style="color:var(--ink);">'+category(bf,sex)+'</b>';
+        var kg=weightKg();
+        if(kg>0){
+          var u=isMetric()?' kg':' lb', f=(bf/100)*kg, cv=isMetric()?1:2.2046;
+          $('bf-lean').textContent=Math.round((kg-f)*cv)+u;
+          $('bf-fat').textContent=Math.round(f*cv)+u;
+        } else { $('bf-lean').textContent='—'; $('bf-fat').textContent='—'; }
+        $('bf-range').textContent=rangeTxt;
+        var n=$('bf-note');
+        if(extraNote){ n.textContent='🧠 '+extraNote; n.hidden=false; } else { n.hidden=true; }
+        $('bf-result-card').scrollIntoView({behavior:'smooth', block:'center'});
+      }
+
+      function runAI(email){
+        $('bf-busy').hidden=false; $('bf-err').hidden=true;
+        fetch('bf-api.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email, image:photoData})})
+          .then(function(r){ return r.json().then(function(j){ return {ok:r.ok, j:j}; }); })
+          .then(function(res){
+            if(!res.ok) throw new Error((res.j&&res.j.error&&res.j.error.message)||'Something went wrong.');
+            var d=res.j.data;
+            if(!d.valid){ fail(d.note||'That photo wasn\u2019t clear enough for a read — try a front-on progress-style photo.'); return; }
+            show(d.body_fat_percent, Math.round(d.range_low)+'\u2013'+Math.round(d.range_high)+'%', d.note+(d.confidence?(' (confidence: '+d.confidence+')'):''));
+          })
+          .catch(function(e){ fail(e.message||'Couldn\u2019t reach the AI — try again in a minute.'); });
+      }
+
+      function proceed(email){
+        if(mode==='ai'){ runAI(email); }
+        else {
+          var res=tapeCompute();
+          if(res.err){ fail(res.err); return; }
+          var sex=sexNow();
+          show(res.bf, sex==='female'?'21\u201331% healthy':'14\u201324% healthy', null);
+        }
+      }
+
+      function readyCheck(){
+        if(mode==='ai'){ if(!photoData){ fail('Choose a photo first.'); return false; } }
+        else { var r=tapeCompute(); if(r.err){ fail(r.err); return false; } }
+        return true;
+      }
+
+      var savedEmail='';
+      $('bf-go').addEventListener('click', function(){
+        clearMsgs();
+        if(!readyCheck()) return;
+        var unlocked=false; try{ unlocked=localStorage.getItem(KEY)==='1'; savedEmail=localStorage.getItem(KEY+'-em')||''; }catch(e){}
+        if(unlocked && savedEmail){ proceed(savedEmail); }
+        else { $('bf-gate').hidden=false; $('bf-email').focus(); }
+      });
+
+      $('bf-unlock').addEventListener('click', function(){
+        var em=($('bf-email').value||'').trim();
+        if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ fail('That email doesn\u2019t look right — try again.'); return; }
+        if(!readyCheck()) return;
+        var btn=$('bf-unlock'); btn.disabled=true; btn.textContent='Unlocking…';
+        var fd=new FormData();
+        fd.append('email', em);
+        fd.append('lead-source', mode==='ai' ? 'AI body-fat estimator' : 'TDEE tape body-fat');
+        fd.append('_subject','New lead — body-fat estimator');
+        fd.append('marketing-consent', ($('bf-consent')&&$('bf-consent').checked)?'yes':'no');
+        fetch('https://formspree.io/f/mgojkeny',{method:'POST',headers:{Accept:'application/json'},body:fd})
+          .then(function(r){ if(!r.ok) throw 0;
+            try{fetch('https://assets.mailerlite.com/jsonp/2490221/forms/194528840040580437/subscribe',{method:'POST',body:new URLSearchParams([['fields[email]',em],['ml-submit','1'],['anticsrf','true']])});}catch(_){}
+            try{ localStorage.setItem(KEY,'1'); localStorage.setItem(KEY+'-em',em); }catch(e){}
+            $('bf-gate').hidden=true; btn.disabled=false; btn.textContent='Unlock my result';
+            proceed(em);
+          })
+          .catch(function(){ btn.disabled=false; btn.textContent='Unlock my result'; fail('Couldn\u2019t send that — check your connection and try again.'); });
+      });
+    })();
+  </script>
+</body>
+</html>

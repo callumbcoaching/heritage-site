@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Physique OS — Run the System Yourself | CALLUM.B</title>
+  <meta name="description" content="Physique OS: the exact system my 1:1 clients run — your macros, the app, recipe & exercise libraries and the weekly review loop. £29/month, 7 days free." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://callumbcoaching.co.uk/start" />
+  <meta property="og:title" content="Physique OS — Run the System Yourself | CALLUM.B" />
+  <meta property="og:description" content="The exact system my 1:1 clients run — your macros, the app, the libraries and the weekly review loop. £29/month, 7 days free." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://callumbcoaching.co.uk/start" />
+  <meta property="og:image" content="https://callumbcoaching.co.uk/og-share.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://callumbcoaching.co.uk/og-share.jpg" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon-lion.png?v=1" />
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png?v=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg:#070807; --panel:#101210; --panel2:#141714;
+      --line:rgba(255,255,255,.07); --line2:rgba(255,255,255,.12);
+      --body:#B9C0B7; --muted:#798177; --white:#F4F6F2; --green:#A4E84B;
+      --font-d:'Sora',sans-serif; --font-b:'Inter',sans-serif;
+      --w:1180px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--body);font-family:var(--font-b);font-size:15.5px;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+    body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+    a{color:inherit;text-decoration:none;}
+    .wrap{max-width:var(--w);margin:0 auto;padding:0 clamp(20px,4vw,48px);}
+    .eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--green);display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+    .eyebrow::before{content:"";width:34px;height:1px;background:var(--green);}
+    .display{font-family:var(--font-d);font-weight:800;color:var(--white);letter-spacing:-.03em;line-height:1.04;}
+    .grad{background:linear-gradient(100deg,#F4F6F2 20%,#A4E84B 78%);-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .lead{font-size:clamp(16px,1.6vw,18.5px);line-height:1.7;color:var(--body);}
+    .note{font-size:13px;color:var(--muted);}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--font-b);font-weight:600;font-size:15px;border-radius:999px;padding:16px 32px;transition:all .3s cubic-bezier(.22,1,.36,1);cursor:pointer;border:none;}
+    .btn .arr{transition:transform .3s;}
+    .btn:hover .arr{transform:translateX(5px);}
+    .btn-solid{background:var(--green);color:#0A0B0A;}
+    .btn-solid:hover{background:#b7f562;}
+    .btn-line{border:1px solid var(--line2);color:var(--white);background:transparent;}
+    .btn-line:hover{border-color:var(--green);color:var(--green);}
+    .sec{padding:clamp(72px,9vw,120px) 0;}
+    .sec--line{border-top:1px solid var(--line);}
+    .sec-head{max-width:760px;margin-bottom:clamp(36px,5vw,56px);}
+    .sec-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+    .sec-head.center .eyebrow{justify-content:center;}
+    .sec-head.center .eyebrow::before{display:none;}
+    h2.display{font-size:clamp(30px,4.4vw,52px);margin-bottom:14px;}
+    .rv{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1);}
+    .rv.in{opacity:1;transform:none;}
+    .rv-d1{transition-delay:.12s;} .rv-d2{transition-delay:.24s;} .rv-d3{transition-delay:.36s;}
+
+    /* nav */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .35s,border-color .35s;border-bottom:1px solid transparent;}
+    .nav.on{background:rgba(7,8,7,.82);backdrop-filter:blur(14px);border-bottom-color:var(--line);}
+    .nav__in{max-width:var(--w);margin:0 auto;padding:18px clamp(20px,4vw,48px);display:flex;align-items:center;justify-content:space-between;}
+    .nav__logo img{height:40px;display:block;}
+    .nav__links{display:flex;gap:26px;align-items:center;font-size:14px;color:var(--body);}
+    .nav__links a:hover{color:var(--white);}
+    @media(max-width:760px){.nav__links a.hide-m{display:none;}}
+
+    /* hero */
+    .hero{padding:clamp(150px,19vh,210px) 0 0;position:relative;overflow:hidden;}
+    .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(55% 45% at 75% 18%,rgba(164,232,75,.08),transparent 65%);pointer-events:none;}
+    .hero .wrap{position:relative;}
+    .hero h1{font-size:clamp(42px,6.4vw,80px);max-width:15ch;}
+    .hero .lead{max-width:620px;margin:24px 0 30px;}
+    .hero-cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+    .hero-trust{font-size:13.5px;color:var(--muted);margin-top:16px;}
+    .statbar{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(11,13,11,.6);backdrop-filter:blur(8px);margin-top:clamp(48px,7vw,84px);}
+    .statbar__in{max-width:var(--w);margin:0 auto;padding:0 clamp(20px,4vw,48px);display:grid;grid-template-columns:repeat(4,1fr);}
+    .stat{padding:22px 10px;text-align:center;border-left:1px solid var(--line);}
+    .stat:first-child{border-left:0;}
+    .stat b{display:block;font-family:var(--font-d);font-size:clamp(20px,2.2vw,28px);font-weight:800;color:var(--white);letter-spacing:-.02em;}
+    .stat b .u{color:var(--green);font-size:.62em;font-weight:700;}
+    .stat span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+    @media(max-width:720px){.statbar__in{grid-template-columns:1fr 1fr}.stat:nth-child(3){border-left:0}}
+
+    /* hairline grids */
+    .hgrid{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);}
+    .g3{grid-template-columns:repeat(3,1fr);}
+    .g2{grid-template-columns:repeat(2,1fr);}
+    .cell{background:var(--bg);padding:clamp(26px,3vw,40px);}
+    .cell .k{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--green);margin-bottom:12px;display:block;}
+    .cell h3{font-family:var(--font-d);color:var(--white);font-size:19px;font-weight:700;letter-spacing:-.01em;margin-bottom:10px;}
+    .cell p{font-size:14px;color:var(--body);}
+    @media(max-width:860px){.g3,.g2{grid-template-columns:1fr;}}
+
+    /* numbered steps */
+    .stepn{font-family:var(--font-d);font-size:clamp(40px,4.5vw,58px);font-weight:800;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(164,232,75,.55);margin-bottom:14px;}
+
+    /* pricing */
+    .pt-toggle{display:inline-flex;border:1px solid var(--line2);border-radius:999px;padding:5px;gap:4px;margin-bottom:30px;}
+    .pt-toggle button{font-family:var(--font-b);font-weight:600;font-size:14px;color:var(--muted);background:transparent;border:none;border-radius:999px;padding:10px 22px;cursor:pointer;transition:all .25s;}
+    .pt-toggle button.on{background:var(--green);color:#0A0B0A;}
+    .pt-save{font-size:10px;font-weight:800;letter-spacing:.06em;margin-left:6px;}
+    .pricecard{max-width:520px;margin:0 auto;background:var(--panel);border:1px solid var(--green);border-radius:22px;padding:clamp(30px,4vw,44px);text-align:center;position:relative;box-shadow:0 0 60px rgba(164,232,75,.07);}
+    .pricecard .tier{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+    .pricecard .amt{font-family:var(--font-d);color:var(--white);}
+    .pricecard .amt b{font-size:clamp(46px,5vw,60px);font-weight:800;letter-spacing:-.035em;}
+    .pricecard .amt small{color:var(--muted);font-size:15px;font-weight:400;margin-left:6px;}
+    .pricecard .sub{font-size:13.5px;color:var(--muted);margin:4px 0 22px;}
+    .pricecard ul{list-style:none;text-align:left;max-width:320px;margin:0 auto 24px;}
+    .pricecard li{padding:10px 0 10px 26px;border-bottom:1px solid var(--line);position:relative;font-size:14.5px;color:var(--body);}
+    .pricecard li::before{content:"—";position:absolute;left:0;color:var(--green);font-weight:700;}
+    .pricecard li:last-child{border-bottom:0;}
+    .trust{font-size:12.5px;color:var(--muted);line-height:1.65;margin-top:16px;text-align:left;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px 16px;}
+    .trust b{color:var(--body);}
+
+    /* faq */
+    details{border-bottom:1px solid var(--line);padding:4px 0;}
+    details summary{font-family:var(--font-d);font-weight:600;font-size:16px;color:var(--white);padding:16px 30px 16px 0;cursor:pointer;list-style:none;position:relative;}
+    details summary::-webkit-details-marker{display:none;}
+    details summary::after{content:"+";position:absolute;right:4px;top:50%;transform:translateY(-50%);color:var(--green);font-size:20px;font-weight:400;transition:transform .25s;}
+    details[open] summary::after{transform:translateY(-50%) rotate(45deg);}
+    details p{padding:0 0 18px;font-size:14.5px;color:var(--body);max-width:640px;}
+
+    /* final band */
+    .band{border-top:1px solid var(--line);text-align:center;padding:clamp(80px,10vw,130px) 0;position:relative;overflow:hidden;}
+    .band::before{content:"";position:absolute;inset:0;background:radial-gradient(50% 60% at 50% 100%,rgba(164,232,75,.08),transparent 70%);pointer-events:none;}
+    .band .display{font-size:clamp(34px,5vw,58px);margin-bottom:14px;}
+    .band .lion{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(520px,80vw);opacity:.05;pointer-events:none;}
+
+    .footer{border-top:1px solid var(--line);padding:34px 0;font-size:12.5px;color:var(--muted);}
+    .footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+
+    /* sticky mobile cta */
+    .sticky{position:fixed;left:0;right:0;bottom:0;z-index:80;background:rgba(7,8,7,.92);backdrop-filter:blur(10px);border-top:1px solid var(--line2);padding:10px 14px;display:none;}
+    .sticky .btn{width:100%;}
+    @media(max-width:760px){.sticky{display:block}body{padding-bottom:74px}}
+  </style>
+  <!-- Privacy-friendly analytics by Plausible -->
+  <script async src="https://plausible.io/js/pa-ARVew5Fljzfvc-hdK57GS.js"></script>
+  <script>
+    window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+    plausible.init()
+  </script>
+</head>
+<body>
+
+  <header class="nav" id="nav">
+    <div class="nav__in">
+      <a class="nav__logo" href="/"><img src="/assets/img/callum-logo.png" alt="CALLUM.B" /></a>
+      <nav class="nav__links">
+        <a class="hide-m" href="/the-ninety/">The Ninety</a>
+        <a class="hide-m" href="/coaching">Premium Coaching</a>
+        <a class="btn btn-solid" style="padding:12px 24px;font-size:14px;" href="#pricing">Start free <span class="arr">→</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow rv in">Physique OS · Self-run system</p>
+        <h1 class="display rv in">Run the system <span class="grad">yourself.</span></h1>
+        <p class="lead rv in rv-d1">The exact system my 1:1 clients run — your macros, the app, the recipe and exercise libraries, and the weekly review loop that keeps progress moving. You drive it. No coaching fees.</p>
+        <div class="hero-cta rv in rv-d2">
+          <a class="btn btn-solid" href="#pricing">Start 7-day free trial <span class="arr">→</span></a>
+          <a class="btn btn-line" href="#inside">What's inside <span class="arr">↓</span></a>
+        </div>
+        <p class="hero-trust rv in rv-d2">From £29/month after your trial · cancel anytime · no long-term contract.</p>
+      </div>
+      <div class="statbar rv in rv-d3">
+        <div class="statbar__in">
+          <div class="stat"><b>7<span class="u"> days</span></b><span>free before you pay</span></div>
+          <div class="stat"><b>14<span class="u"> guides</span></b><span>yours to keep</span></div>
+          <div class="stat"><b>3<span class="u"> rungs</span></b><span>on the training ladder</span></div>
+          <div class="stat"><b>1<span class="u"> app</span></b><span>everything in one place</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="sec">
+      <div class="wrap">
+        <div class="sec-head rv">
+          <p class="eyebrow">Why most transformations fail</p>
+          <h2 class="display">It's never willpower. It's the <span class="grad">missing structure.</span></h2>
+        </div>
+        <div class="hgrid g3 rv rv-d1">
+          <div class="cell"><span class="k">01</span><h3>No baseline</h3><p>Jumping straight into a deficit with no reference point — so nothing you change afterwards can be read properly.</p></div>
+          <div class="cell"><span class="k">02</span><h3>Daily scale panic</h3><p>Reacting to every morning's number — water and food weight — instead of the weekly trend that actually matters.</p></div>
+          <div class="cell"><span class="k">03</span><h3>Too many variables</h3><p>Changing five things at once, so when it stalls you've no idea which one to move. Structure fixes all three.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT'S INSIDE -->
+    <section class="sec sec--line" id="inside">
+      <div class="wrap">
+        <div class="sec-head rv">
+          <p class="eyebrow">What's inside</p>
+          <h2 class="display">Everything you need, <span class="grad">in one app.</span></h2>
+        </div>
+        <div class="hgrid g2 rv rv-d1">
+          <div class="cell"><span class="k">01 · The manual</span><h3>The Framework</h3><p>Your setup manual — how to calibrate your maintenance, set your macros, and run the weekly review loop. The thinking behind every number.</p></div>
+          <div class="cell"><span class="k">02 · Home base</span><h3>The coaching app</h3><p>The exact app my 1:1 clients use — your plan, your logging, your progress, all in one place on your phone.</p></div>
+          <div class="cell"><span class="k">03 · Food</span><h3>Recipe library</h3><p>Meals that fit your numbers — filter to your macros, tap to log. No spreadsheets, no "what do I even eat?".</p></div>
+          <div class="cell"><span class="k">04 · Training</span><h3>Exercise library</h3><p>Every lift with a video demo and cues — so you can follow your split, add your own sets and swap in exercises with confidence.</p></div>
+          <div class="cell"><span class="k">05 · The log</span><h3>Lift &amp; cardio tracking</h3><p>Log your weights and cardio week in, week out, and watch the numbers climb — progress you can actually see.</p></div>
+          <div class="cell"><span class="k">06 · The trend</span><h3>Progress tracking</h3><p>Weight, measurements and photos in one timeline, read as trends — so you make calm decisions, not panicked ones.</p></div>
+          <div class="cell" style="grid-column:1/-1;"><span class="k">07 · The library</span><h3>14 step-by-step guides</h3><p>Meal prep, eating out, beating plateaus, sleep, training principles and more — on top of everything else, and yours to keep.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRAINING LADDER -->
+    <section class="sec sec--line">
+      <div class="wrap">
+        <div class="sec-head rv">
+          <p class="eyebrow">Your training</p>
+          <h2 class="display">A ladder you climb <span class="grad">at your own pace.</span></h2>
+          <p class="lead">No standing in the gym wondering what to do. You start on Foundation and move up as you get stronger — on every rung I load a starter programme straight into your app, then you add your working sets and swap in exercises from the video library. Ready to step up? Just ask and I'll activate the next rung.</p>
+        </div>
+        <div class="hgrid g3 rv rv-d1">
+          <div class="cell"><span class="k">Rung 1 · 3-day</span><h3>Foundation</h3><p>Where everyone starts. Full body, three times a week — everything trained often, low fatigue, and the base every other rung is built on.</p></div>
+          <div class="cell"><span class="k">Rung 2 · 4-day</span><h3>Upper / Lower</h3><p>Two upper days, two lower — more volume per muscle and room to push the big lifts. Activated when Foundation starts to feel light.</p></div>
+          <div class="cell"><span class="k">Rung 3 · 5-day</span><h3>Push / Pull / Legs +</h3><p>The top rung. A push, pull and legs base plus an extra upper and lower to drive weak points — maximum volume, once you're training five days a week.</p></div>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="sec sec--line">
+      <div class="wrap">
+        <div class="sec-head rv">
+          <p class="eyebrow">How it works</p>
+          <h2 class="display">The same three-step loop, <span class="grad">run by you.</span></h2>
+        </div>
+        <div class="hgrid g3 rv rv-d1">
+          <div class="cell"><div class="stepn">01</div><h3>Calibrate</h3><p>Find your maintenance and set your macros to your goal — the Framework walks you through it. A real baseline before you change a thing.</p></div>
+          <div class="cell"><div class="stepn">02</div><h3>Execute</h3><p>Follow the plan in the app — hit protein, log your food, train your sessions, move your steps. Structure doing the heavy lifting.</p></div>
+          <div class="cell"><div class="stepn">03</div><h3>Review</h3><p>Read your weekly averages, change one thing, keep moving. The loop that never lets the plan go stale.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROOF -->
+    <section class="sec sec--line">
+      <div class="wrap">
+        <div class="sec-head rv">
+          <p class="eyebrow">Proof</p>
+          <h2 class="display">The same structure, <span class="grad">real results.</span></h2>
+        </div>
+        <div class="hgrid g3 rv rv-d1">
+          <div class="cell"><p style="color:var(--white);font-size:15px;">"Waist went 119cm to 101cm. What changed wasn't effort — it was finally having a system instead of a guess."</p><p class="note" style="margin-top:12px;">— Blueprint client</p></div>
+          <div class="cell"><p style="color:var(--white);font-size:15px;">"Fed up of feeling heavy on site and knackered by 3pm. A stone down and playing football with the kids again."</p><p class="note" style="margin-top:12px;">— Coaching client</p></div>
+          <div class="cell"><p style="color:var(--white);font-size:15px;">"Never trained properly before. The app told me exactly what to do — I actually look forward to the gym now."</p><p class="note" style="margin-top:12px;">— Self-run member</p></div>
+        </div>
+        <p class="rv rv-d2" style="margin-top:22px;"><a class="btn btn-line" href="/results">See real client transformations <span class="arr">→</span></a></p>
+        <p class="note rv rv-d2" style="margin-top:14px;">Individual results — everyone's starting point and consistency differ.</p>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="sec sec--line" id="pricing">
+      <div class="wrap">
+        <div class="sec-head center rv">
+          <p class="eyebrow">Start today</p>
+          <h2 class="display">One price. <span class="grad">The whole system.</span></h2>
+        </div>
+        <div class="rv rv-d1" style="text-align:center;">
+          <div class="pt-toggle" role="tablist" aria-label="Billing period">
+            <button id="ptMonthly" role="tab" aria-selected="false" onclick="setPlan('monthly')">Monthly</button>
+            <button id="ptAnnual" class="on" role="tab" aria-selected="true" onclick="setPlan('annual')">Annual <span class="pt-save">SAVE &pound;99</span></button>
+          </div>
+        </div>
+        <div class="pricecard rv rv-d2">
+          <p class="tier">Physique OS</p>
+          <p class="amt"><b id="ptPrice">£249</b><small id="ptPer">/year</small></p>
+          <p class="sub" id="ptSub">Works out £20.75/month · billed yearly</p>
+          <ul>
+            <li>The Framework + full app access</li>
+            <li>Recipe &amp; exercise libraries</li>
+            <li>14 step-by-step coaching guides</li>
+            <li>Lift, cardio &amp; progress tracking</li>
+            <li>Cancel anytime · no contract</li>
+          </ul>
+          <a class="btn btn-solid" id="ptCta" style="width:100%;" href="/coaching?plan=Physique OS — Annual (£249)#apply">Start 7-day free trial <span class="arr">→</span></a>
+          <div class="trust">7 days free. Your card is saved and <b id="ptTrustPrice">£249/year</b> is taken when your trial ends — <b>a week after you join</b>. Cancel any time before then (just message me — a day early to be safe) and you're <b>never charged</b>.</div>
+          <p class="note" style="margin-top:10px;">By starting your trial you agree to the <a href="/terms" target="_blank" style="color:var(--green);text-decoration:underline;">Terms</a>.</p>
+        </div>
+        <p class="note rv rv-d3" style="text-align:center;margin-top:26px;">Want eyes on your data as you go? <a href="/the-ninety/" style="color:var(--green);text-decoration:underline;">The Ninety</a> adds a monthly one-to-one call and a written review — £297 for 90 days.</p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="sec sec--line">
+      <div class="wrap" style="max-width:760px;">
+        <div class="sec-head rv">
+          <p class="eyebrow">Questions</p>
+          <h2 class="display">Good to <span class="grad">know.</span></h2>
+        </div>
+        <div class="rv rv-d1">
+          <details><summary>Is this the same as 1:1 coaching?</summary><p>No. Physique OS is the system, run by you — the app, the libraries and the Framework, self-led. My 1:1 coaching (where I set and adjust everything for you) is separate and application-only. This is the way in without the coaching price tag.</p></details>
+          <details><summary>What if it's not for me?</summary><p>Your card is saved when you start but <b style="color:var(--white);">not charged during the 7-day trial</b>. Your trial ends a week after you join (same day, next week) — cancel any time before then by messaging me on WhatsApp or email (a day early to be safe) and you're never charged. After the trial it's rolling (monthly or annual); cancel any time to stop the next payment, no contract, no exit fees.</p></details>
+          <details><summary>Do I need experience to use it?</summary><p>No. The Framework starts from the very beginning — how to find your maintenance, set your macros, and read your progress. The exercise library shows you every lift on video. It's built for people starting out as much as those who've trained for years.</p></details>
+          <details><summary>Can I upgrade to coaching later?</summary><p>Yes. Plenty of members start here, add The Ninety when they want monthly eyes on their data, and step up to 1:1 when they want me in their corner. Every pound you spend credits toward the level above.</p></details>
+          <details><summary>How do I get access after I sign up?</summary><p>You'll get your app login and The Framework by email shortly after payment — usually within a few minutes. Then you're straight in.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="band">
+      <img class="lion" src="/assets/img/lion-cutout.png" alt="" aria-hidden="true" />
+      <div class="wrap" style="position:relative;">
+        <p class="eyebrow" style="justify-content:center;">7 days free · from £29/month</p>
+        <h2 class="display">Stop guessing. <span class="grad">Start running the system.</span></h2>
+        <p class="lead" style="max-width:520px;margin:0 auto 30px;">Seven days free to see if it's for you. Structure over motivation — the rest is just consistency.</p>
+        <a class="btn btn-solid" href="#pricing">Start 7-day free trial <span class="arr">→</span></a>
+      </div>
+    </section>
+  </main>
+
+  <div class="sticky"><a class="btn btn-solid" id="ptStickyCta" href="#pricing">Start 7-day free trial · £249/yr</a></div>
+
+  <footer class="footer">
+    <div class="wrap">
+      <span>© <span id="yr">2026</span> CALLUM.B · Online Transformation Coach</span>
+      <span><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a>
+            <a href="https://billing.stripe.com/p/login/28E8wRc2X1mK9YE3vU00000" target="_blank" rel="noopener">Manage membership</a></span>
+    </div>
+  </footer>
+
+  <script src="/assets/js/payment-links-v2.js"></script>
+  <script>
+    document.getElementById('yr').textContent=new Date().getFullYear();
+    var nav=document.getElementById('nav');
+    addEventListener('scroll',function(){nav.classList.toggle('on',scrollY>40);},{passive:true});
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+    document.querySelectorAll('.rv:not(.in)').forEach(function(el){io.observe(el);});
+
+    var PLANS={
+      monthly:{price:'£29',per:'/month',sub:'Billed monthly · cancel anytime',trust:'£29/month',sticky:'Start 7-day free trial · £29/mo',cta:payLink('os-monthly','/coaching?plan=Physique OS — Monthly (£29)#apply')},
+      annual:{price:'£249',per:'/year',sub:'Works out £20.75/month · billed yearly',trust:'£249/year',sticky:'Start 7-day free trial · £249/yr',cta:payLink('os-annual','/coaching?plan=Physique OS — Annual (£249)#apply')}
+    };
+    setPlan('annual');
+    function setPlan(k){
+      var d=PLANS[k];
+      document.getElementById('ptPrice').textContent=d.price;
+      document.getElementById('ptPer').textContent=d.per;
+      document.getElementById('ptSub').textContent=d.sub;
+      document.getElementById('ptTrustPrice').textContent=d.trust;
+      document.getElementById('ptStickyCta').textContent=d.sticky;
+      document.getElementById('ptCta').setAttribute('href',d.cta);
+      document.getElementById('ptMonthly').classList.toggle('on',k==='monthly');
+      document.getElementById('ptMonthly').setAttribute('aria-selected',k==='monthly');
+      document.getElementById('ptAnnual').classList.toggle('on',k==='annual');
+      document.getElementById('ptAnnual').setAttribute('aria-selected',k==='annual');
+    }
+  </script>
+</body>
+</html>

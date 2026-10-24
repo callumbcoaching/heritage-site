@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Supplement List · CALLUM.B</title>
+<meta name="description" content="What's actually worth your money, what isn't, and the order to buy it in.">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0A0B0A;--panel:#141614;--panel2:#1B1F1B;--line:#2A2F2A;--line2:#363D36;
+        --ink:#FFFFFF;--body:#C2C8C2;--muted:#7A827A;--green:#A4E84B;--amber:#E8A53D;--red:#F0613C;
+        --radius:16px;--radius-sm:11px;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--body);font-family:'Inter',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:820px;margin:0 auto;padding:0 20px}
+  h1,h2,h3{font-family:'Sora',sans-serif;font-weight:800;color:var(--ink);letter-spacing:-.02em}
+  a{color:var(--green)}
+  .eyebrow{font-family:'Sora';font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:12px}
+  .eyebrow::before{content:"";width:26px;height:3px;background:var(--green);border-radius:2px}
+
+  header{padding:26px 0;border-bottom:1px solid var(--line)}
+  header .wrap{display:flex;justify-content:space-between;align-items:center}
+  .wordmark{font-family:'Sora';font-weight:800;color:#fff;font-size:18px;text-decoration:none}
+  .wordmark .dot{color:var(--green)}
+  header .tag{font-size:12px;color:var(--muted);font-family:'Sora';letter-spacing:.14em;text-transform:uppercase}
+
+  .hero{padding:54px 0 34px}
+  .hero h1{font-size:clamp(32px,5.5vw,50px);line-height:1.05;margin:16px 0 0}
+  .hero .sub{font-size:clamp(16px,2.2vw,19px);margin-top:16px;max-width:660px}
+  .hero .sub b{color:var(--ink)}
+
+  .code-card{background:linear-gradient(180deg,rgba(164,232,75,.08),var(--panel));border:1px solid rgba(164,232,75,.4);
+    border-radius:var(--radius);padding:24px 26px;margin:30px 0 10px;display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
+  .code-card .l .k{font-family:'Sora';font-weight:800;font-size:30px;color:var(--green);letter-spacing:.06em}
+  .code-card .l .w{font-size:13.5px;color:var(--muted);margin-top:2px}
+  .btn{font-family:'Sora';font-weight:700;font-size:15px;border:0;border-radius:var(--radius-sm);padding:14px 26px;
+    display:inline-flex;align-items:center;gap:9px;text-decoration:none;background:var(--green);color:#0A0B0A}
+
+  .callout{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--green);border-radius:14px;padding:16px 20px;color:#fff;margin:22px 0;font-size:14.5px}
+  .callout.amber{border-left-color:var(--amber)}
+  .callout b{color:var(--green)}
+  .callout.amber b{color:var(--amber)}
+
+  section{padding:34px 0}
+  .sec-head{margin-bottom:8px}
+  .sec-head h2{font-size:clamp(22px,3.4vw,29px);margin-top:12px}
+  .sec-head p{margin-top:8px;font-size:15px}
+
+  .item{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin-top:14px}
+  .item .top{display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .item h3{font-size:18px}
+  .item .dose{font-family:'Sora';font-weight:700;font-size:13.5px;color:var(--green);white-space:nowrap}
+  .item p{margin-top:8px;font-size:14.5px}
+  .item .when{margin-top:10px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
+  .item .when b{color:var(--body)}
+  .item .stock{margin-top:9px;font-size:12.5px;color:var(--green);font-weight:600}
+  .item .stock.off{color:var(--muted);font-weight:500}
+
+  .rank{display:inline-block;font-family:'Sora';font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+    padding:4px 10px;border-radius:100px;background:rgba(164,232,75,.14);color:var(--green);border:1px solid rgba(164,232,75,.35)}
+  .rank.two{background:rgba(232,165,61,.12);color:var(--amber);border-color:rgba(232,165,61,.35)}
+  .rank.three{background:rgba(255,255,255,.06);color:var(--muted);border-color:var(--line2)}
+
+  .skip{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px 24px;margin-top:14px}
+  .skip li{margin:10px 0 0 18px;font-size:14.5px}
+  .skip li b{color:var(--ink)}
+
+  .order{counter-reset:step;margin-top:14px}
+  .order .step{display:flex;gap:16px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin-bottom:10px}
+  .order .n{flex:0 0 auto;width:32px;height:32px;border-radius:50%;background:rgba(164,232,75,.14);border:1px solid rgba(164,232,75,.35);
+    color:var(--green);font-family:'Sora';font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px}
+  .order .step b{color:var(--ink);font-family:'Sora'}
+  .order .step p{font-size:14px;margin-top:3px}
+
+  footer{border-top:1px solid var(--line);margin-top:30px;padding:30px 0 46px;font-size:12.5px;color:var(--muted)}
+  footer .wordmark{font-size:15px}
+  footer p{margin-top:10px;max-width:640px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="wordmark" href="/">CALLUM<span class="dot">.</span>B</a>
+    <span class="tag">Client Resource</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">The Supplement List</div>
+    <h1>The short list that's<br>actually worth it.</h1>
+    <p class="sub">Supplements are the last 5% of the job. Your food, your training and your sleep are the other 95%, and no powder fixes a missing one. <b>But the 5% is still 5%</b>, so here's exactly what earns its place, what it does, and the order to buy it in.</p>
+
+    <div class="code-card">
+      <div class="l">
+        <div class="k">CALLUMB10</div>
+        <div class="w">My discount code at Full Boar Sports · use it on anything below</div>
+      </div>
+      <a class="btn" href="https://www.fullboarsports.co.uk/CALLUMB10" target="_blank" rel="noopener">Shop Full Boar Sports →</a>
+    </div>
+    <p style="font-size:12.5px;color:var(--muted)">Straight with you: I earn a small commission if you use that code, at no extra cost to you. It doesn't change what's on this list. Everything here was on it before the partnership existed, and anything I think is a waste of money is still called out as one below.</p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="rank">Tier 1 · the foundation</span>
+      <h2>Buy these first</h2>
+      <p>Strong evidence, cheap, and they do something you'll actually notice or measure. If your budget stops here, you've lost nothing that matters.</p>
+    </div>
+
+    <div class="item">
+      <div class="top"><h3>Creatine monohydrate</h3><span class="dose">3–5 g every day</span></div>
+      <p>The most researched supplement in existence and the one that reliably does what it says: more work per session, better recovery between sets, a bit more size over time. Monohydrate only. The fancy versions cost more and do nothing extra.</p>
+      <div class="when"><b>When:</b> any time of day, every day including rest days. No loading phase needed, it just takes 3–4 weeks to saturate. The 1–2kg on the scale in week one is water inside the muscle, not fat.</div>
+      <div class="stock">At Full Boar: Per4m Micronized Creatine, 50 servings, about £15. Cheapest thing on this page and the one I'd never skip.</div>
+    </div>
+
+    <div class="item">
+      <div class="top"><h3>Whey protein</h3><span class="dose">25 g per serving</span></div>
+      <p>Not magic, just convenient protein. It exists so hitting your daily target isn't a battle on busy days. 25 g is the dose that actually does the job in the research, so don't skimp with a half scoop.</p>
+      <div class="when"><b>When:</b> whenever it plugs a gap. Around training is convenient, not compulsory. Total daily protein is what matters.</div>
+      <div class="stock">At Full Boar: Per4m Whey (900 g or 2 kg) and Naughty Boy Advanced Whey. Buy on flavour and price per kg, they're all much of a muchness.</div>
+    </div>
+
+    <div class="item">
+      <div class="top"><h3>Vitamin D3</h3><span class="dose">2,000–5,000 IU daily</span></div>
+      <p>The most common deficiency there is, and we live in the UK, so assume you're low from about October to April. Affects mood, immune function and hormonal health. This is the one worth actually testing rather than guessing.</p>
+      <div class="when"><b>When:</b> daily with a meal containing fat. Ask your GP for a vitamin D blood test if you've never had one.</div>
+      <div class="stock">At Full Boar: HR Labs D3 5000iu, or Supplement Needs D3+K2 if you want the K2 alongside it.</div>
+    </div>
+
+    <div class="item">
+      <div class="top"><h3>Omega-3 (EPA + DHA)</h3><span class="dose">2–3 g combined</span></div>
+      <p>Anti-inflammatory, good for blood lipids, blood pressure and mood. Check the label properly: you want 2–3 g of <i>EPA + DHA combined</i>, not 2–3 g of "fish oil", which is usually a much smaller dose hiding in a bigger capsule.</p>
+      <div class="when"><b>When:</b> daily with food. Skip it if you're already eating oily fish several times a week.</div>
+      <div class="stock">At Full Boar: Supplement Needs Omega-3 softgels, or TBJP Oh-Mega if you want a bigger tub.</div>
+    </div>
+
+    <div class="item">
+      <div class="top"><h3>Magnesium</h3><span class="dose">200–400 mg evening</span></div>
+      <p>Involved in sleep quality, muscle function and stress. Hard training raises what you need and most people eat less than they think. Form matters: <b>bisglycinate, threonate or citrate</b>. Avoid oxide, it's cheap for a reason and mostly ends up in the toilet.</p>
+      <div class="when"><b>When:</b> evening, an hour or so before bed.</div>
+      <div class="stock">At Full Boar: Supplement Needs Magnesium Bisglycinate. That's the right form, avoid the ZMA-style blends if magnesium is what you're actually after.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="rank two">Tier 2 · training performance</span>
+      <h2>Once the basics are in</h2>
+      <p>These make sessions better rather than making you healthier. Worth it if you train hard and consistently. Pointless if tier 1 and your sleep aren't sorted.</p>
+    </div>
+
+    <div class="item">
+      <div class="top"><h3>Caffeine</h3><span class="dose">200–400 mg pre-session</span></div>
+      <p>The most effective legal performance drug we have. Roughly 3–6 mg per kg of bodyweight before a session, which for most people is 200–400 mg. Coffee counts.</p>
+      <div class="when"><b>When:</b> 45–60 minutes before training, and <b>not within 8 hours of bed</b>. Keep everyday intake lower than your pre-session dose so it still works when you need it. Trading sleep for a better session is a bad deal.</div>
+      <div class="stock off">Not sold on its own there and it doesn't need to be. Coffee is cheaper, or it's already in any stim pre-workout you buy.</div>
+    </div>
+
+    <div class="item">
+      <div class="top"><h3>Citrulline malate</h3><span class="dose">6–8 g pre-session</span></div>
+      <p>More blood flow, better work capacity, and yes, a proper pump. One of the few pre-workout ingredients that earns its place at a full dose. Most cheap pre-workouts contain a fraction of what's needed.</p>
+      <div class="when"><b>When:</b> about an hour before lifting.</div>
+      <div class="stock">At Full Boar: easiest as a properly dosed pre-workout rather than a standalone tub. Per4m Pump (stim free), PER4M Pre Workout STIM, or TBJP Pumpage. Check the label lists at least 6 g.</div>
+    </div>
+
+    <div class="item">
+      <div class="top"><h3>Beta-alanine</h3><span class="dose">3–5 g daily</span></div>
+      <p>Buffers the burn in longer sets, so it helps most in the 60-second-plus range and does little for heavy triples. Takes about 4 weeks of daily use to build up, so timing it around a session is irrelevant.</p>
+      <div class="when"><b>When:</b> any time, daily. The face and hand tingling is harmless. Split the dose if you'd rather avoid it.</div>
+      <div class="stock off">Comes inside most pre-workouts rather than on its own. If you want the daily dose properly, a plain standalone tub from anywhere is fine, it's a commodity.</div>
+    </div>
+
+    <div class="item">
+      <div class="top"><h3>Electrolytes</h3><span class="dose">as needed</span></div>
+      <p>Sodium and potassium, not a sports drink full of sugar. Genuinely useful if you're a heavy sweater, training in heat, on a low-carb phase, or getting cramps and light-headedness in sessions. Otherwise food covers it.</p>
+      <div class="when"><b>When:</b> during long or sweaty sessions. Salt your food properly first, it's cheaper.</div>
+      <div class="stock">At Full Boar: Supplement Needs Electrolyte Plus. Or a pinch of salt in your water, which is free and works.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="rank three">Tier 3 · sleep &amp; stress</span>
+      <h2>The recovery end</h2>
+      <p>Optional, and only worth touching once your sleep routine itself is fixed. A supplement won't out-run a phone in bed at midnight.</p>
+    </div>
+
+    <div class="item">
+      <div class="top"><h3>Ashwagandha (KSM-66)</h3><span class="dose">500–600 mg pre-bed</span></div>
+      <p>An adaptogen with decent evidence for lowering stress and cortisol, and people generally report sleeping better on it. Look for a standardised extract such as KSM-66 rather than raw powder.</p>
+      <div class="when"><b>When:</b> with your last meal or before bed. Worth cycling: a few months on, a few weeks off, as the effect can fade.</div>
+      <div class="stock">At Full Boar: Supplement Needs KSM66, Per4m KSM66 or Strom KSM66. All the right extract, buy on price.</div>
+    </div>
+
+    <div class="item">
+      <div class="top"><h3>L-theanine</h3><span class="dose">100–200 mg</span></div>
+      <p>Takes the edge off without sedating you. Pairs well with caffeine to smooth out the jittery bit, and works pre-bed if your head is still racing.</p>
+      <div class="when"><b>When:</b> with your pre-workout caffeine, or an hour before bed. Not both.</div>
+      <div class="stock off">Usually only found inside sleep or nootropic blends. Standalone is cheap anywhere, no need to be fussy about brand.</div>
+    </div>
+
+    <div class="item">
+      <div class="top"><h3>Glycine</h3><span class="dose">3 g pre-bed</span></div>
+      <p>Cheap, mild, and some decent evidence for falling asleep faster and feeling sharper the next morning. Low-risk experiment if sleep onset is your issue.</p>
+      <div class="when"><b>When:</b> 30–60 minutes before bed.</div>
+      <div class="stock off">Not a standalone line there. Any plain glycine powder does the job.</div>
+    </div>
+
+    <div class="callout amber">
+      <b>On melatonin:</b> you'll see it recommended constantly online, but in the UK it is prescription-only, so it isn't on this list and I won't be advising you on doses of it. If your sleep is genuinely broken, that's a conversation with your GP, and a conversation with me about your training and stress load.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Save your money</div>
+      <h2>What I'd skip</h2>
+    </div>
+    <div class="skip">
+      <ul>
+        <li><b>BCAAs and EAAs.</b> If you're hitting your daily protein, they add nothing. The research is clear that whole protein beats individual amino acids, and you're already paying for it in your whey.</li>
+        <li><b>Fat burners.</b> Caffeine plus a marketing budget. The rest of the label is dosed too low to matter, and none of them touch what a calorie deficit does.</li>
+        <li><b>Testosterone boosters.</b> If they worked as advertised they'd be prescription medication. Fix your sleep, bodyfat, training and zinc and vitamin D status instead, that's the actual lever.</li>
+        <li><b>Mass gainers.</b> A very expensive way to buy maltodextrin. Eat the extra food, or blend oats and peanut butter into your whey.</li>
+        <li><b>Fancy creatine forms.</b> HCl, ethyl ester, buffered, all of it. Monohydrate wins on evidence and costs a fraction.</li>
+        <li><b>Detox teas and greens powders.</b> Your liver and kidneys already do the job. Eat 500 g of actual fruit and veg a day instead, which is the single best thing on this whole page and costs nothing extra.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">If you're starting from nothing</div>
+      <h2>Buy it in this order</h2>
+    </div>
+    <div class="order">
+      <div class="step"><span class="n">1</span><div><b>Creatine + vitamin D3</b><p>Under a tenner a month between them. Best value on the entire page.</p></div></div>
+      <div class="step"><span class="n">2</span><div><b>Whey protein</b><p>Only if hitting your protein target is genuinely hard. If food gets you there, skip it.</p></div></div>
+      <div class="step"><span class="n">3</span><div><b>Omega-3 + magnesium</b><p>The health and recovery layer. You'll feel the magnesium in your sleep within a fortnight if you were low.</p></div></div>
+      <div class="step"><span class="n">4</span><div><b>Caffeine + citrulline</b><p>Only once you're training hard enough for a better session to be worth paying for.</p></div></div>
+      <div class="step"><span class="n">5</span><div><b>Everything else</b><p>Optional, situational, and honestly never the reason someone does or doesn't get results.</p></div></div>
+    </div>
+
+    <div class="callout">
+      <b>The honest summary:</b> creatine, vitamin D and protein do most of the work on this page. Everything else is a rounding error next to eating enough protein, sleeping seven-plus hours and turning up to your sessions. If you're ever choosing between a supplement order and a food shop, buy the food.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <b class="wordmark">CALLUM<span class="dot">.</span>B</b>
+    <p>Callum Broadfoot · Online Transformation Coach</p>
+    <p style="margin-top:14px">This is general fitness information, not medical advice. It doesn't diagnose or treat anything and it doesn't replace your GP or pharmacist. Check with them before starting any supplement, especially if you take prescribed medication (including GLP-1 medication or TRT), have a health condition, or are pregnant or breastfeeding. Doses here are typical ranges from the research, not a prescription for you. Anything you're unsure about, ask me before you buy it.</p>
+    <p style="margin-top:10px">I earn a small commission on purchases made with my discount code, at no extra cost to you.</p>
+  </div>
+</footer>
+
+</body>
+</html>

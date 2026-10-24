@@ -163,7 +163,7 @@ h1,h2,h3,h4{font-family:var(--display);color:var(--cream);font-weight:600;margin
 .nav.hide .nav__bar::before{opacity:0;}
 .mark{display:inline-flex;align-items:center;gap:12px;font-family:var(--display);font-weight:600;font-size:19px;letter-spacing:.3em;color:var(--cream);transition:transform .4s var(--spring);}
 .mark img{width:26px;height:auto;}
-.mark i{color:var(--gold);font-style:normal;}
+.mark i{color:var(--gold);font-style:normal;letter-spacing:0;margin-left:-.72em;margin-right:-.44em;}
 .mark:hover{transform:translateY(-1px);}
 .mark:active{transform:scale(.97);}
 .nav__links{display:none;gap:30px;align-items:center;}

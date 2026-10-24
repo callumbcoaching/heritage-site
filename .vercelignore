@@ -1,0 +1,17 @@
+# Dev files are not part of the public site.
+CLAUDE (1).md
+tools/
+tests/
+serve.mjs
+screenshot.mjs
+offsets.mjs
+playwright.config.mjs
+node_modules/
+package.json
+package-lock.json
+playwright-report/
+test-results/
+temporary screenshots/
+.firecrawl/
+.gitignore
+*.md

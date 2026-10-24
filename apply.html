@@ -21,8 +21,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=GFS+Didot&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="heritage.css?v=8b94fb6c">
-<link rel="stylesheet" href="components.css?v=c294268a">
+<link rel="stylesheet" href="heritage.css?v=e77540c5">
+<link rel="stylesheet" href="components.css?v=a9aa471a">
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-ARVew5Fljzfvc-hdK57GS.js"></script>
+<script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()</script>
 </head>
 <body>
 <div class="grain" aria-hidden="true"></div>
@@ -50,7 +53,7 @@
       <div>
         <p class="eyebrow">1:1 coaching · application</p>
         <h1><span class="ln"><span>Tell me</span></span><span class="ln" style="--d:1"><span class="it">where you're at.</span></span></h1>
-        <p class="lede">Two minutes, completely private. I read every application myself and reply within 24 hours. If I'm not the right fit for you, I'll say so.</p>
+        <p class="lede">Free, two minutes, completely private, and it commits you to nothing. I read every application myself and reply within 24 hours. If I'm not the right fit for you, I'll say so.</p>
         
       </div>
       
@@ -60,11 +63,16 @@
 
 <section class="chap g2" id="form" data-chap="Your application">
   <div class="wrap">
+    <div class="applyside rv">
+      <blockquote class="applyq">"I'd been trying for over 10 years to no avail. Callum got me on the right track straight away."<cite>Jonny Gregg · current 1:1 client</cite></blockquote>
+      <p class="applyg"><b>8-Week Progress Guarantee.</b> Hold 80%+ on your weekly SDR score for the first eight weeks. If nothing has improved, the next month is on me. <a class="tlink" href="/terms-coaching">Full terms</a></p>
+    </div>
     <form class="applyf" id="applyForm" novalidate>
       <div class="two">
         <div class="field"><label for="f-name">First name</label><input type="text" id="f-name" name="name" autocomplete="given-name" required></div>
         <div class="field"><label for="f-age">Age</label><input type="number" id="f-age" name="age" min="18" max="90" inputmode="numeric"></div>
       </div>
+      <div class="field"><label for="f-contact">Your WhatsApp number or email</label><p class="hint">So I can reply. It's only used for this.</p><input type="text" id="f-contact" name="contact" autocomplete="email" required></div>
       <fieldset class="field"><legend>What do you want most?</legend>
         <div class="chips">
           <label><input type="checkbox" name="goal" value="Lose fat"><span>Lose fat</span></label>
@@ -86,15 +94,17 @@
         <div class="chips">
           <label><input type="radio" name="reply" value="WhatsApp message" checked><span>WhatsApp message</span></label>
           <label><input type="radio" name="reply" value="A quick call"><span>A quick call</span></label>
+          <label><input type="radio" name="reply" value="Email"><span>Email</span></label>
         </div></fieldset>
-      <div class="actions" style="margin-top:0"><button class="btn" type="submit">Review my application <span class="arr">→</span></button><span class="label">Nothing is sent until you press send</span></div>
+      <div class="actions" style="margin-top:0"><button class="btn" type="submit" id="applyBtn">Send my application <span class="arr">→</span></button><span class="label" id="applyNote">It comes straight to me, privately. <a class="tlink" href="/privacy">Privacy</a></span></div>
     </form>
     <div class="applydone" id="applyDone" hidden>
-      <p class="eyebrow">Ready to send</p>
-      <h3 class="h-md" style="margin-top:var(--s2)">Here's your application.</h3>
-      <p class="body" style="margin-top:var(--s2)">Tap send and it opens WhatsApp with this filled in. You just press send there. I'll reply within 24 hours.</p>
+      <p class="eyebrow" id="doneEye">Ready to send</p>
+      <h3 class="h-md" style="margin-top:var(--s2)" id="doneHead">Here's your application.</h3>
+      <p class="body" style="margin-top:var(--s2)" id="doneBody">Tap send and it opens WhatsApp with this filled in. You just press send there. I'll reply within 24 hours.</p>
       <pre id="applyText"></pre>
       <div class="actions" style="margin-top:0"><a class="btn" id="applySend" href="https://wa.me/447359838866" target="_blank" rel="noopener">Send on WhatsApp <span class="arr">→</span></a><button class="tlink" type="button" id="applyEdit" style="background:none;border:0;cursor:pointer">Edit my answers</button></div>
+      <p class="label" style="margin-top:var(--s3)">Rather not use WhatsApp? <a class="tlink" id="applyMail" href="/cdn-cgi/l/email-protection#8ae9ebe6e6ffe7cae9ebe6e6ffe7e8e9e5ebe9e2e3e4eda4e9e5a4ffe1">Send it by email instead</a> to <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f99a9895958c94b99a9895958c949b9a96989a9190979ed79a96d78c92">[email&#160;protected]</a></p>
     </div>
     <div class="next">
       <article class="panel rv"><span class="label">Within 24 hours</span><h3 class="h-sm" style="margin-top:10px">I reply myself</h3><p class="body" style="margin-top:8px;font-size:15px">Not a bot, not an assistant. A straight answer on whether I can help.</p></article>
@@ -103,16 +113,19 @@
     </div>
   </div>
 </section>
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 (() => {
   const f = document.getElementById("applyForm"), done = document.getElementById("applyDone"), out = document.getElementById("applyText"), send = document.getElementById("applySend");
-  f.addEventListener("submit", e => {
+  let started = false;
+  f.addEventListener("input", () => { if (!started) { started = true; track("Application started"); } });
+  f.addEventListener("submit", async e => {
     e.preventDefault();
     const d = new FormData(f), v = k => (d.get(k) || "").toString().trim();
+    for (const k of ["name", "contact"]) if (!v(k)) { const el = f.elements[k]; el.focus(); el.closest(".field").classList.add("need"); return; }
     const goals = d.getAll("goal").join(", ");
     const lines = [
       "Hi Callum, here's my application for 1:1 coaching.", "",
-      "Name: " + (v("name") || "-"), "Age: " + (v("age") || "-"),
+      "Name: " + (v("name") || "-"), "Age: " + (v("age") || "-"), "Contact: " + v("contact"),
       "What I want: " + (goals || "-"), "",
       "What's gone wrong before: " + (v("tried") || "-"), "",
       "My week: " + (v("week") || "-"), "",
@@ -120,10 +133,33 @@
     ];
     const msg = lines.join("\n");
     out.textContent = msg;
+    const mail = document.getElementById("applyMail");
+    if (mail) mail.href = "mailto:callum@callumbcoaching.co.uk?subject=" + encodeURIComponent("1:1 coaching application") + "&body=" + encodeURIComponent(msg);
     send.href = "https://wa.me/447359838866?text=" + encodeURIComponent(msg);
+    // save it first, so it reaches me even if WhatsApp never gets opened
+    const btn = document.getElementById("applyBtn"); btn.disabled = true;
+    let saved = false;
+    try {
+      const r = await fetch("https://formspree.io/f/mvzjlroq", { method: "POST", headers: { "Accept": "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify({ _subject: "1:1 application: " + v("name"), name: v("name"), contact: v("contact"), age: v("age"), goals, tried: v("tried"), week: v("week"), plan: v("plan"), reply: v("reply"), application: msg }) });
+      saved = r.ok;
+    } catch (err) {}
+    btn.disabled = false;
+    track(saved ? "Application sent" : "Application save failed", { reply: v("reply") });
+    if (saved) {
+      document.getElementById("doneEye").textContent = "Sent";
+      document.getElementById("doneHead").textContent = "Got it. I'll be in touch within 24 hours.";
+      document.getElementById("doneBody").textContent = "Your application is with me. Want a faster answer? Send it on WhatsApp too and I'll usually reply the same day.";
+      document.getElementById("applyEdit").hidden = true;
+      document.getElementById("applyMail").closest("p").hidden = true;
+      send.innerHTML = 'Also send on WhatsApp <span class="arr">→</span>';
+    }
     f.hidden = true; done.hidden = false;
     done.scrollIntoView({ behavior: "smooth", block: "start" });
   });
+  send.addEventListener("click", () => track("Application WhatsApp"));
+  document.getElementById("applyMail").addEventListener("click", () => track("Application email"));
+  f.addEventListener("input", e => { const fl = e.target.closest(".field"); if (fl) fl.classList.remove("need"); });
   document.getElementById("applyEdit").addEventListener("click", () => { done.hidden = true; f.hidden = false; f.scrollIntoView({ behavior: "smooth", block: "start" }); });
 })();
 </script>
@@ -144,6 +180,6 @@
   </div>
 </footer>
 <script src="heritage.js?v=cf7edf40"></script>
-<script src="components.js?v=dc7d4912"></script>
+<script src="components.js?v=2acf95a7"></script>
 </body>
 </html>

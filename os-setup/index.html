@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Set up your Physique OS — CALLUM.B</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<script defer data-domain="callumbcoaching.co.uk" src="https://plausible.io/js/script.js"></script>
+<style>
+:root{--bg:#0A0B0A;--panel:#141614;--panel2:#1B1F1B;--line:#2A2F2A;--line2:#363D36;
+--ink:#fff;--body:#C2C8C2;--muted:#7A827A;--green:#A4E84B;--amber:#E8A53D}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg)}
+body{color:var(--body);font-family:'Inter',system-ui,sans-serif;line-height:1.55;padding-bottom:40px}
+.wrap{max-width:620px;margin:0 auto;padding:34px 18px}
+.eyebrow{font-family:'Sora';font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--green);display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:26px;height:3px;background:var(--green);border-radius:2px}
+h1{font-family:'Sora';font-weight:800;color:var(--ink);font-size:clamp(28px,7vw,40px);letter-spacing:-.025em;line-height:1.1;margin:10px 0 10px}
+h1 .g{color:var(--green)}
+.lede{font-size:15.5px;color:var(--body);margin-bottom:8px}
+.steps{display:flex;gap:8px;margin:20px 0 26px;flex-wrap:wrap}
+.step{flex:1;min-width:150px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:12.5px;color:var(--muted)}
+.step b{display:block;font-family:'Sora';font-size:12px;color:var(--green);margin-bottom:3px}
+.step.done{border-color:rgba(164,232,75,.4)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:14px}
+.card h2{font-family:'Sora';font-weight:800;font-size:17px;color:var(--ink);margin-bottom:3px}
+.card .sub{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+label{font-family:'Sora';font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px}
+input,select,textarea{width:100%;background:var(--panel2);border:1px solid var(--line2);border-radius:10px;color:#fff;font-family:'Inter';font-size:15px;padding:12px 13px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--green)}
+textarea{resize:vertical;min-height:80px}
+.row{display:flex;gap:10px;margin-bottom:14px}.row>div{flex:1}
+.field{margin-bottom:14px}
+.seg{display:flex;gap:6px}
+.seg button{flex:1;background:var(--panel2);border:1px solid var(--line2);color:var(--body);font-family:'Sora';font-weight:600;font-size:13px;padding:11px 6px;border-radius:9px;cursor:pointer}
+.seg button.on{background:var(--green);border-color:var(--green);color:#0A0B0A}
+.unit{display:flex;gap:6px}.unit input{flex:1;min-width:0}
+.chk{display:flex;align-items:flex-start;gap:11px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:18px;cursor:pointer;text-transform:none;letter-spacing:normal;font-family:'Inter',sans-serif;font-size:13.5px;font-weight:400;color:var(--body);line-height:1.5}
+.chk input{width:19px;height:19px;flex:0 0 auto;margin-top:1px;accent-color:var(--green)}
+.unitseg{display:flex;gap:5px;flex:0 0 auto}
+.unitseg button{background:var(--panel2);border:1px solid var(--line2);color:var(--muted);font-family:'Sora';font-weight:600;font-size:12.5px;padding:0 14px;border-radius:9px;cursor:pointer;white-space:nowrap}
+.unitseg button.on{background:var(--green);border-color:var(--green);color:#0A0B0A}
+.opt{display:block;background:var(--panel2);border:1px solid var(--line2);border-radius:11px;padding:13px 15px;margin-bottom:8px;cursor:pointer;text-transform:none;letter-spacing:normal;font-family:'Inter',sans-serif;font-size:14px;font-weight:400;color:var(--body)}
+.opt.on{border-color:var(--green);background:rgba(164,232,75,.06)}
+.opt b{font-family:'Sora';font-size:14.5px;color:var(--ink);display:block}
+.opt span{font-size:12.5px;color:var(--muted)}
+#macros{background:linear-gradient(180deg,rgba(164,232,75,.07),transparent);border:1px solid rgba(164,232,75,.3)}
+.nums{display:flex;gap:8px;text-align:center;margin-top:12px}
+.num{flex:1;background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:12px 4px}
+.num b{display:block;font-family:'Sora';font-weight:800;font-size:22px;color:var(--green);letter-spacing:-.02em}
+.num span{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.tdee{font-size:13px;color:var(--muted);margin-top:10px}
+.tdee b{color:#fff}
+button.go{width:100%;font-family:'Sora';font-weight:700;font-size:16px;border:0;border-radius:12px;padding:16px;cursor:pointer;background:var(--green);color:#0A0B0A;margin-top:4px}
+.note{font-size:11.5px;color:var(--muted);text-align:center;margin-top:10px}
+#err{display:none;color:#F0613C;font-size:13px;text-align:center;margin-top:10px}
+#done{display:none;text-align:center;padding:10px 0}
+#done h2{font-family:'Sora';font-weight:800;font-size:26px;color:#fff;margin-bottom:10px}
+#done p{font-size:15px;margin-bottom:14px}
+.tick{width:64px;height:64px;border-radius:50%;background:rgba(164,232,75,.14);border:1px solid rgba(164,232,75,.4);color:var(--green);font-size:30px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+footer{text-align:center;font-size:11.5px;color:var(--muted);margin-top:26px}
+</style>
+</head>
+<body><div class="wrap">
+
+<div id="form-side">
+  <div class="eyebrow">Physique OS · Step 2 of 2</div>
+  <h1>You're in. Now let's<br>build <span class="g">your</span> setup.</h1>
+  <p class="lede">Two minutes of detail and I'll have your macros, your training and your app loaded before you've made a brew. Your numbers appear as you type.</p>
+
+  <div class="steps">
+    <div class="step done"><b>✓ Payment</b>7-day trial started</div>
+    <div class="step"><b>2 · This form</b>Your numbers &amp; training</div>
+    <div class="step"><b>3 · Me</b>Onboarding link by email</div>
+  </div>
+
+  <form id="setup">
+    <div class="card">
+      <h2>You</h2>
+      <div class="sub">Use the same email you paid with so I can match you up.</div>
+      <div class="row">
+        <div><label>First name</label><input name="first" id="first" required autocomplete="given-name"></div>
+        <div><label>Last name</label><input name="last" id="last" required autocomplete="family-name"></div>
+      </div>
+      <div class="field"><label>Email</label><input name="email" id="email" type="email" required autocomplete="email"></div>
+      <div class="row">
+        <div><label>Age</label><input name="age" id="age" type="number" min="14" max="90" required inputmode="numeric"></div>
+        <div><label>Sex (for the maths)</label>
+          <div class="seg" id="sex"><button type="button" data-v="male" class="on">Male</button><button type="button" data-v="female">Female</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Your numbers</h2>
+      <div class="sub">Rough is fine — we recalibrate from real data in week two.</div>
+      <div class="field"><label>Height</label>
+        <div class="unit"><input id="height" type="number" step="any" min="100" max="230" inputmode="decimal" placeholder="cm" required>
+          <input id="hFt" type="number" step="any" min="3" max="8" inputmode="numeric" placeholder="ft" style="display:none">
+          <input id="hIn" type="number" step="any" min="0" inputmode="decimal" placeholder="in" style="display:none">
+          <div class="unitseg" id="hUnit" data-u="cm"><button type="button" class="on" data-u="cm">cm</button><button type="button" data-u="ft">ft / in</button></div></div>
+      </div>
+      <div class="field"><label>Weight</label>
+        <div class="unit"><input id="weight" type="number" step="any" min="1" inputmode="decimal" placeholder="kg" required>
+          <div class="unitseg" id="wUnit" data-u="kg"><button type="button" class="on" data-u="kg">kg</button><button type="button" data-u="lb">lb</button></div></div>
+      </div>
+      <div class="field"><label>Activity — outside of training too</label>
+        <select id="activity">
+          <option value="1.2">Sedentary — desk job, little exercise</option>
+          <option value="1.375">Light — train 1–3 days / week</option>
+          <option value="1.55" selected>Moderate — train 3–5 days / week</option>
+          <option value="1.725">Very active — train 6–7 days / week</option>
+          <option value="1.9">Athlete — physical job + daily training</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Your goal</h2>
+      <div class="sub">Pick the one that's true for the next 12 weeks.</div>
+      <div id="goal">
+        <label class="opt on" data-v="-0.2"><b>Lose fat</b><span>A controlled deficit — weight comes down, muscle stays.</span></label>
+        <label class="opt" data-v="0"><b>Maintain</b><span>Hold your weight, build the habits, get stronger.</span></label>
+        <label class="opt" data-v="0.1"><b>Build muscle</b><span>A modest surplus — grow without the sloppy gain.</span></label>
+      </div>
+    </div>
+
+    <div class="card" id="macros">
+      <h2>Your starting numbers</h2>
+      <div class="sub">Calculated live — these go straight into your app.</div>
+      <div class="nums">
+        <div class="num"><b id="mCal">—</b><span>kcal</span></div>
+        <div class="num"><b id="mPro">—</b><span>protein</span></div>
+        <div class="num"><b id="mCarb">—</b><span>carbs</span></div>
+        <div class="num"><b id="mFat">—</b><span>fat</span></div>
+      </div>
+      <div class="tdee">Maintenance sits around <b id="mTdee">—</b> kcal. <span id="mGoalTxt"></span></div>
+    </div>
+
+    <div class="card">
+      <h2>Your training</h2>
+      <div class="sub">Honest answer beats ambitious — you can move up any time by asking.</div>
+      <div id="rung">
+        <label class="opt on" data-v="Rung 1 — Foundation (3-day full body)"><b>Foundation · 3 days</b><span>Where everyone starts. Full body ×3 — trains everything often, keeps fatigue low.</span></label>
+        <label class="opt" data-v="Rung 2 — Upper/Lower (4-day)"><b>Rung 2 · 4 days</b><span>Upper/lower split. For those already training consistently.</span></label>
+        <label class="opt" data-v="Rung 3 — 5-day split"><b>Rung 3 · 5 days</b><span>Five days, more volume per muscle. Only if five days is realistic every week.</span></label>
+      </div>
+    </div>
+
+    <label class="chk"><input type="checkbox" id="premium">
+      <span>Let me know when a 1:1 coaching space opens up. No pitch — I'll only mention it if one comes free.</span></label>
+
+    <button class="go" type="submit" id="submit">Build my setup →</button>
+    <div id="err">Something went wrong — give it another go, or email <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="89eae8e5e5fce4c9eae8e5e5fce4ebeae6e8eae1e0e7eea7eae6a7fce2">[email&#160;protected]</a></div>
+    <p class="note">Your details are used to build your plan and nothing else. Not medical advice.</p>
+  </form>
+</div>
+
+<div id="done">
+  <div class="tick">✓</div>
+  <h2>Setup underway 🦁</h2>
+  <p>I've got everything I need. I'm loading your macros and your training into the app now — <b style="color:#fff">your onboarding link comes by email</b>, so keep an eye on your inbox. Check your junk folder too, just in case.</p>
+  <div class="card" style="text-align:left">
+    <h2>While you wait</h2>
+    <div class="sub" style="margin-bottom:0">Two things worth doing: get a set of starting photos and a morning weigh-in done, and read The Framework guide when it arrives. Everything else can wait until you're in.</div>
+  </div>
+  <p style="font-size:13.5px;color:var(--muted)">Questions before then? Just reply to the email — it's actually me.</p>
+</div>
+
+<footer>CALLUM<span style="color:var(--green)">.</span>B · Physique OS</footer>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const $=id=>document.getElementById(id);
+let sex='male', hUnit='cm', wUnit='kg';
+
+$('sex').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  $('sex').querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');sex=b.dataset.v;calc();});
+
+function unitToggle(segId,onChange){
+  const seg=$(segId);
+  seg.addEventListener('click',e=>{
+    const b=e.target.closest('button'); if(!b) return;
+    const to=b.dataset.u, from=seg.dataset.u;
+    if(to===from) return;
+    seg.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
+    seg.dataset.u=to; onChange(from,to); calc();
+  });
+}
+unitToggle('hUnit',(from,to)=>{
+  const imp = to==='ft'; hUnit = imp ? 'ft' : 'cm';
+  if(imp){
+    const v=parseFloat($('height').value)||0;
+    if(v){const t=v/2.54; $('hFt').value=Math.floor(t/12); $('hIn').value=Math.round(t%12);}
+    $('height').style.display='none'; $('height').required=false;
+    $('hFt').style.display=''; $('hIn').style.display=''; $('hFt').required=true;
+  } else {
+    const t=(parseFloat($('hFt').value)||0)*12 + (parseFloat($('hIn').value)||0);
+    if(t) $('height').value=Math.round(t*2.54);
+    $('hFt').style.display='none'; $('hIn').style.display='none'; $('hFt').required=false;
+    $('height').style.display=''; $('height').required=true;
+  }
+});
+unitToggle('wUnit',(from,to)=>{
+  wUnit=to; const v=parseFloat($('weight').value)||0;
+  if(v) $('weight').value = to==='lb' ? Math.round(v*2.2046*10)/10 : Math.round(v/2.2046*10)/10;
+  $('weight').placeholder = to;
+});
+
+['goal','rung'].forEach(g=>$(g).addEventListener('click',e=>{
+  const o=e.target.closest('.opt');if(!o)return;
+  $(g).querySelectorAll('.opt').forEach(x=>x.classList.remove('on'));o.classList.add('on');calc();
+}));
+const pick=g=>$(g).querySelector('.opt.on')?.dataset.v;
+
+function kg(){const v=parseFloat($('weight').value)||0;return wUnit==='lb'?v/2.2046:v;}
+function cm(){
+  if(hUnit==='ft'){const t=(parseFloat($('hFt').value)||0)*12+(parseFloat($('hIn').value)||0);return t*2.54;}
+  return parseFloat($('height').value)||0;
+}
+
+let M={};
+function calc(){
+  const k=kg(), c=cm(), age=parseFloat($('age').value)||0;
+  if(k<=0||c<=0||age<=0){['mCal','mPro','mCarb','mFat','mTdee'].forEach(i=>$(i).textContent='—');return;}
+  const bmr = 10*k + 6.25*c - 5*age + (sex==='male'?5:-161);
+  const tdee = bmr*parseFloat($('activity').value);
+  const goal = parseFloat(pick('goal'));
+  const target = tdee*(1+goal);
+  const protein = 2.0*k, fat = 0.8*k;
+  const carbs = Math.max(0,(target - protein*4 - fat*9)/4);
+  M={bmr:Math.round(bmr),tdee:Math.round(tdee),target:Math.round(target),
+     protein:Math.round(protein),fat:Math.round(fat),carbs:Math.round(carbs),
+     kg:Math.round(k*10)/10,cm:Math.round(c),age:age,sex:sex,
+     activity:$('activity').options[$('activity').selectedIndex].text,
+     };
+  $('mCal').textContent=M.target;$('mPro').textContent=M.protein+'g';
+  $('mCarb').textContent=M.carbs+'g';$('mFat').textContent=M.fat+'g';
+  $('mTdee').textContent=M.tdee;
+  const g=parseFloat(pick('goal'));
+  $('mGoalTxt').textContent = g<0 ? 'Yours is set 20% below for a controlled deficit.'
+    : g>0 ? 'Yours is set 10% above for a lean surplus.' : 'Yours is set at maintenance.';
+}
+['age','height','hFt','hIn','weight','activity'].forEach(i=>$(i).addEventListener('input',calc));
+$('activity').addEventListener('change',calc);
+
+$('setup').addEventListener('submit',e=>{
+  e.preventDefault();calc();
+  const b=$('submit'), err=$('err');
+  b.disabled=true;b.textContent='Building…';err.style.display='none';
+  const name=$('first').value.trim()+' '+$('last').value.trim();
+  const sheet =
+`=== 1FIT SETUP SHEET ===
+NAME:      ${name}
+EMAIL:     ${$('email').value.trim()}
+AGE/SEX:   ${M.age} / ${M.sex}
+HEIGHT:    ${M.cm} cm
+WEIGHT:    ${M.kg} kg
+ACTIVITY:  ${M.activity}
+GOAL:      ${pick('goal')==='-0.2'?'LOSE FAT (−20%)':pick('goal')==='0'?'MAINTAIN':'BUILD MUSCLE (+10%)'}
+
+--- MACROS TO ENTER ---
+CALORIES:  ${M.target} kcal   (maintenance ${M.tdee}, BMR ${M.bmr})
+PROTEIN:   ${M.protein} g
+CARBS:     ${M.carbs} g
+FAT:       ${M.fat} g
+
+--- TRAINING TO LOAD ---
+${pick('rung')}
+1:1 INTEREST: ${$('premium').checked?'YES — wants to hear when a space opens':'no'}
+========================`;
+  fetch('https://formspree.io/f/mbdvgwle',{method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({name:name,email:$('email').value.trim(),
+      _subject:'🟢 NEW PHYSIQUE OS MEMBER — '+name+' — set up now',
+      setup_sheet:sheet})})
+  .then(r=>{ if(!r.ok) throw 0;
+    try{fetch('https://assets.mailerlite.com/jsonp/2490221/forms/194856127205214074/subscribe',{method:'POST',
+      body:new URLSearchParams([['fields[email]',$('email').value.trim()],['fields[name]',$('first').value.trim()],['ml-submit','1'],['anticsrf','true']])});}catch(_){}
+    $('form-side').style.display='none';$('done').style.display='block';window.scrollTo(0,0);
+  })
+  .catch(()=>{b.disabled=false;b.textContent='Build my setup →';err.style.display='block';});
+});
+calc();
+</script>
+</body>
+</html>
