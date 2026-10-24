@@ -4,6 +4,7 @@ import {
   createDashStream,
   createLinkStream,
   createPriceStream,
+  ensureAnabolicReply,
   formatReply,
   isValidEmail,
   normaliseMessages,
@@ -152,6 +153,34 @@ test("does not claim what Callum himself uses", () => {
   const onIt = scrubOwnUse("Callum isn't on steroids. He coaches the training and the food instead.");
   assert.equal(/isn't on/i.test(onIt), false);
   assert.match(onIt, /coaches the training/);
+});
+
+test("substance questions lead with J3 University and do not dodge", () => {
+  const asked = ensureAnabolicReply(
+    "Does Callum use steroids?",
+    "I don't have that information. Callum coaches men who have chosen that route.",
+  );
+  assert.match(asked, /J3 University \(J3U\)/);
+  assert.match(asked, /who've chosen that route/);
+  assert.match(asked, /doesn't give doses/);
+  assert.match(asked, /apply/);
+  assert.equal(/don't have that/i.test(asked), false);
+  assert.equal(/does not use/i.test(asked), false);
+
+  const cycle = ensureAnabolicReply("I'm on a cycle, can you still coach me?", "Yes, he can help with the week.");
+  assert.match(cycle, /J3 University/);
+
+  const dose = ensureAnabolicReply("What dose should I run?", "It depends.");
+  assert.match(dose, /doesn't give doses/);
+
+  const price = ensureAnabolicReply("How much is coaching?", "Foundation is £67 a week. Apply if you want it.");
+  assert.equal(price.includes("J3"), false);
+  assert.match(price, /£67/);
+
+  const shown = formatReply(asked);
+  assert.match(shown, /J3 University/);
+  assert.equal(shown.includes("/apply"), false);
+  assert.match(shown, /\[\[cta:apply\]\]/);
 });
 
 test("streams a path that arrives in pieces", () => {

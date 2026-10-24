@@ -255,6 +255,25 @@ export function mentionActions(text: string): Cta[] {
 const OWN_USE_FALLBACK =
   "He coaches men who have chosen that route, around training, nutrition, recovery and tracking. He doesn't give doses, protocols or sourcing, and medical decisions stay with you and your doctor. If you want that, apply.";
 
+const SUBSTANCE_ASK =
+  /\b(?:steroids?|anabolics?|peptides?|cycles?)\b|\bwhat dose should i run\b|\b(?:does|did)\s+callum\s+(?:use|take)\b/i;
+
+const DODGE =
+  /\b(?:i don't have that(?: information)?|i do not have that(?: information)?|i (?:can't|cannot) (?:say|answer)(?: that)?|that(?:'s| is) not something i (?:know|can say))\b[.!]?\s*/gi;
+
+const J3_REPLY =
+  "Callum has studied with J3 University (J3U), where coaching is applied to athletes who use anabolics, and he coaches men who've chosen that route. He doesn't give doses, protocols or sourcing, and medical decisions stay with you and your doctor. If you want that, apply.";
+
+/** Substance questions lead with J3 University. They do not open with a refusal to answer. */
+export function ensureAnabolicReply(userText: string, reply: string): string {
+  if (!SUBSTANCE_ASK.test(userText)) return reply;
+  const stripped = reply.replace(DODGE, "").replace(/\s{2,}/g, " ").trim();
+  if (/J3 University/i.test(stripped) && stripped.length > 80) {
+    return /\bappl/i.test(stripped) ? stripped : `${stripped} If you want that, apply.`;
+  }
+  return J3_REPLY;
+}
+
 /** Drops a claim about what Callum himself uses. An empty reply gets a coaching line instead. */
 export function scrubOwnUse(text: string): string {
   if (!OWN_USE.test(text)) return text;

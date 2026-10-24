@@ -5,11 +5,13 @@ import {
   clientKey,
   createDashStream,
   createPriceStream,
+  ensureAnabolicReply,
   formatReply,
   knownPage,
   normaliseMessages,
   sameOrigin,
   scrubDashes,
+  scrubOwnUse,
   scrubPrices,
   takeRateLimit,
 } from "../lib/guard.ts";
@@ -39,8 +41,9 @@ function limited(retryAfter: number): Response {
   );
 }
 
-function cleanReply(text: string): string {
-  return formatReply(scrubDashes(scrubPrices(text, business.allowedPrices, business.priceStandIn)));
+function cleanReply(text: string, userText = ""): string {
+  const priced = scrubOwnUse(scrubDashes(scrubPrices(text, business.allowedPrices, business.priceStandIn)));
+  return formatReply(ensureAnabolicReply(userText, priced));
 }
 
 export function GET(): Response {
@@ -100,6 +103,7 @@ export async function POST(request: Request): Promise<Response> {
 
   const messages = normaliseMessages((body as { messages?: unknown }).messages, business.limits);
   if (!messages.ok) return json({ error: messages.error }, messages.status);
+  const latestUser = [...messages.messages].reverse().find((message) => message.role === "user")?.content ?? "";
 
   const model = process.env.AI_GATEWAY_MODEL || business.model;
   let savedLead = false;
@@ -152,7 +156,7 @@ export async function POST(request: Request): Promise<Response> {
         const fallback = savedLead
           ? "Thanks. That's with Callum. Applying is still the way to go ahead. He reads it himself."
           : "Sorry, I missed that. Ask me about the coaching, or apply and Callum will read it himself.";
-        controller.enqueue(encoder.encode(cleanReply(joined.trim() ? joined : fallback)));
+        controller.enqueue(encoder.encode(cleanReply(joined.trim() ? joined : fallback, latestUser)));
       } catch (error) {
         console.error("chat stream error", error instanceof Error ? error.name : "error");
         controller.enqueue(

@@ -10,8 +10,8 @@ var business = {
   rules: [
     "Answer only from the knowledge below. If it is not there, say you don't have that and point him to apply or the free guide.",
     "Never invent facts about Callum's personal life or history. If it is not written in the knowledge, you do not know it, so do not say it.",
-    "Never make any statement about Callum's own use of steroids, anabolics, TRT, peptides or any other substance. Do not confirm it and do not deny it. Do not say that he does, does not, has, or has not. If he asks, skip that part and talk about how Callum coaches.",
-    "Steroids, anabolics, peptides and TRT: no judgement. He coaches men who have chosen that route, around training, nutrition, recovery and tracking. No dosing, no protocols, no sourcing, and he does not prescribe or recommend a substance. Medical decisions and bloodwork stay with the person and their doctor or clinician. Then point him to apply.",
+    "Never make any statement about Callum's own use of steroids, anabolics, TRT, peptides or any other substance. Do not confirm it and do not deny it. Do not say that he does, does not, has, or has not. Do not say you don't have that information, and do not say you can't answer.",
+    "If he asks about anabolics, steroids, a cycle, peptides, or whether Callum uses anything, lead with this and do not open with anything else: Callum has studied with J3 University (J3U), where coaching is applied to athletes who use anabolics, and he coaches men who've chosen that route. Then say he doesn't give doses, protocols or sourcing, and medical decisions stay with the person and their doctor. No judgement. Then point him to apply and end with [[apply]].",
     "The job is to get the right visitor to apply. Ask one question, or two at most, about his week. Reflect the problem back in plain words. Say how Callum's online coaching deals with that. Then point him to apply. Be steady, not pushy. Do not fake urgency, do not say places are limited, and do not use a countdown.",
     "Prices: say only the prices written in the knowledge, copied exactly. Never invent a discount, a sale, a code, or a price that is not listed. If you are not sure, send him to the coaching page.",
     "Never invent testimonials, client results, numbers, before and after claims or guarantees. Use a result only when it is written below, in those words, and say whose it is. Do not present it as his result. The example week and the example charts on the coaching page are illustrations, not clients. Do not quote them.",
@@ -372,6 +372,17 @@ function mentionActions(text) {
   return actions;
 }
 var OWN_USE_FALLBACK = "He coaches men who have chosen that route, around training, nutrition, recovery and tracking. He doesn't give doses, protocols or sourcing, and medical decisions stay with you and your doctor. If you want that, apply.";
+var SUBSTANCE_ASK = /\b(?:steroids?|anabolics?|peptides?|cycles?)\b|\bwhat dose should i run\b|\b(?:does|did)\s+callum\s+(?:use|take)\b/i;
+var DODGE = /\b(?:i don't have that(?: information)?|i do not have that(?: information)?|i (?:can't|cannot) (?:say|answer)(?: that)?|that(?:'s| is) not something i (?:know|can say))\b[.!]?\s*/gi;
+var J3_REPLY = "Callum has studied with J3 University (J3U), where coaching is applied to athletes who use anabolics, and he coaches men who've chosen that route. He doesn't give doses, protocols or sourcing, and medical decisions stay with you and your doctor. If you want that, apply.";
+function ensureAnabolicReply(userText, reply) {
+  if (!SUBSTANCE_ASK.test(userText)) return reply;
+  const stripped = reply.replace(DODGE, "").replace(/\s{2,}/g, " ").trim();
+  if (/J3 University/i.test(stripped) && stripped.length > 80) {
+    return /\bappl/i.test(stripped) ? stripped : `${stripped} If you want that, apply.`;
+  }
+  return J3_REPLY;
+}
 function scrubOwnUse(text) {
   if (!OWN_USE.test(text)) return text;
   OWN_USE.lastIndex = 0;
@@ -563,8 +574,9 @@ function limited(retryAfter) {
     { "retry-after": String(retryAfter) }
   );
 }
-function cleanReply(text) {
-  return formatReply(scrubDashes(scrubPrices(text, business.allowedPrices, business.priceStandIn)));
+function cleanReply(text, userText = "") {
+  const priced = scrubOwnUse(scrubDashes(scrubPrices(text, business.allowedPrices, business.priceStandIn)));
+  return formatReply(ensureAnabolicReply(userText, priced));
 }
 function GET() {
   return Response.json(publicWidget(business), {
@@ -618,6 +630,7 @@ async function POST(request) {
   }
   const messages = normaliseMessages(body.messages, business.limits);
   if (!messages.ok) return json({ error: messages.error }, messages.status);
+  const latestUser = [...messages.messages].reverse().find((message) => message.role === "user")?.content ?? "";
   const model = process.env.AI_GATEWAY_MODEL || business.model;
   let savedLead = false;
   const result = streamText({
@@ -665,7 +678,7 @@ async function POST(request) {
         for await (const delta of result.textStream) raw += delta;
         const joined = dashes.push(prices.push(raw)) + dashes.push(prices.flush()) + dashes.flush();
         const fallback = savedLead ? "Thanks. That's with Callum. Applying is still the way to go ahead. He reads it himself." : "Sorry, I missed that. Ask me about the coaching, or apply and Callum will read it himself.";
-        controller.enqueue(encoder.encode(cleanReply(joined.trim() ? joined : fallback)));
+        controller.enqueue(encoder.encode(cleanReply(joined.trim() ? joined : fallback, latestUser)));
       } catch (error) {
         console.error("chat stream error", error instanceof Error ? error.name : "error");
         controller.enqueue(
